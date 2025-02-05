@@ -1,0 +1,50 @@
+/* تخصيص شريط التمرير العام */
+::-webkit-scrollbar {
+    width: 12px;  /* عرض شريط التمرير */
+    height: 12px; /* ارتفاع شريط التمرير في حالة التمرير الأفقي */
+}
+
+/* تخصيص المسار (Track) */
+::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* لون خلفية المسار */
+    border-radius: 20px; /* تدوير الزوايا لتبدو أكثر نعومة */
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1); /* تأثير الظل داخل المسار */
+}
+
+/* تخصيص المقبض (Thumb) */
+::-webkit-scrollbar-thumb {
+    background-color: #007bff;  /* اللون الأساسي للمقبض */
+    border-radius: 20px;  /* تدوير الزوايا */
+    border: 3px solid #ffffff;  /* إضافة حد أبيض لجعل المقبض يبرز */
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.4);  /* تأثير الظل حول المقبض */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* تأثيرات انتقالية ناعمة */
+}
+
+/* تخصيص تأثيرات التمرير عند التفاعل مع المقبض */
+::-webkit-scrollbar-thumb:hover {
+    background-color: #0056b3; /* تغيير اللون عند التمرير فوقه */
+    box-shadow: 0 0 15px rgba(0, 86, 179, 0.5);  /* زيادة تأثير الظل */
+}
+
+/* تخصيص شريط التمرير الأفقي */
+::-webkit-scrollbar-horizontal {
+    height: 8px;  /* ارتفاع شريط التمرير الأفقي */
+}
+
+::-webkit-scrollbar-track-horizontal {
+    background-color: #f1f1f1;
+    border-radius: 20px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb-horizontal {
+    background-color: #007bff;
+    border-radius: 20px;
+    border: 3px solid #ffffff;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.4);
+}
+
+::-webkit-scrollbar-thumb-horizontal:hover {
+    background-color: #0056b3;
+    box-shadow: 0 0 15px rgba(0, 86, 179, 0.5);
+}

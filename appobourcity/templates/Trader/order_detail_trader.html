@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="icon" href="{{ url_for('static', filename='/img/1.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="static/css/dashboard.css">
+    <link rel="stylesheet" href="static/css/responsive.css">
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+
+    <!-- Link File CSS -->
+    <link rel="stylesheet" href="../../static/css/Tradercss/order_details.css">
+    <link rel="stylesheet" href="../../static/css/Tradercss/style.css">
+    <link rel="icon" href="{{ url_for('static', filename='/img/1.png') }}" type="image/x-icon">
+</head>
+<body>
+    <!-- عرض رسائل الفلاش -->
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            <div id="flash-messages">
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+<!-- الشريط الجانبي -->
+<div class="sidebar">
+<a href="/dashboard_trader" class="logo">
+    <i class='bx bx-store'></i>
+    <div class="logo-name"><span>متجر</span> {{ store_name }}</div>
+</a>
+<ul class="side-menu">
+    <li><a href="/dashboard_trader"><i class='bx bxs-dashboard'></i>لوحة التحكم</a></li>
+    <li><a href="/product_trader"><i class='bx bx-store-alt'></i>إدارة المنتجات</a></li>
+    <li><a href="/Subcategories"><i class='bx bx-category'></i>إدارة الاقسام الفرعيه</a></li>
+    <li><a href="/customers"><i class='bx bx-group'></i>إدارة العملاء</a></li>
+    <li><a href="/Orders_trader"><i class='bx bx-receipt'></i>إدارة الطلبات</a></li>
+    <li><a href="/offers"><i class='bx bx-gift'></i>العروض والخصومات</a></li>
+    <li><a href="settings.html"><i class='bx bx-cog'></i>الإعدادات</a></li>
+    <li><a href="#" id="language-toggle"><i class='bx bx-globe'></i>اللغة</a></li>
+</ul>
+<ul class="side-menu">
+    <li>
+        <a href="{{ url_for('logout') }}" class="logout">
+            <i class='bx bx-log-out-circle'></i>
+            تسجيل الخروج
+        </a>
+    </li>
+</ul>
+</div>
+<!-- نهاية الشريط الجانبي -->
+
+<!-- المحتوى الرئيسي -->
+<div class="content">
+<!-- شريط التنقل -->
+<nav>
+    <i class='bx bx-menu'></i>
+    <form action="#">
+        <div class="form-input">
+            <button class="search-btn" type="submit"><i class='bx bx-search'></i></button>
+            <input type="search" placeholder="بحث...">
+        </div>
+    </form>
+    <input type="checkbox" id="theme-toggle" hidden>
+    <label for="theme-toggle" class="theme-toggle"></label>
+        <!-- زر الإشعارات -->
+        <a href="notifications_trader">
+            <button class="button" style="position: relative; display: flex; align-items: center;">
+                {% if unread_count > 0 %}
+                    <p id="unreadCount" style="display: inline-block; background-color: red; color: white; padding: 0; border-radius: 50%; font-size: 10px; font-weight: bold; text-align: center; width: 16px; height: 16px; line-height: 16px; vertical-align: middle;">
+                        {{ unread_count }}
+                    </p>
+                
+                {% endif %}                   
+                
+                <svg viewBox="0 0 448 512" class="bell" style="width: 24px; height: 24px;">
+                    <path d="M224 0c-17.7 0-32 14.3-32 32V49.9C119.5 61.4 64 124.2 64 200v33.4c0 45.4-15.5 89.5-43.8 124.9L5.3 377c-5.8 7.2-6.9 17.1-2.9 25.4S14.8 416 24 416H424c9.2 0 17.6-5.3 21.6-13.6s2.9-18.2-2.9-25.4l-14.9-18.6C399.5 322.9 384 278.8 384 233.4V200c0-75.8-55.5-138.6-128-150.1V32c0-17.7-14.3-32-32-32zm0 96h8c57.4 0 104 46.6 104 104v33.4c0 47.9 13.9 94.6 39.7 134.6H72.3C98.1 328 112 281.3 112 233.4V200c0-57.4 46.6-104 104-104h8zm64 352H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7s18.7-28.3 18.7-45.3z"></path>
+                </svg>
+                الاشعارات
+            </button>
+        </a>
+    <a href="" class="profile">
+        <img src="../../static/uploads/Trader/logo{{store_image}}" alt="الملف الشخصي">
+    </a>
+</nav>
+<!-- نهاية شريط التنقل -->
+
+
+
+          <!-- Order Details Section -->
+<div class="order-details-container">
+    <div class="actions">
+        <button class="edit-button" id="print-invoice">
+            <i class='bx bx-printer'></i> طباعة الفاتورة
+        </button>
+        <!--<button class="edit-button" id="generate-pdf"><i class='bx bx-file'></i> تحميل PDF</button>-->
+    </div>
+
+    
+    
+    <!-- محتوى الفاتورة -->
+<div class="order-box" id="invoice-content" data-order-id="{{ order.order_id }}">
+    <div class="company-info" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 8px;">
+        <!-- القسم الأوسط: معلومات الشركة -->
+        <div style="flex: 2; text-align: right;">
+            <h1 style="margin: 10px 0; font-size: 24px;">Obour City Services</h1>
+            <p>
+                {% if current_user.is_authenticated %}
+                    <strong>متجر: {{ current_user.store_name }}</strong><br>
+                    رقم التواصل: {{ current_user.phone }}<br>
+                    البريد الإلكتروني: <a href="mailto:{{ current_user.email }}">{{ current_user.email }}</a><br>
+                    العنوان:  {{ current_user.governorate }}, {{ current_user.city }}, {{ current_user.village }},{{current_user.street_address}}
+
+                {% else %}
+                    <strong>مرحبًا بكم في Obour City Services</strong><br>
+                    رقم التواصل: 01145425207<br>
+                    البريد الإلكتروني: <a href="mailto:info@obourcityservices.com">info@obourcityservices.com</a><br>
+                    العنوان: شارع طلبه عويضه، الزقازيق، الشرقيه
+                {% endif %}
+            </p>
+        </div>
+        
+        <!-- القسم الأيسر: الشعار -->
+        <div style="flex: 1; text-align: center;">
+            {% if current_user.is_authenticated and current_user.store_image %}
+                <img style="border-radius:8px; width:120px; height:120px" class="logo" src="{{ url_for('static', filename='uploads/Trader/logo/'+(current_user.store_image)) }}" alt="شعار المستخدم" style="max-width: 150px; width: 100px;">
+            {% else %}
+                <img class="logo" src="{{ url_for('static', filename='img/1.png') }}" alt="شعار الشركة" style="max-width: 150px; width: 100px;">
+            {% endif %}
+        </div>
+        
+        <!-- القسم الأيمن: الباركود -->
+        <div style="flex: 1; text-align: left;">
+            <img class = "qr" src="{{ url_for('static', filename='uploads/qrcode/qrcode_order_' + (order.order_id|string) + '.png') }}" alt="QR Code" style="max-width: 150px;width: 120px;" />
+        </div>
+    </div>
+
+    <!-- تفاصيل الطلب -->
+    <div style="height:30px; padding:15px;" class="header">
+        <h2><i class='bx bx-file'></i> تفاصيل الطلب</h2>
+        <span>رقم الطلب: {{ order.order_id }}</span>
+        <span>{{ order.order_date.strftime('%I:%M %p %d %B %Y') }}</span>
+    </div>
+
+    <table class="order-details-table">
+        <thead style="background-color: rgba(0, 132, 255, 0.2);">
+            <tr>
+                <th><i class='bx bx-package'></i> المنتج</th>
+                <th><i class='bx bx-user'></i> العميل</th>
+                <th><i class='bx bx-store'></i> المتجر</th>
+                <th><i class="bi bi-boxes"></i> الكمية</th>
+                <th><i class="bi bi-cash-stack"></i> سعر القطعه بعد الخصم</th>
+                <th><i class='bx bx-money'></i> السعر النهائي</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order_details in order_details %}
+            <tr>
+                <td>
+                    {% if order_details.product_name|length > 30 %}
+                        {{ order_details.product_name[:70] }}... 
+                        <a href="" title="{{ order_details.product_name }}"></a>
+                    {% else %}
+                        {{ order_details.product_name }}
+                    {% endif %}
+                </td>
+                <td>{{ order_details.customer_name }}</td>
+                <td>{{ order_details.store_name }}</td>
+                <td>{{ order_details.quantity }}</td>
+                <td>{{ order_details.price }} ج.م</td>
+                <td>{{ order_details.price * order_details.quantity }} ج.م</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="5" style="text-align:right;"><strong>المجموع الكلي:</strong></td>
+                <td><strong>{{ total_price }} ج.م</strong></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+    
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        var printButton = document.getElementById('print-invoice');
+        
+        if (printButton) {
+            printButton.addEventListener('click', function () {
+                var invoiceContent = document.getElementById('invoice-content');
+                
+                if (invoiceContent) {
+                    var content = invoiceContent.innerHTML; // جلب محتوى الفاتورة
+                    var orderId = invoiceContent.getAttribute('data-order-id'); // جلب رقم الطلب
+
+                    var printWindow = window.open('', '', 'height=800,width=800');
+
+                    // إضافة المحتوى إلى نافذة الطباعة
+                    printWindow.document.write('<html><head><title>فاتورة البائع - رقم الفاتورة: ' + orderId + '</title>');
+
+                    // تنسيق CSS للطباعة
+                    printWindow.document.write('<style>');
+                    printWindow.document.write('body { font-family: Arial, sans-serif; direction: rtl; margin: 0; padding: 0; }');
+                    printWindow.document.write('.order-details-table { width: 100%; border-collapse: collapse; margin-top: 20px; }');
+                    printWindow.document.write('.order-details-table th, .order-details-table td { padding: 10px; border: 1px solid #ddd; text-align: center; }');
+                    printWindow.document.write('.company-info { display: flex; justify-content: space-between; margin-bottom: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 8px; }');
+                    printWindow.document.write('.header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 10px; }');
+                    printWindow.document.write('@media print { img { max-width: 100%; height: auto; } }');
+                    printWindow.document.write('</style>');
+
+                    printWindow.document.write('</head><body>');
+                    printWindow.document.write(content);
+                    printWindow.document.write('</body></html>');
+                    printWindow.document.close();
+
+                    // استدعاء نافذة الطباعة
+                } else {
+                    console.error('العنصر الذي يحتوي على الفاتورة غير موجود!');
+                }
+            });
+        } else {
+            console.error('الزر الذي يحمل ID print-invoice غير موجود!');
+        }
+    });
+</script>
+
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,97 @@
+/* تنسيق الملاحظات */
+.form-notes {
+    background-color: #ffeb3b; /* خلفية صفراء لامعة */
+    color: #333; /* لون النص */
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    border: 1px solid #fbc02d; /* حدود بلون أصفر داكن */
+    text-align: center; /* توسيط النص */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* إضافة ظل خفيف */
+    font-family: 'Tajawal', serif;
+}
+
+.form-notes p {
+    margin: 10px 0;
+    font-weight: bold;
+    font-family: 'Tajawal', serif;
+}
+
+.form-notes h1 {
+    margin: 10px;
+    font-weight: bold;
+    color: #ffffff;
+    font-size: larger;
+    border-radius: 15px;
+    background: #a00aa5;
+    height: 40px;
+    padding: 5px;
+    font-family: 'Tajawal', serif;
+
+}
+
+.payment-container {
+    background: #fff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 700px;
+    text-align: center;
+    margin: 0 auto;
+    font-family: 'Tajawal', serif;
+}
+
+.payment-container h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-family: 'Tajawal', serif;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+    font-family: 'Tajawal', serif;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    direction: rtl;
+    text-align: right;
+    font-family: 'Tajawal', serif;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #a00aa5;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: 'Tajawal', serif;
+}
+
+.form-group input:focus{
+    border-color: #4caf50;
+    outline: none;
+}
+
+.amount-display {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f9fff9;
+    border: 2px solid #4caf50;
+    border-radius: 5px;
+    color: #4caf50;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.error-message {
+    color: red;
+    margin-top: 10px;
+    display: none;
+}
+

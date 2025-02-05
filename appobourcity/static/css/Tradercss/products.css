@@ -1,0 +1,393 @@
+.title-box {
+    display: inline-block; /* جعل الصندوق بحجم النص */
+    background-color: #0d6efd00; /* لون خلفية خفيف */
+    border: 1px solid #0096FF; /* إطار حول النص */
+    border-radius: 10px; /* حواف دائرية */
+    padding: 5px 10px; /* مساحة داخلية للصندوق */
+    margin-bottom: 10px; /* تباعد أسفل الصندوق */
+    font-size: 1em; /* تكبير النص قليلاً */
+    color: #0096FF; /* لون النص */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* ظل خفيف */
+}
+/* استايل النموذج لإضافة المنتجات */
+.add-product-form {
+    background-color: var(--light); /* خلفية فاتحة */
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* ظل خفيف */
+    width: 97%;
+    max-width: 1400px; /* زيادة العرض */
+    margin: 40px auto; /* مسافة من الأعلى */
+}
+
+/* العنوان */
+.add-product-form h2 {
+    font-size: 1.7rem;
+    font-weight: 600;
+    color: #0096FF; /* لون النص */
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+/* تنسيق الصفوف */
+.form-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+    flex-wrap: wrap; /* دعم الجوالات */
+}
+
+/* تنسيق عناصر النموذج */
+.form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #0096FF; /* لون النص */
+    margin-bottom: 0.3rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%; /* جعل المدخلات تأخذ عرض الحاوية بالكامل */
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid var(--dark-grey); /* لون الحدود */
+    border-radius: 5px;
+    transition: border-color 0.3s; /* تأثير الانتقال */
+}
+
+.form-group textarea {
+    min-height: 100px; /* ارتفاع مناسب لحقل النص */
+    resize: vertical; /* تغيير الحجم عموديًا فقط */
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--primary); /* تغيير لون الحدود عند التركيز */
+    outline: none;
+}
+
+/* زر الإرسال */
+.submit-button {
+    padding: 12px 20px;
+    background: var(--primary);
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.submit-button:hover {
+    background: var(--dark-primary); /* لون الخلفية عند التحويم */
+}
+
+/* تنسيق الصورة */
+.image-preview {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover; /* تكبير الصورة مع الحفاظ على الأبعاد */
+    border: 1px solid var(--dark-grey);
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+/* تنسيقات عامة */
+.products-page {
+    padding: 36px 24px;
+    background: var(--grey);
+}
+
+.products-page .header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* تغيير التبرير إلى اليسار */
+    margin-bottom: 24px;
+}
+
+.products-page .header h1 {
+    font-size: 25px;
+    font-weight: 600;
+    color: #0096FF;
+}
+
+.add-button {
+    margin-left: 20px; /* زيادة المسافة بين العنوان وزر الإضافة */
+}
+
+/* استايل الأجهزة المختلفة */
+@media (max-width: 800px) {
+    .products-page {
+        padding: 20px;
+    }
+
+    .products-page .header h1 {
+        font-size: 20px;
+    }
+
+    .products-page .add-button {
+        margin-left: 10px;
+    }
+
+    .form-row {
+        flex-direction: column; /* جعل العناصر رأسية على الجوال */
+    }
+}
+
+@media (min-width: 1025px) {
+    .products-page {
+        padding: 40px;
+    }
+
+    .products-page .header h1 {
+        font-size: 28px;
+    }
+}
+/* جدول المنتجات */
+.products-page .products-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--light);
+    margin-top: 2rem; /* مسافة أعلى الجدول */
+}
+
+.products-page .products-table th,
+.products-page .products-table td {
+    padding: 12px 16px;
+    text-align: left;
+}
+
+.products-page .products-table th {
+    background: var(--dark-grey);
+    color: #ffffff;
+    font-size: 14px;
+    text-transform: uppercase; /* تحويل النصوص إلى حروف كبيرة */
+}
+
+.products-page .products-table td {
+    border-bottom: 1px solid var(--grey);
+    color: var(--dark);
+    font-size: 13px;
+}
+
+.products-page .products-table tbody tr {
+    transition: background 0.3s ease;
+}
+
+.products-page .products-table tbody tr:hover {
+    background: var(--grey);
+}
+
+/* أزرار التعديل والحذف */
+.products-page .btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 10px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #0096FF; /* اللون الأساسي */
+    color: white;
+    font-size: 12px;
+    transition: background-color 0.3s;
+}
+
+.products-page .btn:hover {
+    background-color: #16ee21; /* لون مختلف عند التحويم */
+}
+
+.products-page .btn-delete {
+    background-color: #ff1900; /* لون الزر للحذف */
+}
+
+.products-page .btn-delete:hover {
+    background-color: #0096FF;
+}
+
+
+/* إخفاء نافذة تعديل المنتج بشكل افتراضي */
+
+.modal-content {
+    background-color: #fff; /* لون خلفية النموذج */
+    padding: 20px; /* مسافة داخلية للنموذج */
+    border-radius: 8px; /* حواف دائرية */
+    width: 100%; /* عرض كامل للنموذج */
+    max-width: 1200px; /* زيادة العرض الأقصى للنموذج */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* ظل خفيف */
+    margin: auto; /* توسيط النموذج */
+    margin-top: 50px; /* زيادة التباعد من أعلى النموذج (يمكنك تغيير القيمة حسب الحاجة) */
+}
+
+.modal-title {
+    text-align: center; /* محاذاة العنوان في المنتصف */
+    margin-bottom: 20px; /* إضافة مسافة أسفل العنوان */
+    color: #0096FF; /* لون النص */
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column; /* جعل العناصر عمودية */
+    color: #0096FF; /* لون النص */
+}
+
+.form-row {
+    display: flex; /* استخدام flexbox */
+    justify-content: space-between; /* توزيع العناصر بالتساوي */
+    margin-bottom: 15px; /* إضافة مسافة بين الصفوف */
+}
+
+.form-group {
+    flex: 1; /* جعل كل مجموعة تأخذ مساحة متساوية */
+    margin-right: 15px; /* إضافة مسافة بين المجموعات */
+}
+
+.form-group:last-child {
+    margin-right: 0; /* إزالة المسافة من المجموعة الأخيرة */
+}
+
+input,
+select {
+    width: 100%; /* جعل الإدخال يستغل المساحة بالكامل */
+    padding: 10px; /* مسافة داخلية في الحقول */
+    border: 1px solid #ccc; /* إطار خفيف حول الحقول */
+    border-radius: 5px; /* حواف دائرية للحقول */
+    font-size: 14px; /* حجم الخط */
+    color: #0096FF; /* لون النص */
+}
+
+.custom-yellow {
+    background-color: #FFC107; /* اللون الأصفر */
+    color: #000; /* النص باللون الأسود */
+    border: none; /* إزالة الإطار */
+}
+.custom-yellow:hover {
+    background-color: #E0A800; /* لون مختلف عند التمرير */
+    color: #fff; /* النص يصبح أبيض عند التمرير */
+}
+
+.custom-red {
+    background-color: #DC3545; /* اللون الأحمر */
+    color: #fff; /* النص باللون الأبيض */
+    border: none; /* إزالة الإطار */
+}
+.custom-red:hover {
+    background-color: #C82333; /* لون مختلف عند التمرير */
+    color: #fff; /* النص يبقى أبيض */
+}
+
+button.custom-yellow {
+    background-color: #FFC107 !important; /* اللون الأصفر */
+    color: #000 !important; /* النص باللون الأسود */
+    border: none !important; /* إزالة الإطار */
+}
+
+button.custom-red {
+    background-color: #DC3545 !important; /* اللون الأحمر */
+    color: #fff !important; /* النص باللون الأبيض */
+    border: none !important; /* إزالة الإطار */
+}
+
+
+/* زر التبديل (Switch) */
+.theme-toggle {
+    position: relative;
+    display: inline-block;
+    width: 50px; /* تصغير الحجم */
+    height: 28px; /* تصغير الحجم */
+}
+
+.theme-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 50px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;  /* تصغير الـ knob */
+    width: 22px;   /* تصغير الـ knob */
+    border-radius: 50%;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+}
+
+input:checked + .slider {
+    background-color: #0096ff; /* اللون الأخضر عند التفعيل */
+}
+
+input:checked + .slider:before {
+    transform: translateX(22px); /* حركة الـ knob */
+}
+
+/* إزالة النص الذي يظهر مع الزر */
+.status-label {
+    display: none;  /* إزالة النص تمامًا */
+}
+
+
+/*تنسيق رسالة الفلاش*/
+
+.flash-message {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+    animation: fadeOut 5s forwards;
+}
+/* رسائل النجاح */
+.flash-message.success {
+    background-color: rgba(0, 255, 0, 0.2); /* خلفية خضراء شفافة */
+    border: 2px solid darkgreen; /* إطار أخضر غامق */
+    color: darkgreen; /* لون النص */
+}
+
+/* رسائل الخطأ */
+.flash-message.error {
+    background-color: rgba(255, 0, 0, 0.2); /* خلفية حمراء شفافة */
+    border: 2px solid darkred; /* إطار أحمر غامق */
+    color: darkred; /* لون النص */
+}
+
+/* تأثير الاختفاء التدريجي */
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    90% { opacity: 0.2; }
+    100% { opacity: 0; display: none; }
+}
+
+.instruction {
+    font-size: 13px; /* حجم الخط صغير */
+    color: red; /* اللون أحمر */
+    margin-right: 10px; /* مسافة علوية صغيرة */
+}

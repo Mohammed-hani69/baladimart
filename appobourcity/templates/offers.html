@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='/img/1.png') }}" type="image/x-icon">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/offers.css">
+    <link rel="stylesheet" href="static/css/style.css">
+    <input type="hidden" id="editOfferId" name="editOfferId">
+    <title>العروض</title>
+</head>
+
+<body>
+<!-- الشريط الجانبي -->
+<div class="sidebar">
+    <a href="dashboard.html" class="logo">
+        <i class='bx bx-code-alt'></i>
+        <div class="logo-name"><span>مدينة</span>العبور</div>
+    </a>
+    <ul class="side-menu">
+        <li><a href="/dashboard"><i class='bx bxs-dashboard'></i>لوحة التحكم</a></li>
+        <li><a href="/products"><i class='bx bx-store-alt'></i>المنتجات</a></li>
+        <li><a href="/banner"><i class='bx bx-image'></i>البانرات الاعلانيه</a></li>
+        <li><a href="/sellers"><i class='bx bx-group'></i>البائعون</a></li>
+        <li><a href="/Orders"><i class='bx bx-receipt'></i>الطلبات</a></li>
+        <li><a href="/services"><i class='bx bx-message-square-dots'></i>الخدمات</a></li>
+        <li><a href="/Types_of_services"><i class="bx bx-briefcase"></i>انواع الخدمات</a></li>
+        <li><a href="/category"><i class='bx bx-category'></i>الاقسام</a></li>
+        <li><a href="/offers_admin"><i class='bx bx-gift'></i>العروض</a></li>
+        <li><a href="/settings"><i class='bx bx-cog'></i>الإعدادات</a></li>
+        <li><a href="#" id="language-toggle"><i class='bx bx-globe'></i>اللغة</a></li>
+    </ul>
+    <ul class="side-menu">
+        <li>
+            <a href="/logout" class="logout">
+                <i class='bx bx-log-out-circle'></i>
+                تسجيل الخروج
+            </a>
+        </li>
+    </ul>
+
+</div>
+<!-- نهاية الشريط الجانبي -->
+
+    <!-- المحتوى الرئيسي -->
+    <div class="content">
+        <!-- الشريط العلوي -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            <form action="#" method="get">
+                <div class="form-input" style="direction: rtl; display: flex; align-items: center;">
+                    <button class="search-btn" type="submit" style="margin-right: 5px;"><i class='bx bx-search'></i></button>
+                    <input type="search" id="searchInput" placeholder="بحث..." style="text-align: right;">
+                </div>
+            </form>
+            <input type="checkbox" id="theme-toggle" hidden>
+            <label for="theme-toggle" class="theme-toggle"></label>
+<!-- زر الإشعارات الجديد -->
+<a href="/notifications">
+    <button class="button">
+        <svg viewBox="0 0 448 512" class="bell">
+            <path d="M224 0c-17.7 0-32 14.3-32 32V49.9C119.5 61.4 64 124.2 64 200v33.4c0 45.4-15.5 89.5-43.8 124.9L5.3 377c-5.8 7.2-6.9 17.1-2.9 25.4S14.8 416 24 416H424c9.2 0 17.6-5.3 21.6-13.6s2.9-18.2-2.9-25.4l-14.9-18.6C399.5 322.9 384 278.8 384 233.4V200c0-75.8-55.5-138.6-128-150.1V32c0-17.7-14.3-32-32-32zm0 96h8c57.4 0 104 46.6 104 104v33.4c0 47.9 13.9 94.6 39.7 134.6H72.3C98.1 328 112 281.3 112 233.4V200c0-57.4 46.6-104 104-104h8zm64 352H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7s18.7-28.3 18.7-45.3z"></path>
+        </svg>
+        الاشعارات
+    </button>
+</a>
+ 
+ <a href="settings.html" class="profile">
+    <img src="images/logo.png" alt="الملف الشخصي">
+            </a>
+        </nav>
+        <!-- نهاية الشريط العلوي -->
+
+        <main class="offers-page">
+            <div class="header">
+                <div class="title-box">
+                    <h2>إضافة عرض</h2>
+                </div>
+            </div>
+
+            <div class="offer-list">
+                <h2 class="offer-list-header">قائمة العروض</h2>
+                <div class="search-box" style="display: flex; align-items: center; margin-bottom: 20px;">
+                    <input type="text" id="searchBox" placeholder="ابحث حسب العنوان أو الرمز" style="flex-grow: 1; margin-right: 10px; padding: 8px; border: 1px solid var(--dark-grey); border-radius: 5px; font-size: 14px;">
+                    <button id="searchBtn" class="search-btn" style="display: flex; align-items: center; padding: 8px 12px; font-size: 14px; margin-left: 10px;"><i class="fas fa-search" style="margin-right: 5px;"></i>بحث</button>
+                </div>
+                <table class="offers-table" style="border: 1px solid var(--dark-grey); border-collapse: collapse;">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>كود العرض</th>
+                            <th>العنوان</th>
+                            <th>اسم البائع</th>
+                            <th>اسم المتجر</th>
+                            <th>نوع العرض</th>
+                            <th>مقدار العرض</th>
+                            <th>تفاصيل العرض</th>
+                            <th>تاريخ البداية</th>
+                            <th>تاريخ الانتهاء</th>
+                            <th>حالة العرض</th>
+                            <th>التحكم</th>
+                            <th>ملاحظات</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="offersTableBody">
+                        {% for offer, seller_name,store_name in offers %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ offer.code }}</td>
+                            <td>{{ offer.name }}</td>
+                            <td>{{ seller_name }}</td>  <!-- عرض اسم البائع -->
+                            <td>{{ store_name }}</td>  <!-- عرض اسم المتجر -->
+                            <td>{{ offer.typename }}</td>
+                            <td>{{ offer.discount_value }}</td>
+                            <td>{{ offer.description }}</td>
+                            <td>{{ offer.start_date }}</td>
+                            <td>{{ offer.end_date }}</td>
+                            <td>
+                                <div class="form-group">
+                                    <label for="status-toggle-{{ offer.offer_id }}" class="theme-toggle">
+                                        <input type="checkbox" class="custom-switch-input" 
+                                               id="status-toggle-{{ offer.offer_id }}" 
+                                               {% if offer.status %}checked{% endif %} 
+                                               onchange="toggleStatus({{ offer.offer_id }}, this.checked)">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <select id="approval-status-select-{{ offer.offer_id }}" 
+                                            class="form-control small-select" 
+                                            onchange="updateApprovalStatus({{ offer.offer_id }}, this.value)">
+                                        <option class="badge badge-pending" value="pending" {% if offer.approval_status == 'pending' %}selected{% endif %}>تحت الاختبار</option>
+                                        <option class="badge badge-approved" value="approved" {% if offer.approval_status == 'approved' %}selected{% endif %}>تم الموافقة</option>
+                                        <option class="badge badge-rejected" value="rejected" {% if offer.approval_status == 'rejected' %}selected{% endif %}>مرفوض</option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td>
+                                <textarea 
+                                    id="notes-{{ offer.offer_id }}" 
+                                    class="form-control" 
+                                    onchange="saveNotes({{ offer.offer_id }}, this.value)"
+                                >{{ offer.notes }}</textarea>
+                            </td> 
+                            <td>                
+                                <a href="{{ url_for('delete_offer_admin', offer_id=offer.offer_id) }}" 
+                                class="btn btn-sm btn-danger d-flex align-items-center justify-content-center" 
+                                style="background-color: #f54242; border-radius: 5px; padding: 5px 10px; font-size: 10px; color: white; text-decoration: none;" 
+                                onclick="return confirm('هل أنت متأكد أنك تريد حذف هذا المنتج؟')">
+                                 <i class="fas fa-trash-alt me-2"></i> حذف
+                             </a>                                                         
+                            </td>                                                                                                              
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                    
+                <script>
+                    // وظيفة البحث
+                    document.getElementById('searchBox').addEventListener('input', function() {
+                        // الحصول على النص المدخل من المستخدم
+                        var searchQuery = this.value.toLowerCase();
+                        
+                        // جميع صفوف الجدول
+                        var rows = document.querySelectorAll('#offersTableBody tr');
+                        
+                        // تصفية الصفوف بناءً على النص المدخل
+                        rows.forEach(function(row) {
+                            // الحصول على النصوص في كل خلية من الصف
+                            var cells = row.querySelectorAll('td');
+                            var rowText = Array.from(cells).map(cell => cell.textContent.toLowerCase()).join(' ');
+                            
+                            // عرض أو إخفاء الصف بناءً على مطابقة النص
+                            if (rowText.includes(searchQuery)) {
+                                row.style.display = ''; // عرض الصف
+                            } else {
+                                row.style.display = 'none'; // إخفاء الصف
+                            }
+                        });
+                    });
+                </script>
+            <!-- النافذة المنبثقة لتعديل العرض -->
+            <div id="editOfferModal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal()">&times;</span>
+                    <h2 class="modal-title">تعديل العرض</h2>
+                    <form id="editOfferForm" onsubmit="updateOffer(event)">
+                        <div class="user-details">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="editOfferCode"><i class='bx bx-tag'></i> رمز العرض:</label>
+                                    <input type="text" id="editOfferCode" name="editOfferCode" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editOfferTitle"><i class='bx bx-pencil'></i> عنوان العرض:</label>
+                                    <input type="text" id="editOfferTitle" name="editOfferTitle" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="editOfferType"><i class='bx bx-list-ul'></i> نوع العرض:</label>
+                                    <input type="text" id="editOfferType" name="editOfferType" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editOfferAmount"><i class='bx bx-dollar'></i> مقدار العرض:</label>
+                                    <input type="text" id="editOfferAmount" name="editOfferAmount" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="editStartDate"><i class='bx bxs-calendar'></i> تاريخ البداية:</label>
+                                    <input type="date" id="editStartDate" name="editStartDate" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editEndDate"><i class='bx bxs-calendar'></i> تاريخ الانتهاء:</label>
+                                    <input type="date" id="editEndDate" name="editEndDate" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <button type="submit" class="submit-btn">تحديث العرض</button>
+                                <button type="button" class="cancel-btn" onclick="closeModal()">إلغاء</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="static/js/offers.js"></script>
+    <script src="static/js/dashboard.js"></script>
+
+
+</body>
+</html>

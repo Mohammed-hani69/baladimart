@@ -1,0 +1,442 @@
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    
+}
+
+.cart-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.cart-header h1 {
+    font-size: 28px;
+    color: #0d6efd;
+    font-weight: bold;
+}
+
+.cart-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.cart-details, .cart-summary {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    flex: 1;
+    transition: transform 0.3s ease;
+}
+
+.cart-details:hover, .cart-summary:hover {
+    transform: translateY(-5px);
+}
+
+.cart-item {
+    display: flex;               /* استخدام flex لعرض العناصر بجانب بعضها */
+    align-items: center;         /* محاذاة العناصر عموديًا في المنتصف */
+    gap: 20px;                   /* المسافة بين العناصر */
+    border-bottom: 1px solid #ccc; /* الخط أسفل العنصر */
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.cart-item img {
+    width: 100px;  /* تحديد عرض الصورة */
+    height: 100px; /* تحديد ارتفاع الصورة */
+    object-fit: fill; /* الحفاظ على نسبة الأبعاد مع اقتصاص الصورة إذا لزم الأمر */
+}
+
+.cart-item-info {
+    flex-grow: 1;    /* توسيع المساحة المتاحة للمعلومات */
+}
+
+.cart-item-info h2 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.cart-item-info span {
+    color: #777;
+    font-size: 14px;
+}
+
+.cart-item-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cart-item-controls button {
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #0d6efd;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.cart-item-controls button:hover {
+    background-color: #990499;
+}
+
+.cart-item-controls input {
+    width: 40px;  /* زيادة العرض ليتناسب مع الأزرار */
+    height: 30px; /* تعيين ارتفاع مناسب */
+    text-align: center;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.cart-item-price {
+    font-size: 16px;
+    color: #333;
+    font-weight: bold;
+    margin-top: 10px; /* مسافة بين السعر وبقية العناصر */
+    text-align: right; /* محاذاة السعر لليمين */
+    margin-left: auto; /* دفع السعر إلى أقصى اليمين */
+}
+
+.cart-item-price del {
+    font-size: 14px;
+    color: #777;
+    display: block;
+    margin-top: 5px;
+}
+
+.cart-item-actions {
+    top: 10px;
+    left: 10px;
+    display: flex;
+    gap: 3px;
+
+}
+
+.cart-item-actions i {
+    font-size: 20px;
+    cursor: pointer;
+    color: #555;
+}
+
+.cart-item-actions i:hover {
+    color: red;
+}
+
+.cart-summary h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.cart-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+.cart-discounts {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.summary-total {
+    font-size: 18px;
+    font-weight: bold;
+    color: #0d6efd;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #0d6efd;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #990499;
+}
+
+.btn-secondary {
+    background-color: #ffa500;
+    margin-top: 10px;
+}
+.dropdown, .input-field, .textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.dropdown:hover, .input-field:hover, .textarea:hover {
+    border-color: #0d6efd;
+}
+
+.dropdown {
+    background-color: #f9f9f9;
+}
+
+.textarea {
+    height: 120px;
+    resize: vertical;
+}
+
+.btn {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    padding: 12px 20px;
+    margin-top: 20px;
+    background-color: #0d6efd;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #990499;
+}
+
+.payment-icon {
+    width: 50px;
+    margin-top: 10px;
+}
+
+label {
+    font-size: 16px;
+    margin-bottom: 8px;
+    display: block;
+    color: #444;
+}
+.original-price {
+    color: gray;
+    text-decoration: line-through;
+    margin-right: 10px;
+}
+
+.discounted-price {
+    color: green;
+    font-weight: bold;
+}
+.icon-container {
+    display: flex;
+    justify-content: center; /* لضمان أن الأيقونات في المنتصف */
+    margin-top: 20px;
+}
+
+.small-icon {
+    width: 100px; /* زيادة الحجم */
+    height: 100px;
+    margin: 0 15px; /* زيادة المسافة بين الأيقونات */
+    object-fit: fill;
+    transition: transform 0.3s ease, filter 0.3s ease; /* إضافة تأثير التغيير */
+}
+
+/* تأثير عند التمرير على الأيقونة */
+.small-icon:hover {
+    transform: scale(1.2); /* تكبير الأيقونة */
+    filter: brightness(1.2); /* إضافة تأثير السطوع */
+}
+
+
+.cart-item {
+    border-bottom: 1px solid #ccc;  /* إضافة خط تحت كل منتج */
+    padding-bottom: 20px;            /* إضافة مسافة أسفل المنتج */
+    margin-bottom: 20px;             /* إضافة مسافة بين المنتجات */
+}
+
+.cart-item:last-child {
+    border-bottom: none;            /* إزالة الخط في آخر منتج لتجنب ظهور خط أسفل السلة ككل */
+}
+
+/* تصميم النافذة المنبثقة */
+.popup {
+    position: fixed; /* تثبيت النافذة في مكان محدد بغض النظر عن التمرير */
+    top: 50%; /* توسيط عمودي */
+    left: 50%; /* توسيط أفقي */
+    transform: translate(-50%, -50%); /* إعادة الضبط إلى المنتصف تمامًا */
+    background-color: #f9fff9; /* لون الخلفية */
+    border: 2px solid #4caf50; /* تحديد إطار أخضر */
+    border-radius: 10px; /* زوايا منحنية */
+    padding: 20px; /* المسافة الداخلية */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* ظل خفيف */
+    z-index: 9999; /* ضمان الظهور فوق جميع العناصر */
+    max-width: 90%; /* أقصى عرض للنافذة */
+    word-wrap: break-word; /* تكسر النص الطويل */
+    white-space: normal; /* التفاف النص */
+    text-align: center; /* توسيط النص داخل النافذة */
+}
+
+/* تظليل الخلفية لتجنب التأثير على العناصر الأخرى */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* خلفية شفافة سوداء */
+    z-index: 9998; /* خلف النافذة */
+}
+
+
+/* إخفاء النافذة افتراضيًا */
+.hidden {
+    display: none;
+}
+#location-status {
+    color: red;
+    font-weight: bold;
+}
+
+
+
+#loading-indicator {
+    position: fixed; /* لجعل العنصر ثابتًا بغض النظر عن التمرير */
+    top: 50%; /* لتوسيط العنصر عموديًا */
+    left: 50%; /* لتوسيط العنصر أفقيًا */
+    transform: translate(-50%, -50%); /* لتعديل الموضع إلى منتصف الصفحة */
+    background-color: rgba(255, 255, 255, 0.877); /* لون الخلفية شبه شفاف */
+    color: #160bb3; /* لون النص */
+    padding: 40px; /* مسافة داخلية حول النص والصورة */
+    border-radius: 10px; /* حواف مستديرة */
+    text-align: center; /* محاذاة النص إلى المنتصف */
+    z-index: 9999; /* لجعل العنصر فوق جميع العناصر الأخرى */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* ظل خفيف */
+}
+
+#loading-indicator img {
+    width: 50px; /* حجم الصورة */
+    height: 50px; /* حجم الصورة */
+    margin-bottom: 10px; /* مسافة بين الصورة والنص */
+}
+
+#loading-indicator p {
+    font-size: 16px; /* حجم النص */
+    margin: 0; /* إزالة المسافات الخارجية */
+}
+
+
+/* HTML: <div class="loader"></div> */
+.loader {
+    width: 50px;
+    aspect-ratio: 1;
+    display: grid;
+    border: 4px solid #0000;
+    border-radius: 50%;
+    border-right-color: #3568d8;
+    animation: l15 1s infinite linear;
+  }
+  .loader::before,
+  .loader::after {    
+    content: "";
+    grid-area: 1/1;
+    margin: 2px;
+    border: inherit;
+    border-radius: 50%;
+    animation: l15 2s infinite;
+  }
+  .loader::after {
+    margin: 8px;
+    animation-duration: 3s;
+  }
+  @keyframes l15{ 
+    100%{transform: rotate(1turn)}
+  }
+
+
+
+  /* تنسيق حقل إدخال كود الخصم والزر */
+.apply-offer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.apply-offer input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    flex: 1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.apply-offer button {
+    padding: 5px 12px;
+    background-color: #1000f1;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.3s ease;
+}
+
+.apply-offer button:hover {
+    background-color: #170996;
+}
+/* تنسيق الرسالة المنبثقة */
+.popup-message {
+    position: absolute;
+    top: 50%;
+    right: -300px; /* تظهر الرسالة في الجانب الأيمن */
+    transform: translateY(-50%);
+    background-color: #333;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    opacity: 0;
+    animation: slideIn 0.5s forwards, fadeOut 0.5s 5000s forwards;
+    width: 250px;
+}
+
+/* إضافة سهم يشير إلى المنتج */
+.popup-message::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -10px; /* السهم في اليسار للإشارة إلى المنتج */
+    transform: translateY(-50%);
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent #333 transparent transparent;
+}
+
+/* حركات الرسالة */
+@keyframes slideIn {
+    from { right: -300px; opacity: 0; }
+    to { right: 10px; opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}

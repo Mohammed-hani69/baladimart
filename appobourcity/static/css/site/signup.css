@@ -1,0 +1,285 @@
+/* إعدادات عامة */
+
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Tajawal', serif;
+    background: url('../../img/site/back.jpg') no-repeat center center fixed; /* إضافة صورة الخلفية */
+    background-color: #f4f7f6;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    direction: rtl;
+}
+
+/* تصميم الحاوية الرئيسية */
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    height: 80%;
+    background: linear-gradient(135deg, #A54BFF, #70FFD3);
+    border-radius: 15px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    overflow: hidden;
+}
+
+/* تصميم الشعار */
+.site-logo {
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.site-logo img {
+    width: 140px;
+}
+
+/* تصميم النماذج */
+.form-container {
+    flex: 1;
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.5s ease-in-out;
+    width: 45%;
+    max-width: 700px;
+    position: relative;
+}
+
+/* حركة عند ظهور النماذج */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+#signup-form {
+    display: block;
+}
+
+/* تصميم الصورة */
+.image-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 20px;
+    max-width: 55%;
+}
+
+.image-container img {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 10px;
+    animation: slideInFromRight 1s forwards;
+}
+
+/* الحركة للصورة */
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+/* العناوين */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #85059e;
+    font-weight: 600;
+}
+
+/* الحقول */
+.input-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.input-group {
+    width: 48%;
+}
+
+.input-group.full-width {
+    width: 100%;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+/* تأثيرات على الحقول */
+input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    box-shadow: 0px 2px 5px rgba(161, 4, 135, 0.2);
+    background-color: #f9f9f9;
+    margin-bottom: 15px;
+}
+
+/* تأثيرات عند التركيز على الحقول */
+input:focus {
+    border-color: #85059e;
+    box-shadow: 0 0 10px rgba(81, 8, 155, 0.2);
+    outline: none;
+    background-color: #fff;
+    transform: translateY(-5px); /* رفع الحقل عند التركيز */
+}
+
+/* تأثيرات عند التمرير على الحقول */
+input:hover {
+    border-color: #7a2d8f;
+    transform: scale(1.05); /* تكبير الحقل عند التمرير */
+}
+
+/* الأزرار */
+button {
+    width: 100%;
+    padding: 12px;
+    background: #a319bb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+button:hover {
+    background: linear-gradient(135deg, #70FFD3, #BA68C8);
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.login-link a {
+    color: #9c0797;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+
+/* تنسيق حقل select مثل input */
+select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    box-shadow: 0px 2px 5px rgba(161, 4, 135, 0.2);
+    background-color: #f9f9f9;
+    margin-bottom: 15px;
+}
+
+/* تأثيرات عند التركيز على حقل select */
+select:focus {
+    border-color: #85059e;
+    box-shadow: 0 0 10px rgba(81, 8, 155, 0.2);
+    outline: none;
+    background-color: #fff;
+    transform: translateY(-5px); /* رفع الحقل عند التركيز */
+}
+
+/* تأثيرات عند التمرير على حقل select */
+select:hover {
+    border-color: #7a2d8f;
+    transform: scale(1.05); /* تكبير الحقل عند التمرير */
+}
+
+
+
+/*تنسيق رسالة الفلاش*/
+
+.flash-message {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+    animation: fadeOut 5s forwards;
+}
+
+/* رسائل النجاح */
+.flash-message.success {
+    background-color: rgba(0, 255, 0, 0.2); /* خلفية خضراء شفافة */
+    border: 2px solid darkgreen; /* إطار أخضر غامق */
+    color: darkgreen; /* لون النص */
+}
+
+/* رسائل الخطأ */
+.flash-message.error {
+    background-color: rgba(255, 0, 0, 0.2); /* خلفية حمراء شفافة */
+    border: 2px solid darkred; /* إطار أحمر غامق */
+    color: darkred; /* لون النص */
+}
+
+/* تأثير الاختفاء التدريجي */
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    90% { opacity: 0.2; }
+    100% { opacity: 0; display: none; }
+}
+
+.instruction {
+    font-size: 13px; /* حجم الخط صغير */
+    color: red; /* اللون أحمر */
+    margin-right: 10px; /* مسافة علوية صغيرة */
+}
+
+
+
+/* تغيير لون الزر */
+.btn-custom {
+    width: 100%;
+    padding: 12px;
+    background: #a319bb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+/* تأثير عند التمرير على الزر */
+.btn-custom:hover {
+    background: linear-gradient(135deg, #70FFD3, #BA68C8);
+}

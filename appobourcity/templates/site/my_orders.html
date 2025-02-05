@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طلباتي</title>
+
+    <!-- إضافة Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link href="../../static/css/site/my_orders.css" rel="stylesheet">
+    <link href="../../static/css/site/home.css" rel="stylesheet">
+
+    <!-- إضافة خط Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="icon" href="{{ url_for('static', filename='/img/1.png') }}" type="image/x-icon">
+</head>
+<body>
+
+    <header>
+
+        <div class="header-top">
+            <div class="contanier">
+             <p>خدمات مدينة العبور للتسوق الإلكتروني</p>
+             <div class="link-top-heder">
+                 {% if current_user.is_authenticated %}
+                 <a href="{{ url_for('seller_profile') }}">حسابي</a>
+                 <a href="/favorites">قائمة الرغبات</a>
+                 {% endif %}
+                 {% if not current_user.is_authenticated %}
+                 <a href="login">تسجيل الدخول</a>
+                 {% endif %}
+                 {% if  current_user.is_authenticated%}
+                 <a href="/logout">تسجيل الخروج</a>
+                 {% endif %}
+                 <a href="#">مقارنة</a>
+             </div>
+         </div>
+           </div>
+
+           <div class="header-info">
+            <div class="contanier">
+                <img src="../../static/img/site/alpha.png" alt="Logo" class="small-logo black-image">
+
+            <div class="search-bar">
+                <form action="">
+                    <input type="search" placeholder="ابحث عن طلبك...">
+                    <button class="btn-srch">بحث</button>
+                </form>
+            </div>
+            <div class="card">
+                <div class="price">
+                </div>
+                <a href="cart"><i class="fa-solid fa-bag-shopping"></i> <span class="count-in-card">2</span></a>
+
+            </div>
+            </div>
+        </div>
+
+        <div class="header-bottom">
+           <div class="contanier">
+            <i id="open-side" class="fa-solid fa-bars"></i>
+            <ul class="nav-links">
+
+                <li><a href="/"> الرئيسية</a>
+
+                </li>
+
+                <li>
+                    <a href="Services.html">الخدمات </a>
+
+                    <div class="drobdwon">
+                        <ul><li><a href="Services.html">الخدمات</a></li></ul>
+                        {% for typeservice in typeservice%}
+                        <ul>
+                            <li><a href="">{{typeservice.Types_of_services_name}}</a></li>
+                        </ul>
+                        {% endfor %}
+                        
+                    </div>
+                </li>
+
+                <li>
+                    <a href="about.html">من نحن</a>
+                </li>
+
+                <li>
+                    <a href="contact.html">المميزات</a>
+                </li>
+                <li><a href="/offer_details">العروض</a></li>
+
+                <li><a href="/allproduct">المنتجات</a></li>
+
+                <li><a href="/my-orders">الطلبات</a></li>
+
+                <li><a href="/alltrader">البائعين</a></li>
+
+
+
+            </ul>
+            {% if not current_user.is_authenticated %}
+            <a href="signup" class="sign-in-btn"><i class="fa-solid fa-user-plus"></i> إنشاء حساب </a>
+            {% endif %}
+            {% if current_user.is_authenticated and not is_seller%}
+            <a href="is_seller" class="merchant-btn"><i class="fa-solid fa-store"></i>بيع معانا</a>
+            {% endif %}
+            {%if current_user.is_authenticated and is_seller %}
+            <a href="/dashboard_trader" class="merchant-btn"><i class="fa-solid fa-store"></i>لوحة تحكم متجرك</a>
+            {% endif %}
+
+           </div>
+        </div>
+
+    </header>
+   <!-- عرض رسائل الفلاش -->
+   {% with messages = get_flashed_messages(with_categories=True) %}
+   {% if messages %}
+       <div id="flash-messages">
+           {% for category, message in messages %}
+               <div class="flash-message {{ category }}">
+                   {{ message }}
+               </div>
+           {% endfor %}
+       </div>
+   {% endif %}
+{% endwith %}
+
+
+
+    
+    <div class="search-container">
+        <h3 class="title">الطلبات الخاصة بي</h3>
+        <p class="subtitle">ابحث عن طلباتك حسب رقم الفاتورة بكل سهولة.</p>
+        <form class="search-form d-flex" onsubmit="return false;">
+            <input 
+                type="text" 
+                id="searchInvoiceInput"
+                class="form-control search-input" 
+                placeholder="اكتب رقم الفاتورة..."
+                onkeyup="filterOrdersByInvoice()"
+            />
+            <button 
+                class="btn btn-primary search-button"
+                onclick="filterOrdersByInvoice()">بحث</button>
+        </form>
+    </div>
+    <style>
+        #noResultsMessage {
+            color: #ff4d4d;
+            font-size: 16px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        
+        
+        .search-container {
+            background: linear-gradient(90deg, #f0f8ff, #e6f7ff);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .search-container .title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 5px;
+        }
+        
+        .search-container .subtitle {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .search-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .search-input {
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+            border-right: none;
+            padding: 10px;
+        }
+        
+        .search-button {
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            padding: 10px 20px;
+            font-size: 14px;
+        }
+        
+        .search-form .form-control {
+            box-shadow: none;
+            border: 1px solid #ddd;
+        }
+        
+        .search-form .btn {
+            box-shadow: none;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+        }
+        
+        .search-form .btn:hover {
+            background-color: #0056b3;
+        }
+        
+    </style>
+    
+    
+    <!-- الكروت الخاصة بالطلبات -->
+<div class="container card-container">
+    <p id="noResultsMessage" class="text-center" style="display: none;">لا توجد طلبات مطابقة لبحثك.</p>
+    {% if orders %}
+        {% for order in orders %}
+        <div class="order-card">
+            <h5>رقم الطلب: {{ order.order_id }}</h5>
+            <div class="order-info">
+                <p><strong>تاريخ الطلب:</strong> {{ order.order_date.strftime('%I:%M %p %d %B %Y') }}</p>
+                <p><strong>إجمالي السعر:</strong> {{ "{:,.2f}".format(order.total_amount) }} جنيه</p>
+                <p><strong>طريقة الدفع:</strong>
+                    {% if order.payment_method == 'online' %}
+                        <span>الدفع بالمحافظ الالكترونية</span>
+                    {% elif order.payment_method == 'cod' %}
+                        <span>الدفع عند الاستلام</span>
+                    {% endif %}
+                </p>
+                <p><strong>حالة الدفع:</strong>
+                    {% if order.payment_status == 1 %}
+                        <span class="badge-approved">تم الدفع</span>
+                    {% elif order.payment_status == 0 %}
+                        <span class="badge-rejected">لم يتم الدفع</span>
+                    {% endif %}
+                </p>
+                <p><strong>حالة الطلب:</strong> 
+                    {% if order.order_status == 'pending' %}
+                        <span class="badge-pending">قيد الانتظار</span>
+                    {% elif order.order_status == 'approved' %}
+                        <span class="badge-approved">مكتمل</span>
+                    {% elif order.order_status == 'onroad' %}
+                        <span class="badge-onroad">الطلب في الطريق</span>
+                    {% elif order.order_status == 'startpreper' %}
+                        <span class="badge-startpreper">يتم التجهيز</span>
+                    {% endif %}
+                </p>
+            </div>
+            <div class="order-footer">
+                <!-- زر تفاصيل الطلب -->
+                <a href="{{ url_for('order_details', order_id=order.order_id) }}" class="btndetails btn-primary btn-sm">
+                    <i class="fas fa-search"></i> تفاصيل الطلب
+                </a>
+                
+                
+
+                <!-- زر دفع الطلب - يظهر فقط إذا لم يتم الدفع -->
+                {% if not order.payment_status and order.payment_method == 'online' %}
+                    <a href="{{ url_for('payment') }}" 
+                       class="btnpayment btn-success btn-sm"
+                       onclick="setOrderDetails({{ order.order_id }}, {{ order.total_amount }})">
+                        <i class="fas fa-credit-card"></i> دفع الطلب
+                    </a>
+                {% endif %}
+
+
+                <!-- زر إلغاء الطلب -->
+                <form action="{{ url_for('delete_order') }}" method="POST" class="d-inline">
+                    <input type="hidden" name="order_id" value="{{ order.order_id }}">
+                    <button type="submit" class="btndanger btn-outline-danger btn-sm">
+                        <i class="fas fa-trash-alt"></i> حذف الطلب
+                    </button>
+                </form>                
+                
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p class="text-center">لا يوجد طلبات حتى الآن.</p>
+    {% endif %}
+</div>
+
+<div class="pagination text-center mt-4">
+    <!-- أزرار التنقل بين الصفحات -->
+</div>
+
+
+
+
+<script>
+
+    function setOrderDetails(orderId, totalAmount) {
+        // تخزين بيانات الطلب في localStorage
+        localStorage.setItem('order_id', orderId);
+        localStorage.setItem('total_amount', totalAmount);
+        console.log(`تم تخزين الطلب: ${orderId}, المبلغ: ${totalAmount}`);
+    }
+
+
+
+    
+</script>
+
+
+    <div class="newsletter">
+        <div class="container">
+            <div class="subscribe-content">
+                <div class="text">
+                    <h4>سجل للحصول علي آخر العروض</h4>
+                    <p>سجل برقم الهاتف حتي تحصل علي اخر العروض الخصومات</p>
+                </div>
+            </div>
+            <div class="subscribe-form">
+                <form action="">
+                    <input type="phone" placeholder="أدخل رقم الهاتف هنا للتسجيل" required>
+                    <button class="btn-srch" type="submit">سجل</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="contanier">
+            <div class="top-footer">
+                <div class="row">
+                    <img src="../../static/img/site/alpha.png" alt="" class="small-logo">
+                    <div class="hotline">
+
+                        <div class="hotline-text">
+                            <h6>خدمة عملاء 24/7</h6>
+                            <a href="https://wa.me/+201145425207?text=مرحبًا، أريد الاستفسار عن الخدمة"target="_blank"><span>(+20) 01145425207</span></a>
+                        </div>
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+
+                </div>
+                <div class="small-row">
+                    <h6> اعرف المزيد عنا</h6>
+                    <div class="links-row">
+                        <a href="#"> <i class="fa-solid fa-angle-left"></i>معلومات عن اكسبريمو </a>
+                        <a href="#"><i class="fa-solid fa-angle-left"></i>الشحن و التوصيل </a>
+
+                    </div>
+                </div>
+
+                <div class="small-row">
+                    <h6> تسوق معنا</h6>
+                    <div class="links-row">
+                        <a href="/profile"><i class="fa-solid fa-angle-left"></i>حسابك</a>
+                        <a href="#"> <i class="fa-solid fa-angle-left"></i>مشترياتك</a>
+                        <a href="#"> <i class="fa-solid fa-angle-left"></i>عناوينك</a>
+                        <a href="#"> <i class="fa-solid fa-angle-left"></i>قوائمك</a>
+                    </div>
+                </div>
+
+                <div class="small-row">
+                    <h6> دعنا نساعدك</h6>
+                    <div class="links-row">
+                        <a href="#"><i class="fa-solid fa-angle-left"></i>المساعدة و الدعم</a>
+                        <a href="#"><i class="fa-solid fa-angle-left"></i>تتبع الطلب</a>
+                        <a href="#"><i class="fa-solid fa-angle-left"></i>سياسة الاسترجاع</a>
+                        <a href="#"><i class="fa-solid fa-angle-left"></i>الشروط و الأحكام </a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="bottom-footer">
+            <div class="contanier">
+                <p>Copyright &copy; <span>MOHAMED HANI</span> Powered by <span>HASHISH</span></p>
+                <div class="payment">
+                <img src="../../static/img/site/payment-1.png" alt="">
+                <img src="../../static/img/site/payment-2.png" alt="">
+                <img src="../../static/img/site/payment-3.png" alt="">
+                <img src="../../static/img/site/payment-4.png" alt="">
+            </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../static/js/site/home.js"></script>
+    <script src="../../static/js/site/my_orders.js"></script>
+
+</body>
+</html>

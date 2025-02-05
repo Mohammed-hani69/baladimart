@@ -1,0 +1,107 @@
+<!--<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل دخول الادمن</title>
+    <link rel="stylesheet" href="../../static/css/Tradercss/admin.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="icon" href="{{ url_for('static', filename='/img/1.png') }}" type="image/x-icon">
+</head>
+<body>
+     لعرض رسائل الفلاش 
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div id="flash-message" class="error">
+        {% for category, message in messages %}
+          {{ message }}
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% endwith %}
+
+    <div class="container">
+        <div class="login-box">
+            <h2>تسجيل دخول التاجر</h2>
+            
+            <form id="loginForm" action="{{ url_for('admin_trader') }}" method="POST">
+                {{ form.hidden_tag() }}   لإضافة حقل CSRF تلقائيًا 
+                
+                <div class="input-box">
+                    {{ form.email(class="form-control", placeholder="البريد الإلكتروني", required=True) }}
+                    <label>البريد الإلكتروني</label>
+                </div>
+                
+                <div class="input-box">
+                    {{ form.password(class="form-control", placeholder="كلمة المرور", required=True) }}
+                    <label>كلمة المرور</label>
+                </div>
+                
+                <button type="submit" class="btn">{{ form.submit.label.text }}</button>
+            </form>
+            
+        </div>
+        <span style="--i:0;"></span>
+        <span style="--i:1;"></span>
+        <span style="--i:2;"></span>
+        <span style="--i:3;"></span>
+        <span style="--i:4;"></span>
+        <span style="--i:5;"></span>
+        <span style="--i:6;"></span>
+        <span style="--i:7;"></span>
+        <span style="--i:8;"></span>
+        <span style="--i:9;"></span>
+        <span style="--i:10;"></span>
+        <span style="--i:11;"></span>
+        <span style="--i:12;"></span>
+        <span style="--i:13;"></span>
+        <span style="--i:14;"></span>
+        <span style="--i:15;"></span>
+        <span style="--i:16;"></span>
+        <span style="--i:17;"></span>
+        <span style="--i:18;"></span>
+        <span style="--i:19;"></span>
+        <span style="--i:20;"></span>
+        <span style="--i:21;"></span>
+        <span style="--i:22;"></span>
+        <span style="--i:23;"></span>
+        <span style="--i:24;"></span>
+        <span style="--i:25;"></span>
+        <span style="--i:26;"></span>
+        <span style="--i:27;"></span>
+        <span style="--i:28;"></span>
+        <span style="--i:29;"></span>
+        <span style="--i:30;"></span>
+        <span style="--i:31;"></span>
+        <span style="--i:32;"></span>
+        <span style="--i:33;"></span>
+        <span style="--i:34;"></span>
+        <span style="--i:35;"></span>
+        <span style="--i:36;"></span>
+        <span style="--i:37;"></span>
+        <span style="--i:38;"></span>
+        <span style="--i:39;"></span>
+        <span style="--i:40;"></span>
+        <span style="--i:41;"></span>
+        <span style="--i:42;"></span>
+        <span style="--i:43;"></span>
+        <span style="--i:44;"></span>
+        <span style="--i:45;"></span>
+        <span style="--i:46;"></span>
+        <span style="--i:47;"></span>
+        <span style="--i:48;"></span>
+        <span style="--i:49;"></span>
+    </div>
+
+    <!-- صفحة التحميل 
+    <div id="loadingScreen">
+        <div class="loading-text">جاري التحميل</div>
+        <div class="loader-circle"></div>
+    </div>
+
+    <script src="../../static/js/Traderjs/admin.js"></script>
+   
+</body>
+</html>
+-->

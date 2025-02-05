@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="icon" href="{{ url_for('static', filename='/img/1.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="static/css/dashboard.css">
+    <link rel="stylesheet" href="static/css/responsive.css">
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+
+    <!-- Link File CSS -->
+    <link rel="stylesheet" href="../../static/css/site/order_details.css">
+    <link rel="stylesheet" href="../../static/css/style.css">
+</head>
+<body>
+<!-- الشريط الجانبي -->
+<div class="sidebar">
+    <a href="dashboard.html" class="logo">
+        <i class='bx bx-code-alt'></i>
+        <div class="logo-name"><span>مدينة</span>العبور</div>
+    </a>
+    <ul class="side-menu">
+        <li><a href="/dashboard"><i class='bx bxs-dashboard'></i>لوحة التحكم</a></li>
+        <li><a href="/products"><i class='bx bx-store-alt'></i>المنتجات</a></li>
+        <li><a href="/banner"><i class='bx bx-image'></i>البانرات الاعلانيه</a></li>
+        <li><a href="/sellers"><i class='bx bx-group'></i>البائعون</a></li>
+        <li><a href="/Orders"><i class='bx bx-receipt'></i>الطلبات</a></li>
+        <li><a href="/services"><i class='bx bx-message-square-dots'></i>الخدمات</a></li>
+        <li><a href="/Types_of_services"><i class="bx bx-briefcase"></i>انواع الخدمات</a></li>
+        <li><a href="/category"><i class='bx bx-category'></i>الاقسام</a></li>
+        <li><a href="/offers_admin"><i class='bx bx-gift'></i>العروض</a></li>
+        <li><a href="/settings"><i class='bx bx-cog'></i>الإعدادات</a></li>
+        <li><a href="#" id="language-toggle"><i class='bx bx-globe'></i>اللغة</a></li>
+    </ul>
+    <ul class="side-menu">
+        <li>
+            <a href="admin.html" class="logout">
+                <i class='bx bx-log-out-circle'></i>
+                تسجيل الخروج
+            </a>
+        </li>
+    </ul>
+
+</div>
+<!-- نهاية الشريط الجانبي -->
+
+    <!-- المحتوى الرئيسي -->
+    <div class="content">
+        <!-- شريط التنقل -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            <form action="#">
+                <div class="form-input" style="direction: rtl; display: flex; align-items: center;">
+                    <button class="search-btn" type="submit" style="margin-right: 5px;"><i class='bx bx-search'></i></button>
+                    <input type="search" placeholder="بحث..." style="text-align: right;">
+                </div>
+            </form>
+            <!-- تبديل الوضع الليلي -->
+            <input type="checkbox" id="theme-toggle" hidden>
+            <label for="theme-toggle" class="theme-toggle"></label>
+<!-- زر الإشعارات الجديد -->
+<a href="/notifications">
+    <button class="button">
+        <svg viewBox="0 0 448 512" class="bell">
+            <path d="M224 0c-17.7 0-32 14.3-32 32V49.9C119.5 61.4 64 124.2 64 200v33.4c0 45.4-15.5 89.5-43.8 124.9L5.3 377c-5.8 7.2-6.9 17.1-2.9 25.4S14.8 416 24 416H424c9.2 0 17.6-5.3 21.6-13.6s2.9-18.2-2.9-25.4l-14.9-18.6C399.5 322.9 384 278.8 384 233.4V200c0-75.8-55.5-138.6-128-150.1V32c0-17.7-14.3-32-32-32zm0 96h8c57.4 0 104 46.6 104 104v33.4c0 47.9 13.9 94.6 39.7 134.6H72.3C98.1 328 112 281.3 112 233.4V200c0-57.4 46.6-104 104-104h8zm64 352H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7s18.7-28.3 18.7-45.3z"></path>
+        </svg>
+        الاشعارات
+    </button>
+</a>
+ 
+            <!-- أيقونة الملف الشخصي -->
+            <a href="settings.html" class="profile">
+                <img src="images/logo.png" alt="الملف الشخصي">
+            </a>
+        </nav>
+        <!-- نهاية شريط التنقل -->
+
+
+
+          <!-- Order Details Section -->
+<div class="order-details-container">
+    <div class="actions">
+        <button class="edit-button" id="print-invoice">
+            <i class='bx bx-printer'></i> طباعة الفاتورة
+        </button>
+        <button class="edit-button" id="share-location"><i class='bx bx-chat'></i> ارسال معلومات البائعين الي الدليفري</button>
+        <!--<button class="edit-button" id="generate-pdf"><i class='bx bx-file'></i> تحميل PDF</button>-->
+    </div>
+
+    
+    
+    <!-- محتوى الفاتورة -->
+<div class="order-box" id="invoice-content" data-order-id="{{ order.order_id }}">
+    <div class="company-info" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 8px;">
+        <!-- القسم الأوسط: معلومات الشركة -->
+        <div style="flex: 2; text-align: right;">
+            <h1 style="margin: 10px 0; font-size: 24px;">Obour City Services</h1>
+            <p>
+                رقم التواصل: 01145425207<br>
+                البريد الإلكتروني: <a href="mailto:info@obourcityservices.com">info@obourcityservices.com</a><br>
+                العنوان: شارع طلبه عويضه، الزقازيق، الشرقيه
+            </p>
+        </div>
+        <!-- القسم الأيسر: الشعار -->
+        <div style="flex: 1; text-align: center;">
+            <img class = "logo" src="{{ url_for('static', filename='img/1.png') }}" alt="شعار الشركة" style="max-width: 150px;width: 100px;">
+        </div>
+        <!-- القسم الأيمن: الباركود -->
+        <div style="flex: 1; text-align: left;">
+            <img class = "qr" src="{{ url_for('static', filename='uploads/qrcode/qrcode_order_' + (order.order_id|string) + '.png') }}" alt="QR Code" style="max-width: 150px;width: 120px;" />
+        </div>
+    </div>
+
+    <!-- تفاصيل الطلب -->
+    <div style="height:30px; padding:15px;" class="header">
+        <h2><i class='bx bx-file'></i> تفاصيل الطلب</h2>
+        <span>رقم الطلب: {{ order.order_id }}</span>
+        <span>{{ order.order_date.strftime('%I:%M %p %d %B %Y') }}</span>
+    </div>
+
+    <table class="order-details-table">
+        <thead style="background-color: rgba(255, 0, 242, 0.2);">
+            <tr>
+                <th><i class='bx bx-package'></i> المنتج</th>
+                <th><i class='bx bx-user'></i> البائع</th>
+                <th><i class='bx bx-store'></i> المتجر</th>
+                <th><i class="bi bi-boxes"></i> الكمية</th>
+                <th><i class="bi bi-cash-stack"></i> سعر القطعه بعد الخصم</th>
+                <th><i class='bx bx-money'></i> السعر النهائي</th>
+                <th class="hide-on-print"><i class='bx bx-money'></i> ربح المنتج</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order_details in order_details %}
+            <tr>
+                <td>
+                    {% if order_details.product_name|length > 30 %}
+                        {{ order_details.product_name[:70] }}... 
+                        <a href="" title="{{ order_details.product_name }}"></a>
+                    {% else %}
+                        {{ order_details.product_name }}
+                    {% endif %}
+                </td>
+                <td>{{ order_details.seller_name }}</td>
+                <td>{{ order_details.store_name }}</td>
+                <td>{{ order_details.quantity }}</td>
+                <td>{{ order_details.price_comition }} ج.م</td>
+                <td>{{ order_details.price_comition * order_details.quantity }} ج.م</td>
+                <td class="hide-on-print">{{ order_details.price_comition * order_details.quantity - order_details.price * order_details.quantity }} ج.م</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="5" style="text-align:right;"><strong>المجموع الكلي:</strong></td>
+                <td><strong>{{ total_price }} ج.م</strong></td>
+                <td class="hide-on-print"><strong>{{ total_profit }} ج.م</strong></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+    
+    </div>
+</div>
+<script type="text/javascript">
+    document.getElementById('print-invoice').onclick = function() {
+        var content = document.getElementById('invoice-content').innerHTML;  // جلب محتوى الفاتورة
+        var orderId = document.getElementById('invoice-content').getAttribute('data-order-id'); // جلب order_id
+    
+        var printWindow = window.open('', '', 'height=800,width=800');
+        
+        // إضافة المحتوى إلى نافذة الطباعة
+        printWindow.document.write('<html><head><title>فاتورة تجميع الطلب - رقم الفاتورة: ' + orderId + '</title>');
+        
+        // إضافة تنسيق CSS للطباعة
+        printWindow.document.write('<style>');
+        printWindow.document.write('body { font-family: Arial, sans-serif; direction: rtl; margin: 0; padding: 0; }');
+        printWindow.document.write('.order-details-table { width: 100%; border-collapse: collapse; margin-top: 20px; }');
+        printWindow.document.write('.order-details-table th, .order-details-table td { padding: 10px; border: 1px solid #ddd; text-align: center; }');
+        printWindow.document.write('.company-info { display: flex; justify-content: space-between; margin-bottom: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 8px; }');
+        printWindow.document.write('.company-info img { max-width: 150px; width: auto; height: auto; }');
+        printWindow.document.write('.company-info .bx, .company-info .bi { font-size: 20px; }');
+        printWindow.document.write('@media print {');
+        printWindow.document.write('  .hide-on-print { display: none; }');
+        printWindow.document.write('}');
+
+        
+        // إضافة تنسيق خاص برأس الفاتورة (تفاصيل الطلب)
+        printWindow.document.write('.header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 10px; }');
+        printWindow.document.write('.header h2 { margin: 0; font-size: 20px; padding: 0; }');
+        printWindow.document.write('.header span { margin-left: 20px; }');
+        
+        // تنسيق الصور للشعار والـ QR داخل الـ .company-info
+        printWindow.document.write('.company-info img { max-width: 150px; height: auto; width: auto; }');
+        printWindow.document.write('.company-info .left { text-align: center; }');
+        printWindow.document.write('.company-info .right { text-align: left; }');
+        
+        // تنسيق للطباعة
+        printWindow.document.write('@media print {');
+        printWindow.document.write('  img { max-width: 100%; height: auto; }');
+        printWindow.document.write('  body { padding: 10px; }');
+        printWindow.document.write('  .company-info { flex-direction: row; justify-content: space-between; align-items: center; }');
+        printWindow.document.write('  .header { display: flex; justify-content: space-between; }');
+        printWindow.document.write('}');
+        printWindow.document.write('</style>');
+        
+        // إضافة المحتوى داخل نافذة الطباعة
+        printWindow.document.write('</head><body>');
+        
+        // محتوى الفاتورة مع الشعار وQR داخل .company-info
+        printWindow.document.write('<div class="company-info">');
+        printWindow.document.write('<div class="left">');
+        printWindow.document.write('</div>');
+        printWindow.document.write('<div class="right">');
+        printWindow.document.write('</div>');
+        printWindow.document.write('</div>');
+        
+        // إضافة باقي المحتوى (تفاصيل الطلب)
+        printWindow.document.write(content);
+        
+        // إغلاق النافذة بعد الطباعة
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        
+        // بدء الطباعة
+        
+    };
+    
+</script>
+
+<script>
+    document.getElementById('share-location').addEventListener('click', function() {
+        const sellers = {{ sellers|tojson }};
+        const orderId = {{ order.order_id }};
+        let message = `تفاصيل الطلب رقم ${orderId}:\n`;
+    
+        sellers.forEach(seller => {
+            message += `\n---\n`;
+            message += `اسم البائع: ${seller.seller_name}\n`;
+            message += `اسم المحل: ${seller.store_name}\n`;
+            message += `العنوان: ${seller.address}\n`;
+            message += `رقم الهاتف: ${seller.phone}\n`;
+        });
+    
+        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+        window.open(whatsappUrl, '_blank');
+    });
+
+    
+</script>
+
+
+
+<!--
+<script>
+    // التأكد من تحميل DOM بشكل كامل قبل تنفيذ الكود
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById('generate-pdf').addEventListener('click', function () {
+            // استيراد مكتبة jsPDF
+            const { jsPDF } = window.jspdf;
+
+            // إنشاء كائن PDF جديد
+            const doc = new jsPDF();
+
+            // إضافة محتوى PDF (هنا يتم استخدام بيانات من الصفحة كما في المثال السابق)
+            const header = document.querySelector('.header');
+            const table = document.querySelector('.order-details-table');
+            
+            if (!header || !table) {
+                console.error('عناصر HTML المطلوبة غير موجودة');
+                return;
+            }
+
+            // تحويل HTML إلى نص يمكن عرضه في PDF
+            const pdfContent = `
+                <div style="font-family: Arial, sans-serif; direction: rtl;">
+                    ${header.outerHTML}
+                    ${table.outerHTML}
+                </div>
+            `;
+
+            // استخدم مكتبة jsPDF لتحويل HTML إلى PDF
+            doc.html(pdfContent, {
+                callback: function (doc) {
+                    // حفظ الملف بصيغة PDF
+                    doc.save(`order_details.pdf`);
+
+                    // إرسال الملف عبر WhatsApp
+                    sendToWhatsApp();  // استدعاء دالة الإرسال بعد إنشاء PDF
+                },
+                x: 10,
+                y: 10,
+                autoPaging: 'text',
+                width: 190, // عرض الصفحة A4
+            });
+        });
+    });
+
+    // دالة لإرسال رابط الملف عبر WhatsApp
+    function sendToWhatsApp() {
+        // رابط رابط WhatsApp API لإرسال الملف (هنا نفترض أنك قد حصلت على رابط للملف)
+        const fileUrl = 'https://example.com/order_details.pdf';  // استبدل هذا بالرابط الفعلي للملف المخزن على الخادم
+
+        // رقم الهاتف الذي تريد إرسال الملف إليه (يمكنك تغييره حسب الحاجة)
+        const phoneNumber = '1234567890';
+
+        // صيغة URL لإرسال رسالة عبر WhatsApp تحتوي على الرابط
+        const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=تحميل الملف: ${fileUrl}`;
+
+        // فتح رابط WhatsApp API لإرسال الرسالة
+        window.open(whatsappUrl, '_blank');
+    }
+</script>
+
+    -->
+
+
+    <!-- Swiper JS -->
+    <script src="../../static/swiperJs/swiper-bundle.min.js"></script>
+
+    <!-- Linke File JS -->
+    <script src="../../static/js/dashboard.js"></script>
+    <script src="../../static/js/settings.js"></script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

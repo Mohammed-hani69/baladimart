@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../static/css/site/home.css">
+    <link rel="stylesheet" href="../../static/css/site/profile.css">
+    <!-- Link Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الملف الشخصي للبائع</title>
+    <link rel="icon" href="{{ url_for('static', filename='/img/1.png') }}" type="image/x-icon">
+</head>
+<body>
+    <header>
+
+        <div class="header-top">
+            <div class="contanier">
+             <p>خدمات مدينة العبور للتسوق الإلكتروني</p>
+             <div class="link-top-heder">
+                 {% if current_user.is_authenticated %}
+                 <a href="{{ url_for('seller_profile') }}">حسابي</a>
+                 <a href="/favorites">قائمة الرغبات</a>
+                 {% endif %}
+                 {% if not current_user.is_authenticated %}
+                 <a href="login">تسجيل الدخول</a>
+                 {% endif %}
+                 {% if  current_user.is_authenticated%}
+                 <a href="/logout">تسجيل الخروج</a>
+                 {% endif %}
+                 <a href="#">مقارنة</a>
+             </div>
+         </div>
+           </div>
+
+           <div class="header-info">
+            <div class="contanier">
+                <img src="../../static/img/site/alpha.png" alt="Logo" class="small-logo black-image">
+
+            <div class="search-bar">
+                <form action="">
+                    <input type="search" placeholder="ابحث عن طلبك...">
+                    <button class="btn-srch">بحث</button>
+                </form>
+            </div>
+            <div class="card">
+                <div class="price">
+                </div>
+                <a href="/cart"><i class="fa-solid fa-bag-shopping"></i> 
+                    <span class="count-in-card" id="cart-count">
+                       
+                            0
+                    </span>
+                </a>
+                          
+
+            </div>
+            </div>
+        </div>
+
+
+        <div class="header-bottom">
+           <div class="contanier">
+            <i id="open-side" class="fa-solid fa-bars"></i>
+            <ul class="nav-links">
+
+                <li><a href="/"> الرئيسية</a>
+
+                </li>
+
+                <li>
+                    <a href="Services.html">الخدمات </a>
+
+                    <div class="drobdwon">
+                        <ul><li><a href="Services.html">الخدمات</a></li></ul>
+                        {% for typeservice in typeservice%}
+                        <ul>
+                            <li><a href="">{{typeservice.Types_of_services_name}}</a></li>
+                        </ul>
+                        {% endfor %}
+                        
+                    </div>
+                </li>
+
+                <li>
+                    <a href="about.html">من نحن</a>
+                </li>
+
+                <li>
+                    <a href="contact.html">المميزات</a>
+                </li>
+                <li><a href="/offer_details">العروض</a></li>
+
+                <li><a href="/allproduct">المنتجات</a></li>
+
+                <li><a href="/my-orders">الطلبات</a></li>
+
+                <li><a href="/alltrader">البائعين</a></li>
+
+            </ul>
+            {% if not current_user.is_authenticated %}
+            <a href="signup" class="sign-in-btn"><i class="fa-solid fa-user-plus"></i> إنشاء حساب </a>
+            {% endif %}
+            {% if current_user.is_authenticated and not is_seller%}
+            <a href="is_seller" class="merchant-btn"><i class="fa-solid fa-store"></i>بيع معانا</a>
+            {% endif %}
+            {%if current_user.is_authenticated and is_seller %}
+            <a href="/dashboard_trader" class="merchant-btn"><i class="fa-solid fa-store"></i>لوحة تحكم متجرك</a>
+            {% endif %}
+
+           </div>
+        </div>
+
+    </header>
+    <!-- عرض رسائل الفلاش -->
+   {% with messages = get_flashed_messages(with_categories=True) %}
+   {% if messages %}
+       <div id="flash-messages">
+           {% for category, message in messages %}
+               <div class="flash-message {{ category }}">
+                   {{ message }}
+               </div>
+           {% endfor %}
+       </div>
+   {% endif %}
+{% endwith %}
+    <!-- Banner and Profile Image -->
+    <div class="profile-banner" style="background-image: url('../../static/uploads/Trader/banner/{{ seller.owner_banner }}')">
+        <div class="profile-image-container">
+            <img src="../../static/uploads/{{ seller.owner_image }}" alt="صورة البائع" class="profile-image">
+        
+            <form action="{{ url_for('update_image', seller_id=seller.seller_id) }}" method="POST" enctype="multipart/form-data" class="change-image-form">
+                <input type="hidden" name="image_type" value="profile_image">
+                <label class="change-image-icon">
+                    <i class="bi bi-images"></i>
+                    <input  type="file" name="image_file" id="profile_image" accept="image/*" onchange="this.form.submit()">
+                </label>
+            </form>
+        </div>
+        
+
+        <!-- أيقونة تغيير البانر -->
+        <form action="{{ url_for('update_image', seller_id=seller.seller_id) }}" method="POST" enctype="multipart/form-data" class="banner-form">
+            <input type="hidden" name="image_type" value="banner_image">
+            <label for="banner_image" class="change-banner-icon">
+                <i class="bi bi-images"></i>
+            </label>
+            <input type="file" id="banner_image" name="image_file" accept="image/*" onchange="this.form.submit()" hidden>
+        </form>
+    </div>
+
+
+    <!-- Profile Container -->
+    <div class="profile-container">
+        <!-- Basic Information -->
+        <div class="info-section">
+            <div class="section-title">
+                <h2>المعلومات الأساسية</h2>
+                <button class="edit-btn" id="editButton">تعديل</button>
+            </div>
+            <div class="info-grid" id="infoGrid">
+                <div class="info-item">
+                    <div class="info-label"><span style="color:red;">*</span>اسم البائع</div>
+                    <div class="info-value" data-key="seller_name" onlyread>{{ seller.seller_name }}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">اسم المتجر</div>
+                    <div class="info-value" data-key="store_name">{{ seller.store_name }}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label"><span style="color:red;">*</span>تصنيف المتجر</div>
+                    <div class="info-value" data-key="store_category" onlyread>{{ seller.store_category }}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label"><span style="color:red;">*</span>البريد الإلكتروني</div>
+                    <div class="info-value" data-key="email" onlyread>{{ seller.email }}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">رقم الهاتف</div>
+                    <div class="info-value" data-key="phone">{{ seller.phone }}</div>
+                </div>
+            </div>
+            <button class="save-btn" id="saveButton" style="display: none;">حفظ</button>
+        </div>
+        
+        
+
+        <!-- Location Information -->
+        <div class="info-section">
+            <h2 class="section-title">معلومات الموقع</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">المحافظة</div>
+                    <div class="info-value">{{ seller.governorate }}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">المدينة</div>
+                    <div class="info-value">{{ seller.city }}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">الحي</div>
+                    <div class="info-value">{{ seller.village }}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">عنوان الشارع</div>
+                    <div class="info-value">{{ seller.street_address }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Store Information -->
+        <div class="info-section">
+            <h2 class="section-title">معلومات المتجر</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">حالة المتجر</div>
+                    <div class="info-value">
+                        <span class="status-badge {{ 'status-active' if seller.status else 'status-inactive' }}">
+                            {{ 'نشط' if seller.status else 'غير نشط' }}
+                        </span>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">التقييم</div>
+                    <div class="rating">★ {{ '%.1f'|format(avg_rating) }}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">تاريخ التسجيل</div>
+                    <div class="info-value">{{ seller.registration_date.strftime('%Y-%m-%d') }}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">آخر تسجيل دخول</div>
+                    <div class="info-value">{{ seller.last_login.strftime('%Y-%m-%d %H:%M') if seller.last_login else 'لم يسجل الدخول بعد' }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Store Image -->
+        {% if seller.store_image %}
+        <div class="info-section">
+            <h2 class="section-title">صورة المتجر</h2>
+            <div class="store-image-container">
+                <!-- صورة المتجر -->
+                <img src="../../static/uploads/Trader/logo/{{ seller.store_image }}" alt="صورة المتجر" class="store-image">
+
+                <!-- نموذج تغيير الصورة -->
+               
+                <form action="{{ url_for('update_image', seller_id=seller.seller_id) }}" method="POST" enctype="multipart/form-data" class="update-image-form">
+                    <input type="hidden" name="image_type" value="store_image">
+                    <label for="store_image">اختار صورة جديدة:</label>
+                    <input type="file" name="image_file" id="store_image" required>
+                    <button type="submit">تغيير صورة المتجر</button>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+
+
+        <!-- قسم التعليقات -->
+        <div class="info-section">
+            <h2 class="section-title">التعليقات</h2>
+            {% if comments %}
+                <ul class="comments-list">
+                    {% for comment in comments %}
+                        <li class="comment-item">
+                            <div class="comment-header">
+                                <img src="../../static/uploads/{{ comment.customer.owner_image }}" alt="صورة المستخدم" class="comment-user-image">
+                                <div class="comment-details">
+                                    <span class="comment-user-name">{{ comment.customer.seller_name }}</span>
+                                    <p class="comment-text">{{ comment.comment }}</p>
+                                    <div class="comment-rating">
+                                        {% for star in range(1, 6) %}
+                                            {% if star <= comment.rating %}
+                                                <i class="bi bi-star-fill text-warning" style="color:#f1c40f;"></i> <!-- نجمة ممتلئة -->
+                                            {% else %}
+                                                <i class="bi bi-star text-muted"></i> <!-- نجمة فارغة -->
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>لا توجد تعليقات حتى الآن.</p>
+            {% endif %}
+        </div>        
+
+    </div>
+    <script src="../../static/js/site/profile.js"></script>
+</body>
+</html>

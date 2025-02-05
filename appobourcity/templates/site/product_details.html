@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>مدينة العبور | خدمات إلكترونية</title>
+
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="../../static/swiperJs/swiper-bundle.min.css" />
+
+    <!-- Link Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Link File CSS -->
+    <link rel="stylesheet" href="../../static/css/site/product_details.css">
+    <link rel="stylesheet" href="../../static/css/site/home.css">
+
+    <link rel="icon" href="{{ url_for('static', filename='/img/1.png') }}" type="image/x-icon">
+</head>
+<body class="buy-product-bag menu-side-in-bag">
+    <header>
+
+        <div class="header-top">
+            <div class="contanier">
+             <p>خدمات مدينة العبور للتسوق الإلكتروني</p>
+             <div class="link-top-heder">
+                 {% if current_user.is_authenticated %}
+                 <a href="{{ url_for('seller_profile') }}">حسابي</a>
+                 <a href="/favorites">قائمة الرغبات</a>
+                 {% endif %}
+                 {% if not current_user.is_authenticated %}
+                 <a href="login">تسجيل الدخول</a>
+                 {% endif %}
+                 {% if  current_user.is_authenticated%}
+                 <a href="/logout">تسجيل الخروج</a>
+                 {% endif %}
+                 <a href="#">مقارنة</a>
+             </div>
+         </div>
+           </div>
+
+           <div class="header-info">
+            <div class="contanier">
+                <img src="../../static/img/site/alpha.png" alt="Logo" class="small-logo black-image">
+
+            <div class="search-bar">
+                <form action="">
+                    <input type="search" placeholder="ابحث عن طلبك...">
+                    <button class="btn-srch">بحث</button>
+                </form>
+            </div>
+            <div class="card">
+                <div class="price">
+                </div>
+                <a href="/cart"><i class="fa-solid fa-bag-shopping"></i> 
+                    <span class="count-in-card" id="cart-count">
+                       
+                            0
+                    </span>
+                </a>
+                          
+
+            </div>
+            </div>
+        </div>
+
+
+        <div class="header-bottom">
+           <div class="contanier">
+            <i id="open-side" class="fa-solid fa-bars"></i>
+            <ul class="nav-links">
+
+                <li><a href="/"> الرئيسية</a>
+
+                </li>
+
+                <li>
+                    <a href="Services.html">الخدمات </a>
+
+                    <div class="drobdwon">
+                        <ul><li><a href="Services.html">الخدمات</a></li></ul>
+                        {% for typeservice in typeservice%}
+                        <ul>
+                            <li><a href="">{{typeservice.Types_of_services_name}}</a></li>
+                        </ul>
+                        {% endfor %}
+                        
+                    </div>
+                </li>
+
+                <li>
+                    <a href="about.html">من نحن</a>
+                </li>
+
+                <li>
+                    <a href="contact.html">المميزات</a>
+                </li>
+                <li><a href="/offer_details">العروض</a></li>
+
+                <li><a href="/allproduct">المنتجات</a></li>
+
+                <li><a href="/my-orders">الطلبات</a></li>
+
+                <li><a href="/alltrader">البائعين</a></li>
+
+
+            </ul>
+            {% if not current_user.is_authenticated %}
+            <a href="signup" class="sign-in-btn"><i class="fa-solid fa-user-plus"></i> إنشاء حساب </a>
+            {% endif %}
+            {% if current_user.is_authenticated and not is_seller%}
+            <a href="is_seller" class="merchant-btn"><i class="fa-solid fa-store"></i>بيع معانا</a>
+            {% endif %}
+            {%if current_user.is_authenticated and is_seller %}
+            <a href="/dashboard_trader" class="merchant-btn"><i class="fa-solid fa-store"></i>لوحة تحكم متجرك</a>
+            {% endif %}
+
+           </div>
+        </div>
+
+    </header>
+
+
+    <section class="product-details">
+        <div class="contanier">
+            <div class="product-buy">
+                <div class="product-name-price">
+                    <a class="product-item-link">{{ product.product_name }}</a>
+                    <div class="stars">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                    <div class="price">
+                        <span>{{ "{:.2f}".format(product.total_after_commission * (1 - product.discount / 100)) }}<span>جنيه</span></span>
+                        {% if product.discount %}
+                            <del>{{ "{:.2f}".format(product.total_after_commission) }} <del>جنيه</del></del>
+                        {% endif %}
+                    </div>                    
+                    <!-- هنا يتم التحقق من العروض المفعلة -->
+                    {% if product.has_active_offer() %}
+                    <div class="offer-label">
+                        <span style="background-color: red; color: white; padding: 5px 10px; border-radius: 5px;">
+                            ضمن العروض المميزه
+                        </span>
+                    </div>
+                    {% endif %}
+                    <div class="stock-model">
+                        <p>البائع: <span><a href="/trader/{{ product.seller.seller_id }}">{{ product.seller.store_name }}</a></span></p>
+                        <p>حالة التوفر: <span>{{ 'متوفر في المخزن' if product.stock_quantity > 0 else 'نفد من المخزون' }}</span></p>
+                        <p>النوع: <span>{{ product.product_category }}</span></p>
+                    </div>
+    
+                    <p class="product-text">{{ product.description[:50] }}...</p>
+    
+                    <h6>أسرع - بقي {{ product.stock_quantity }} منتجًا فقط في المخزن.</h6>
+    
+                    <form>
+                        <button class="addtcart add-to-cart">
+                            {% if product.stock_quantity != 0 %}
+                            <a style="color:#fff;" class="add-to-cart" data-product-id="{{ product.product_id }}" data-seller-id="{{ current_user.seller_id }}">
+                                <i class="fa-solid fa-cart-arrow-down"></i>إضافة إلى السلة
+                            </a>
+                            {% endif %}
+                            {% if product.stock_quantity == 0 %}
+                            غير متوفر
+                            {% endif %}
+                        </button>
+                    </form>
+                    
+    
+    
+                    <ul class="product-action">
+                        <li><a href="#"><i class="fa-regular fa-heart"></i></a></li>
+                        <!-- زر المشاركة -->
+                        <li>
+                            <a href="#" onclick="toggleShareModal('{{ product.product_name }}')">
+                            <i class="fa-solid fa-share-nodes"></i>
+                            </a>
+                        </li>
+                        
+                        <!-- نافذة المشاركة -->
+                        <div id="share-modal" class="modal">
+                            <div class="modal-content">
+                            <span class="close" onclick="toggleShareModal()">&times;</span>
+                            <h3>شارك المنتج مع أصدقائك!</h3>
+                            <div class="social-icons">
+                                <a href="#" id="twitter-share" target="_blank"><i class="fa-brands fa-twitter"></i></a>
+                                <a href="#" id="facebook-share" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+                                <a href="#" id="linkedin-share" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+                                <a href="#" id="whatsapp-share" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+                                <a href="#" id="telegram-share" target="_blank"><i class="fa-brands fa-telegram"></i></a>
+                                <a href="#" id="email-share"><i class="fa-solid fa-envelope"></i></a>
+                            </div>
+                            </div>
+                        </div>
+                        </ul>
+                </div>
+    
+                <div class="img-product">
+                    <!-- الصورة الكبيرة -->
+                    <img id="big-img" src="../../static/uploads/products/{{ product.image1 }}" alt="">
+                
+                    <!-- الصور الصغيرة -->
+                    <div class="small-img">
+                        <img onclick="changeImage(this.src)" src="../../static/uploads/products/{{ product.image1 }}" alt="">
+                        <img onclick="changeImage(this.src)" src="../../static/uploads/products/{{ product.image2 }}" alt="">
+                        <img onclick="changeImage(this.src)" src="../../static/uploads/products/{{ product.image3 }}" alt="">
+                        <img onclick="changeImage(this.src)" src="../../static/uploads/products/{{ product.image4 }}" alt="">
+                        <img onclick="changeImage(this.src)" src="../../static/uploads/products/{{ product.image5 }}" alt="">
+                    </div>
+                </div>
+                
+
+                
+                
+            </div>
+
+            <section class="detils-comnt">
+                <div class="details">
+                    <div class="section-head">
+                        <h4>تفاصيل</h4>
+                    </div>
+            
+                    <div class="details-content">
+                        <!-- الجزء الأيسر - وصف المنتج -->
+                        <div class="left-side">
+                            <h3>{{ product.product_name }}</h3>
+                            <p>{{ product.description }}</p>
+                        </div>
+                        
+                        <!-- الجزء الأيمن - خصومات على المنتجات -->
+                        <div class="right-side">
+                            <section class="sale-sec container">
+
+                                <div class="section-head">
+                                    <h4>منتجات <span> مشابهه </span> </h4>
+                                </div>
+                            
+                                <div class="boxs2 boxs">
+                                    {% for products in related_products %}
+                                    <div class="box column product-item2 product-item">
+                                        <div class="div-img2 div-img">
+                                            {% if products.discount != 0.0 %}
+                                            <span class="discount">{{ products.discount }}%</span>
+                                            {% endif %}
+                                            <a href="{{ url_for('product_details', product_id=products.product_id) }}">
+                                                <img src="{{ url_for('static', filename='uploads/products/' ~ products.image1) }}" class="img-product">
+                                                <img src="{{ url_for('static', filename='uploads/products/' ~ products.image1) }}" class="hover-img">
+                                            </a>
+                                            <!-- أزرار الإجراء -->
+                                            <div class="product-btn" style="position: relative;">
+                                                <ul class="product-action">
+                                                    <!-- زر المفضلة أعلى يمين الصورة -->
+                                                    <li style="position: absolute; top: 10px;">
+                                                        <a href="#"><i class="fa-regular fa-heart active"></i></a>
+                                                    </li>
+                                                    <!-- زر السلة أسفل الصورة -->
+                                                    <li style="position: absolute; bottom: 10px; left: 10px;">
+                                                        <a href="#" class="add-to-cart" data-product-id="{{ products.product_id }}" data-seller-id="{{ current_user.seller_id }}">
+                                                            <i class="fa-solid fa-cart-arrow-down"></i>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="content">
+                                            <a href="{{ url_for('product_details', product_id=products.product_id) }}" class="product-item-link">
+                                                {% if products.product_name|length > 30 %}
+                                                {{ products.product_name[:30] }}... 
+                                                <a href="#" title="{{ products.product_name }}">المزيد</a>
+                                                {% else %}
+                                                {{ products.product_name }}
+                                                {% endif %}
+                                            </a>
+                                            <div class="stars">
+                                                <i class="fa-solid fa-star"></i>
+                                                <i class="fa-solid fa-star"></i>
+                                                <i class="fa-solid fa-star"></i>
+                                                <i class="fa-solid fa-star"></i>
+                                                <i class="fa-solid fa-star-half-stroke"></i>
+                                            </div>
+                                            <div class="price">
+                                                <span>{{ "%.2f"|format(products.total_after_commission * (1 - (products.discount / 100))) }} جنيه</span>
+                                                {% if products.discount != 0.0 %}
+                                                <del>{{ "%.2f"|format(products.total_after_commission) }} جنيه</del>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            
+                            </section>
+                            
+                        </div>
+                    </div>
+                </div>
+            </section>            
+        </div>
+    </section>
+   
+    
+    <footer>
+        <div class="contanier">
+            <div class="top-footer">
+                <div class="row">
+                    <img src="img/scan_12580910.png" alt="">
+                    <div class="hotline">
+                        <div class="hotline-text">
+                            <h6>خدمة عملاء 24/7</h6>
+                            <span>(+20) 123 456 7890</span>
+                        </div>
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+                </div>
+                <div class="small-row">
+                    <h6> اعرف المزيد عنا</h6>
+                    <div class="links-row">
+                        <a href="#"> <i class="fa-solid fa-angle-left"></i>معلومات عن اكسبريمو </a>
+                        <a href="#"><i class="fa-solid fa-angle-left"></i>الشحن و التوصيل </a>
+                    </div>
+                </div>
+    
+                <div class="small-row">
+                    <h6> تسوق معنا</h6>
+                    <div class="links-row">
+                        <a href="/profile"><i class="fa-solid fa-angle-left"></i>حسابك</a>
+                        <a href="#"> <i class="fa-solid fa-angle-left"></i>مشترياتك</a>
+                        <a href="#"> <i class="fa-solid fa-angle-left"></i>عناوينك</a>
+                        <a href="#"> <i class="fa-solid fa-angle-left"></i>قوائمك</a>
+                    </div>
+                </div>
+    
+                <div class="small-row">
+                    <h6> دعنا نساعدك</h6>
+                    <div class="links-row">
+                        <a href="#"><i class="fa-solid fa-angle-left"></i>المساعدة و الدعم</a>
+                        <a href="#"><i class="fa-solid fa-angle-left"></i>تتبع الطلب</a>
+                        <a href="#"><i class="fa-solid fa-angle-left"></i>سياسة الاسترجاع</a>
+                        <a href="#"><i class="fa-solid fa-angle-left"></i>الشروط و الأحكام </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+        <div class="bottom-footer">
+            <div class="contanier">
+                <p>Copyright &copy; <span>MOHAMED HASHISH</span> Powered by <span>HASHISH</span></p>
+            <div class="payment">
+                <img src="img/payment-1.png" alt="">
+                <img src="img/payment-2.png" alt="">
+                <img src="img/payment-3.png" alt="">
+                <img src="img/payment-4.png" alt="">
+            </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Swiper JS -->
+    <script src="../../static/swiperJs/swiper-bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+    <!-- Linke File JS -->
+    <script src="../../static/js/site/main.js"></script>
+    <script src="../../static/js/site/home.js"></script>
+    <script src="../../static/js/site/product_details.js"></script>
+</body>
+</html>

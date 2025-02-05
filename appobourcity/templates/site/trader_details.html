@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>مدينة العبور | خدمات إلكترونية</title>
+
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="../../static/swiperJs/swiper-bundle.min.css" />
+
+    <!-- Link Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Link File CSS -->
+    <link rel="stylesheet" href="../../static/css/site/trader_details.css">
+    <link rel="icon" href="{{ url_for('static', filename='/img/1.png') }}" type="image/x-icon">
+</head>
+<body class="menu-side-in-bag">
+
+    <header>
+
+        <div class="header-top">
+            <div class="contanier">
+             <p>خدمات مدينة العبور للتسوق الإلكتروني</p>
+             <div class="link-top-heder">
+                 {% if current_user.is_authenticated %}
+                 <a href="{{ url_for('seller_profile') }}">حسابي</a>
+                 <a href="/favorites">قائمة الرغبات</a>
+                 {% endif %}
+                 {% if not current_user.is_authenticated %}
+                 <a href="login">تسجيل الدخول</a>
+                 {% endif %}
+                 {% if  current_user.is_authenticated%}
+                 <a href="/logout">تسجيل الخروج</a>
+                 {% endif %}
+                 <a href="#">مقارنة</a>
+             </div>
+         </div>
+           </div>
+
+           <div class="header-info">
+            <div class="contanier">
+                <img src="../../static/img/site/alpha.png" alt="Logo" class="small-logo black-image">
+
+            <div class="search-bar">
+                <form action="">
+                    <input type="search" placeholder="ابحث عن طلبك...">
+                    <button class="btn-srch">بحث</button>
+                </form>
+            </div>
+            <div class="card">
+                <div class="price">
+                </div>
+                <a href="/cart"><i class="fa-solid fa-bag-shopping"></i> <span class="count-in-card">2</span></a>
+
+            </div>
+            </div>
+        </div>
+
+        <div class="header-bottom">
+           <div class="contanier">
+            <i id="open-side" class="fa-solid fa-bars"></i>
+            <ul class="nav-links">
+
+                <li><a href="/"> الرئيسية</a>
+
+                </li>
+
+                <li>
+                    <a href="Services.html">الخدمات </a>
+
+                    <div class="drobdwon">
+                        <ul><li><a href="Services.html">الخدمات</a></li></ul>
+                        {% for typeservice in typeservice%}
+                        <ul>
+                            <li><a href="">{{typeservice.Types_of_services_name}}</a></li>
+                        </ul>
+                        {% endfor %}
+                        
+                    </div>
+                </li>
+
+                <li>
+                    <a href="about.html">من نحن</a>
+                </li>
+
+                <li>
+                    <a href="contact.html">المميزات</a>
+                </li>
+                <li><a href="/offer_details">العروض</a></li>
+
+                <li><a href="/allproduct">المنتجات</a></li>
+
+                <li><a href="/my-orders">الطلبات</a></li>
+
+                <li><a href="/alltrader">البائعين</a></li>
+
+
+            </ul>
+            {% if not current_user.is_authenticated %}
+            <a href="signup" class="sign-in-btn"><i class="fa-solid fa-user-plus"></i> إنشاء حساب </a>
+            {% endif %}
+            {% if current_user.is_authenticated and not is_seller%}
+            <a href="is_seller" class="merchant-btn"><i class="fa-solid fa-store"></i>بيع معانا</a>
+            {% endif %}
+            {%if current_user.is_authenticated and is_seller %}
+            <a href="/dashboard_trader" class="merchant-btn"><i class="fa-solid fa-store"></i>لوحة تحكم متجرك</a>
+            {% endif %}
+
+           </div>
+        </div>
+
+    </header>
+   <!-- عرض رسائل الفلاش -->
+   {% with messages = get_flashed_messages(with_categories=True) %}
+   {% if messages %}
+       <div id="flash-messages">
+           {% for category, message in messages %}
+               <div class="flash-message {{ category }}">
+                   {{ message }}
+               </div>
+           {% endfor %}
+       </div>
+   {% endif %}
+{% endwith %}
+    <section class="slide-sec contanier">
+        <div id="side-bar" class="side-bar">
+            <h5><i class="fa-solid fa-bars"></i> التسوق حسب القسم</h5>
+            <img class="logo-slide" src="../../static/img/site/alpha.png" alt="">
+            <i id="btn-close" class="fa-solid fa-bars fa-times"></i>
+            <ul class="side-links">
+                <a href="#"><li>الرئيسية</li></a>
+                <a href="#"><li>الخدمات</li></a>
+                <a href="#"><li>من نحن</li></a>
+                <a href="#"><li>المميزات</li></a>
+                <a href="offer_details"><li>العروض</li></a>
+                <a href="#"><li>المنتجات</li></a>
+                <a href="#"><li>إكسسوارات</li></a>
+                <a href="#"><li>مستحضرات التجميل</li></a>
+                <a href="#"><li>التلفزيونات</li></a>
+
+            </ul>
+        </div>
+
+
+        <div class="slide">
+            <div class="slide-swp">
+                <div class="swiper-slide swiper-slide1">
+                    <img style="height:350px; object-fit:fill; width:100%;" src="../../static/uploads/Trader/banner/{{ trader.owner_banner }}" alt="">
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+            <!-- تفاصيل المتجر فوق البانر -->
+            <div class="store-details">
+                <div class="logo-container">
+                    <img src="../../static/uploads/Trader/logo/{{ trader.store_image }}" alt="Logo" class="logo">
+                </div>
+                <div class="info">
+                    <h2>{{ trader.store_name }}</h2>
+                    <p><strong>التخصص:</strong> {{ trader.store_category }}</p>
+                    <p><strong>التقييم:</strong> {{ avg_rating }}/5</p>
+                    <div class="rating-stars">
+                        {% for i in range(1, 6) %}
+                            {% if i <= avg_rating %}
+                                <i class="fas fa-star filled"></i>
+                            {% elif i - 1 < avg_rating < i %}
+                                <i class="fas fa-star-half-alt filled"></i>
+                            {% else %}
+                                <i class="far fa-star"></i>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    
+                        <!-- عرض التخصصات الفرعية -->
+                        <div class="subcategories">
+                            {% for subcategory in trader.subcategories %}
+                                <a href="{{ url_for('trader_details', seller_id=trader.seller_id) }}?subcategory_id={{ subcategory.id }}" class="subcategory">
+                                    {{ subcategory.name }}
+                                </a>
+                            {% endfor %}
+                            
+                            <!-- زر لعرض جميع المنتجات -->
+                            <a class="subcategory" href="{{ url_for('trader_details', seller_id=trader.seller_id) }}" class="view-all-products">عرض جميع المنتجات</a>
+                        </div>                         
+                </div>
+            </div>
+        </div>
+ 
+    </section>
+
+    
+    
+
+
+    <!--منتجات الخصومات-->
+    <section class="sale-sec contanier swiper mySwiper">
+
+        <div class="section-head">
+            <h4>خصومات <span>على المنتجات</span> </h4>
+        </div>
+
+        <div class="boxs swiper-wrapper">
+            {% for products in products %}
+            {% if products.discount != 0.0 %}
+            <div class="box column product-item swiper-slide">
+                <div class="div-img">
+                    <span class="discount">{{ products.discount }}%</span>
+                    
+                    <a href="{{ url_for('product_details', product_id=products.product_id) }}">
+                    <img src="../../static/uploads/products/{{ products.image1 }}" class="img-product">
+                    <img src="../../static/uploads/products/{{ products.image1 }}" class="hover-img">
+                    </a>
+                    <!-- أزرار الإجراء -->
+                    <div class="product-btn" style="position: relative;">
+                        <ul class="product-action">
+                            <!-- زر المفضلة أعلى يمين الصورة -->
+                            <li style="position: absolute; top: 10px; ">
+                                <a href="#"><i class="fa-regular fa-heart active"></i></a>
+                            </li>
+                            <!-- زر السلة أسفل الصورة -->
+                            <li style="position: absolute; bottom: 10px; left: 10px;">
+                                <a href="#" class="add-to-cart" data-product-id="{{ products.product_id }}" data-seller-id="{{ current_user.seller_id }}">
+                                    <i class="fa-solid fa-cart-arrow-down"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="content">
+                    <a href="{{ url_for('product_details', product_id=products.product_id) }}" class="product-item-link">
+                        {% if products.product_name|length > 30 %}
+                        {{ products.product_name[:30] }}... 
+                        <a href="#" title="{{ products.product_name }}">المزيد</a>
+                        {% else %}
+                        {{ products.product_name }}
+                        {% endif %}
+                    </a>
+                    <div class="stars">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                    <div class="price">
+                        <span>{{ "%.2f"|format(products.total_after_commission * (1 - (products.discount / 100))) }} جنيه</span>
+                        {% if products.discount != 0.0 %}
+                        <del>{{ "%.2f"|format(products.total_after_commission) }} جنيه</del>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        
+
+        <div class="swiper-button-next swiper-btn"></div>
+        <div class="swiper-button-prev swiper-btn"></div>
+
+    </section>
+
+ 
+<!--جميع منتجات التاجر-->
+<section class="sale-sec container">
+
+    <div class="section-head">
+        <h4>
+            جميع المنتجات:
+            <span>
+                {% set subcategory = trader.subcategories | selectattr('id', 'equalto', request.args.get('subcategory_id') | int) | first %}
+                {% if subcategory %}
+                    {{ subcategory.name }}
+                {% endif %}
+
+            </span>
+        </h4>    
+    </div>
+
+    <div class="boxs2 boxs">
+        {% for products in products %}
+        <div class="box column product-item2 product-item">
+            <div class="div-img2 div-img">
+                {% if products.discount != 0.0 %}
+                <span class="discount">{{ products.discount }}%</span>
+                {% endif %}
+                <a href="{{ url_for('product_details', product_id=products.product_id) }}">
+                    <img src="{{ url_for('static', filename='uploads/products/' ~ products.image1) }}" class="img-product">
+                    <img src="{{ url_for('static', filename='uploads/products/' ~ products.image1) }}" class="hover-img">
+                </a>
+                <!-- أزرار الإجراء -->
+                <div class="product-btn" style="position: relative;">
+                    <ul class="product-action">
+                        <!-- زر المفضلة أعلى يمين الصورة -->
+                        <li style="position: absolute; top: 10px;">
+                            <a href="#"><i class="fa-regular fa-heart active"></i></a>
+                        </li>
+                        <!-- زر السلة أسفل الصورة -->
+                        <li style="position: absolute; bottom: 10px; left: 10px;">
+                            <a href="#" class="add-to-cart" data-product-id="{{ products.product_id }}" data-seller-id="{{ current_user.seller_id }}">
+                                <i class="fa-solid fa-cart-arrow-down"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="content">
+                <a href="{{ url_for('product_details', product_id=products.product_id) }}" class="product-item-link">
+                    {% if products.product_name|length > 30 %}
+                    {{ products.product_name[:30] }}... 
+                    <a href="#" title="{{ products.product_name }}">المزيد</a>
+                    {% else %}
+                    {{ products.product_name }}
+                    {% endif %}
+                </a>
+                <div class="stars">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                </div>
+                <div class="price">
+                    <span>{{ "%.2f"|format(products.total_after_commission * (1 - (products.discount / 100))) }} جنيه</span>
+                    {% if products.discount != 0.0 %}
+                    <del>{{ products.total_after_commission }} جنيه</del>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</section>
+
+
+
+
+    <script>
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+                
+                // استخراج معرف المنتج ومعرف المستخدم
+                const productId = this.getAttribute('data-product-id');
+                const seller_id = this.getAttribute('data-seller-id');
+                
+                // إرسال البيانات إلى السيرفر
+                fetch('/add-to-cart', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ product_id: productId, seller_id: seller_id }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    
+                })
+                .catch(error => console.error('Error:', error));
+            });
+        });
+    </script>
+
+    <!-- كرت تقييم البائع -->
+<div class="seller-rating-card">
+    <h3>تقييم البائع</h3>
+    <div class="rating-stars" id="seller-rating-stars" data-seller-id="{{ trader.seller_id }}">
+        <i class="far fa-star" data-value="1"></i>
+        <i class="far fa-star" data-value="2"></i>
+        <i class="far fa-star" data-value="3"></i>
+        <i class="far fa-star" data-value="4"></i>
+        <i class="far fa-star" data-value="5"></i>
+    </div>
+    <textarea id="seller-comment" placeholder="يمكنك كتابة تعليقك هنا (اختياري)..." rows="4"></textarea>
+    <button id="submit-rating">إرسال التقييم</button>
+    <p id="rating-feedback">اضغط على النجوم لتقييم البائع.</p>
+</div>
+
+<style>
+    .seller-rating-card {
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 20px auto;
+        text-align: center;
+        max-width: 600px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .seller-rating-card h3 {
+        margin-bottom: 15px;
+        font-size: 24px;
+        color: #333;
+    }
+    .rating-stars i {
+        font-size: 24px;
+        color: #FFD700;
+        cursor: pointer;
+    }
+    .rating-stars i.far {
+        color: #ddd;
+    }
+    textarea#seller-comment {
+        width: 90%;
+        margin: 15px 0;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+        resize: none;
+    }
+    button#submit-rating {
+        background: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    button#submit-rating:hover {
+        background: #45a049;
+    }
+</style>
+
+<script>
+    document.querySelectorAll('#seller-rating-stars i').forEach(star => {
+        star.addEventListener('click', function () {
+            const rating = this.getAttribute('data-value');
+            const sellerId = document.getElementById('seller-rating-stars').getAttribute('data-seller-id');
+            document.querySelectorAll('#seller-rating-stars i').forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.remove('far');
+                    star.classList.add('fas');
+                } else {
+                    star.classList.remove('fas');
+                    star.classList.add('far');
+                }
+            });
+            document.getElementById('submit-rating').dataset.rating = rating; // تخزين التقييم عند الضغط
+        });
+    });
+
+    document.getElementById('submit-rating').addEventListener('click', function () {
+        const sellerId = document.getElementById('seller-rating-stars').getAttribute('data-seller-id');
+        const rating = this.dataset.rating || 0; // التقييم المختار
+        const comment = document.getElementById('seller-comment').value; // التعليق المكتوب
+
+        // إرسال التقييم والتعليق إلى السيرفر
+        fetch('/rate-seller', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ seller_id: sellerId, rating: rating, comment: comment }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('rating-feedback').textContent = data.message;
+            if (data.success) {
+                document.getElementById('seller-comment').value = ''; // تفريغ الحقل بعد الإرسال
+                document.getElementById('seller-rating-stars').value = ''; // تفريغ الحقل بعد الإرسال
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+</script>
+
+
+    <div class="newsletter">
+        <div class="container">
+            <div class="subscribe-content">
+                <div class="text">
+                    <h4>سجل للحصول علي آخر العروض</h4>
+                    <p>سجل برقم الهاتف حتي تحصل علي اخر العروض الخصومات</p>
+                </div>
+            </div>
+            <div class="subscribe-form">
+                <form action="">
+                    <input type="phone" placeholder="أدخل رقم الهاتف هنا للتسجيل" required>
+                    <button class="btn-srch" type="submit">سجل</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="contanier">
+            <div class="top-footer">
+                <div class="row">
+                    <img src="../../static/img/site/alpha.png" alt="" class="small-logo">
+                    <div class="hotline">
+
+                        <div class="hotline-text">
+                            <h6>خدمة عملاء 24/7</h6>
+                            <a href="https://wa.me/+201145425207?text=مرحبًا، أريد الاستفسار عن الخدمة"target="_blank"><span>(+20) 01145425207</span></a>
+                        </div>
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+
+                </div>
+                <div class="small-row">
+                    <h6> اعرف المزيد عنا</h6>
+                    <div class="links-row">
+                        <a href="#"> <i class="fa-solid fa-angle-left"></i>معلومات عن اكسبريمو </a>
+                        <a href="#"><i class="fa-solid fa-angle-left"></i>الشحن و التوصيل </a>
+
+                    </div>
+                </div>
+
+                <div class="small-row">
+                    <h6> تسوق معنا</h6>
+                    <div class="links-row">
+                        <a href="/profile"><i class="fa-solid fa-angle-left"></i>حسابك</a>
+                        <a href="#"> <i class="fa-solid fa-angle-left"></i>مشترياتك</a>
+                        <a href="#"> <i class="fa-solid fa-angle-left"></i>عناوينك</a>
+                        <a href="#"> <i class="fa-solid fa-angle-left"></i>قوائمك</a>
+                    </div>
+                </div>
+
+                <div class="small-row">
+                    <h6> دعنا نساعدك</h6>
+                    <div class="links-row">
+                        <a href="#"><i class="fa-solid fa-angle-left"></i>المساعدة و الدعم</a>
+                        <a href="#"><i class="fa-solid fa-angle-left"></i>تتبع الطلب</a>
+                        <a href="#"><i class="fa-solid fa-angle-left"></i>سياسة الاسترجاع</a>
+                        <a href="#"><i class="fa-solid fa-angle-left"></i>الشروط و الأحكام </a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="bottom-footer">
+            <div class="contanier">
+                <p>Copyright &copy; <span>MOHAMED HANI</span> Powered by <span>HASHISH</span></p>
+                <div class="payment">
+                <img src="../../static/img/site/payment-1.png" alt="">
+                <img src="../../static/img/site/payment-2.png" alt="">
+                <img src="../../static/img/site/payment-3.png" alt="">
+                <img src="../../static/img/site/payment-4.png" alt="">
+            </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Swiper JS -->
+    <script src="../../static/swiperJs/swiper-bundle.min.js"></script>
+
+    <!-- Linke File JS -->
+    <script src="../../static/js/site/home.js"></script>
+</body>
+</html>

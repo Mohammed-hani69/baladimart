@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>البائعين</title>
+
+    <!-- إضافة Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link href="../../static/css/site/alltrader.css" rel="stylesheet">
+    <link href="../../static/css/site/home.css" rel="stylesheet">
+
+    <!-- إضافة خط Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+
+    <link rel="icon" href="{{ url_for('static', filename='/img/1.png') }}" type="image/x-icon">
+</head>
+<body>
+
+    <header>
+
+        <div class="header-top">
+            <div class="contanier">
+             <p>خدمات مدينة العبور للتسوق الإلكتروني</p>
+             <div class="link-top-heder">
+                 {% if current_user.is_authenticated %}
+                 <a href="{{ url_for('seller_profile') }}">حسابي</a>
+                 <a href="/favorites">قائمة الرغبات</a>
+                 {% endif %}
+                 {% if not current_user.is_authenticated %}
+                 <a href="login">تسجيل الدخول</a>
+                 {% endif %}
+                 {% if  current_user.is_authenticated%}
+                 <a href="/logout">تسجيل الخروج</a>
+                 {% endif %}
+                 <a href="#">مقارنة</a>
+             </div>
+         </div>
+           </div>
+
+           <div class="header-info">
+            <div class="contanier">
+                <img src="../../static/img/site/alpha.png" alt="Logo" class="small-logo black-image">
+
+            <div class="search-bar">
+                <form action="">
+                    <input type="search" placeholder="ابحث عن طلبك...">
+                    <button class="btn-srch">بحث</button>
+                </form>
+            </div>
+            <div class="card">
+                <div class="price">
+                </div>
+                <a href="cart"><i class="fa-solid fa-bag-shopping"></i> <span class="count-in-card">2</span></a>
+
+            </div>
+            </div>
+        </div>
+
+        <div class="header-bottom">
+           <div class="contanier">
+            <i id="open-side" class="fa-solid fa-bars"></i>
+            <ul class="nav-links">
+
+                <li><a href="/"> الرئيسية</a>
+
+                </li>
+
+                <li>
+                    <a href="Services.html">الخدمات </a>
+
+                    <div class="drobdwon">
+                        <ul><li><a href="Services.html">الخدمات</a></li></ul>
+                        {% for typeservice in typeservice%}
+                        <ul>
+                            <li><a href="">{{typeservice.Types_of_services_name}}</a></li>
+                        </ul>
+                        {% endfor %}
+                        
+                    </div>
+                </li>
+
+                <li>
+                    <a href="about.html">من نحن</a>
+                </li>
+
+                <li>
+                    <a href="contact.html">المميزات</a>
+                </li>
+                <li><a href="/offer_details">العروض</a></li>
+
+                <li><a href="/allproduct">المنتجات</a></li>
+
+                <li><a href="/my-orders">الطلبات</a></li>
+
+                <li><a href="/alltrader">البائعين</a></li>
+
+
+
+            </ul>
+            {% if not current_user.is_authenticated %}
+            <a href="signup" class="sign-in-btn"><i class="fa-solid fa-user-plus"></i> إنشاء حساب </a>
+            {% endif %}
+            {% if current_user.is_authenticated and not is_seller%}
+            <a href="is_seller" class="merchant-btn"><i class="fa-solid fa-store"></i>بيع معانا</a>
+            {% endif %}
+            {%if current_user.is_authenticated and is_seller %}
+            <a href="/dashboard_trader" class="merchant-btn"><i class="fa-solid fa-store"></i>لوحة تحكم متجرك</a>
+            {% endif %}
+
+           </div>
+        </div>
+
+    </header>
+
+    <div class="search-container">
+        <h3 class="title">جميع البائعين</h3>
+        <p class="subtitle">دور على المتاجر اللي نفسك فيها واشتري منتجاتك المفضلة براحتك و بكل سهوله </p>
+        <form class="search-form d-flex" onsubmit="return false;">
+            <input 
+                type="text" 
+                id="searchInput"
+                class="form-control search-input" 
+                placeholder="اكتب اسم المتجر..." 
+                onkeyup="filterTradersByName()"
+            />
+            <button 
+                class="btn btn-primary search-button"
+                onclick="filterTradersByName()">بحث</button>
+        </form>
+    </div>
+    <style>
+        .search-container {
+            background: linear-gradient(90deg, #f0f8ff, #e6f7ff);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 30px; /* للتحكم في المسافة بين هذا القسم والبائعين */
+        }
+    
+        .search-container .title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 5px;
+        }
+    
+        .search-container .subtitle {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+    
+        .search-form {
+            max-width: 600px;
+            margin: 0 auto; /* لتوسيط النموذج */
+        }
+    
+        .search-input {
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+            border-right: none;
+            padding: 10px;
+        }
+    
+        .search-button {
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            padding: 10px 20px;
+            font-size: 14px;
+        }
+    
+        .search-form .form-control {
+            box-shadow: none;
+            border: 1px solid #ddd;
+        }
+    
+        .search-form .btn {
+            box-shadow: none;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+        }
+    
+        .search-form .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+        
+
+
+    <!-- الكروت الخاصة بالتجار -->
+    <div class="container card-container" id="tradersContainer">
+        {% for trader_data in traders %}
+            {% set trader = trader_data.seller %}
+            <div class="order-card trader-card" data-name="{{ trader.store_name }}">
+                <a style="text-decoration:none;" href="{{ url_for('trader_details', seller_id=trader.seller_id) }}" class="card-link">
+                    <div class="banner">
+                        <img src="../../static/uploads/Trader/banner/{{ trader.owner_banner }}" alt="Banner">
+                    </div>
+                    <div class="logo-container">
+                        <img src="../../static/uploads/Trader/logo/{{ trader.store_image }}" alt="Logo" class="logo">
+                    </div>
+                    <div class="order-info">
+                        <h5>{{ trader.store_name }}</h5>
+                        <hr>
+                        <div class="details">
+                            <div class="right-side">
+                                <p><strong>عدد المنتجات:</strong> {{ trader_data.product_count }}</p>
+                                <p><strong>التخصص:</strong> {{ trader.store_category }}</p>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="left-side">
+                                <p><strong>تقييم البائع:</strong> ({{ trader_data.review_count }})</p>
+                                <div class="rating-stars">
+                                    {% for i in range(1, 6) %}
+                                        {% if i <= trader_data.avg_rating %}
+                                            <i class="fas fa-star filled"></i>
+                                        {% elif i - 1 < trader_data.avg_rating < i %}
+                                            <i class="fas fa-star-half-alt filled"></i>
+                                        {% else %}
+                                            <i class="far fa-star"></i>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>                                                                       
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+    <div id="noResultsMessage" style="display: none; text-align: center; margin-top: 20px;">
+        لا توجد نتائج تطابق البحث.
+    </div>
+    
+
+   <div class="pagination text-center mt-4">
+        <!-- أزرار التنقل بين الصفحات -->
+    </div>
+
+    <div class="newsletter">
+        <div class="container">
+            <div class="subscribe-content">
+                <div class="text">
+                    <h4>سجل للحصول علي آخر العروض</h4>
+                    <p>سجل برقم الهاتف حتي تحصل علي اخر العروض الخصومات</p>
+                </div>
+            </div>
+            <div class="subscribe-form">
+                <form action="">
+                    <input type="phone" placeholder="أدخل رقم الهاتف هنا للتسجيل" required>
+                    <button class="btn-srch" type="submit">سجل</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="contanier">
+            <div class="top-footer">
+                <div class="row">
+                    <img src="../../static/img/site/alpha.png" alt="" class="small-logo">
+                    <div class="hotline">
+
+                        <div class="hotline-text">
+                            <h6>خدمة عملاء 24/7</h6>
+                            <a href="https://wa.me/+201145425207?text=مرحبًا، أريد الاستفسار عن الخدمة"target="_blank"><span>(+20) 01145425207</span></a>
+                        </div>
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+
+                </div>
+                <div class="small-row">
+                    <h6> اعرف المزيد عنا</h6>
+                    <div class="links-row">
+                        <a href="#"> <i class="fa-solid fa-angle-left"></i>معلومات عن اكسبريمو </a>
+                        <a href="#"><i class="fa-solid fa-angle-left"></i>الشحن و التوصيل </a>
+
+                    </div>
+                </div>
+
+                <div class="small-row">
+                    <h6> تسوق معنا</h6>
+                    <div class="links-row">
+                        <a href="/profile"><i class="fa-solid fa-angle-left"></i>حسابك</a>
+                        <a href="#"> <i class="fa-solid fa-angle-left"></i>مشترياتك</a>
+                        <a href="#"> <i class="fa-solid fa-angle-left"></i>عناوينك</a>
+                        <a href="#"> <i class="fa-solid fa-angle-left"></i>قوائمك</a>
+                    </div>
+                </div>
+
+                <div class="small-row">
+                    <h6> دعنا نساعدك</h6>
+                    <div class="links-row">
+                        <a href="#"><i class="fa-solid fa-angle-left"></i>المساعدة و الدعم</a>
+                        <a href="#"><i class="fa-solid fa-angle-left"></i>تتبع الطلب</a>
+                        <a href="#"><i class="fa-solid fa-angle-left"></i>سياسة الاسترجاع</a>
+                        <a href="#"><i class="fa-solid fa-angle-left"></i>الشروط و الأحكام </a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="bottom-footer">
+            <div class="contanier">
+                <p>Copyright &copy; <span>MOHAMED HANI</span> Powered by <span>HASHISH</span></p>
+                <div class="payment">
+                <img src="../../static/img/site/payment-1.png" alt="">
+                <img src="../../static/img/site/payment-2.png" alt="">
+                <img src="../../static/img/site/payment-3.png" alt="">
+                <img src="../../static/img/site/payment-4.png" alt="">
+            </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+    <script>
+
+        const traders = [
+            {% for trader_data in traders %}
+            {
+                name: "{{ trader_data.seller.store_name }}",
+                productCount: "{{ trader_data.product_count }}",
+                category: "{{ trader_data.seller.store_category }}",
+                rating: "{{ trader_data.avg_rating }}",
+                reviewCount: "{{ trader_data.review_count }}",
+                banner: "../../static/uploads/Trader/banner/{{ trader_data.seller.owner_banner }}",
+                logo: "../../static/uploads/Trader/logo/{{ trader_data.seller.store_image }}",
+                url: "{{ url_for('trader_details', seller_id=trader_data.seller.seller_id) }}"
+            },
+            {% endfor %}
+        ];
+    
+        const itemsPerPage = 9;
+        let currentPage = 1;
+    
+        function displayTraders(page) {
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const tradersToShow = traders.slice(startIndex, endIndex);
+    
+            const tradersContainer = document.getElementById('tradersContainer');
+            tradersContainer.innerHTML = '';
+    
+            tradersToShow.forEach(trader => {
+                const traderCard = `
+                    <div class="order-card trader-card">
+                        <a style="text-decoration:none;" href="${trader.url}" class="card-link">
+                            <div class="banner">
+                                <img src="${trader.banner}" alt="Banner">
+                            </div>
+                            <div class="logo-container">
+                                <img src="${trader.logo}" alt="Logo" class="logo">
+                            </div>
+                            <div class="order-info">
+                                <h5>${trader.name}</h5>
+                                <hr>
+                                <div class="details">
+                                    <div class="right-side">
+                                        <p><strong>عدد المنتجات:</strong> ${trader.productCount}</p>
+                                        <p><strong>التخصص:</strong> ${trader.category}</p>
+                                    </div>
+                                    <div class="divider"></div>
+                                    <div class="left-side">
+                                        <p><strong>تقييم البائع:</strong> (${trader.reviewCount})</p>
+                                        <div class="rating-stars">${generateStars(trader.rating)}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                `;
+                tradersContainer.innerHTML += traderCard;
+            });
+        }
+    
+        function generateStars(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= rating) {
+                    stars += '<i class="fas fa-star filled"></i>';
+                } else if (i - 1 < rating && rating < i) {
+                    stars += '<i class="fas fa-star-half-alt filled"></i>';
+                } else {
+                    stars += '<i class="far fa-star"></i>';
+                }
+            }
+            return stars;
+        }
+    
+        function setupPagination() {
+            const totalPages = Math.ceil(traders.length / itemsPerPage);
+            const paginationContainer = document.querySelector('.pagination');
+            paginationContainer.innerHTML = '';
+    
+            for (let i = 1; i <= totalPages; i++) {
+                const button = document.createElement('button');
+                button.textContent = i;
+                button.classList.add('page-btn');
+                if (i === currentPage) button.classList.add('active');
+                button.addEventListener('click', () => {
+                    currentPage = i;
+                    displayTraders(currentPage);
+                    setupPagination();
+                });
+                paginationContainer.appendChild(button);
+            }
+        }
+    
+        // استدعاء الوظائف عند التحميل
+        displayTraders(currentPage);
+        setupPagination();
+    </script>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../static/js/site/home.js"></script>
+    <script src="../../static/js/site/alltrader.js"></script>
+    <script src="../../static/js/site/my_orders.js"></script>
+
+
+</body>
+</html>

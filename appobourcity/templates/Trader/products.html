@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../../static/css/Tradercss/style.css">
+    <link rel="stylesheet" href="../../static/css/Tradercss/products.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    
+    <title>لوحة التحكم الإدارية</title>
+    <link rel="icon" href="{{ url_for('static', filename='/img/1.png') }}" type="image/x-icon">
+</head>
+
+<body>
+<!-- الشريط الجانبي -->
+<div class="sidebar">
+    <a href="dashboard.html" class="logo">
+        <i class='bx bx-code-alt'></i>
+        <div class="logo-name"><span>مدينة</span>العبور</div>
+    </a>
+    <ul class="side-menu">
+        <li><a href="dashboard_trader"><i class='bx bxs-dashboard'></i>لوحة التحكم</a></li>
+        <li><a href="product_trader"><i class='bx bx-store-alt'></i>إدارة المنتجات</a></li>
+        <li><a href="Subcategories"><i class='bx bx-category'></i>إدارة الاقسام الفرعيه</a></li>
+        <li><a href="/customers"><i class='bx bx-group'></i>إدارة العملاء</a></li>
+        <li><a href="/Orders_trader"><i class='bx bx-receipt'></i>إدارة الطلبات</a></li>
+        <li><a href="offers"><i class='bx bx-gift'></i>العروض والخصومات</a></li>
+        <li><a href="settings.html"><i class='bx bx-cog'></i>الإعدادات</a></li>
+        <li><a href="#" id="language-toggle"><i class='bx bx-globe'></i>اللغة</a></li>
+    </ul>
+    <ul class="side-menu">
+        <li>
+            <a href="{{ url_for('logout') }}" class="logout">
+                <i class='bx bx-log-out-circle'></i>
+                تسجيل الخروج
+            </a>
+        </li>
+    </ul>
+</div>
+<!-- نهاية الشريط الجانبي -->
+
+<!-- المحتوى الرئيسي -->
+<div class="content">
+    <!-- شريط التنقل -->
+    <nav>
+        <i class='bx bx-menu'></i>
+        <form action="#">
+            <div class="form-input">
+                <button class="search-btn" type="submit"><i class='bx bx-search'></i></button>
+                <input type="search" placeholder="بحث...">
+            </div>
+        </form>
+        <input type="checkbox" id="theme-toggle" hidden>
+        <label for="theme-toggle" class="theme-toggle"></label>
+            <!-- زر الإشعارات -->
+            <a href="notifications_trader">
+                <button class="button" style="position: relative; display: flex; align-items: center;">
+                    {% if unread_count > 0 %}
+                        <p id="unreadCount" style="display: inline-block; background-color: red; color: white; padding: 0; border-radius: 50%; font-size: 10px; font-weight: bold; text-align: center; width: 16px; height: 16px; line-height: 16px; vertical-align: middle;">
+                            {{ unread_count }}
+                        </p>
+                    
+                    {% endif %}                   
+                    
+                    <svg viewBox="0 0 448 512" class="bell" style="width: 24px; height: 24px;">
+                        <path d="M224 0c-17.7 0-32 14.3-32 32V49.9C119.5 61.4 64 124.2 64 200v33.4c0 45.4-15.5 89.5-43.8 124.9L5.3 377c-5.8 7.2-6.9 17.1-2.9 25.4S14.8 416 24 416H424c9.2 0 17.6-5.3 21.6-13.6s2.9-18.2-2.9-25.4l-14.9-18.6C399.5 322.9 384 278.8 384 233.4V200c0-75.8-55.5-138.6-128-150.1V32c0-17.7-14.3-32-32-32zm0 96h8c57.4 0 104 46.6 104 104v33.4c0 47.9 13.9 94.6 39.7 134.6H72.3C98.1 328 112 281.3 112 233.4V200c0-57.4 46.6-104 104-104h8zm64 352H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7s18.7-28.3 18.7-45.3z"></path>
+                    </svg>
+                    الاشعارات
+                </button>
+            </a>
+        <a href="settings.html" class="profile">
+            <img src="../../static/uploads/{{store_image}}" alt="الملف الشخصي">
+        </a>
+    </nav>
+    <!-- نهاية شريط التنقل -->
+
+    <!-- قسم إدارة المنتجات -->
+    <div class="product-management">
+
+<!-- رابط مكتبة Material Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<!-- نموذج إضافة منتج -->
+<div class="container">
+    <form class="add-product-form"action="{{ url_for('product_trader') }}" method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}  <!-- إضافة token CSRF للحماية من الهجمات -->
+        <!-- عرض رسائل الفلاش -->
+        {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            <div id="flash-messages">
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% endwith %}
+        <h2>إضافة منتج جديد</h2>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="product_name"><i class='bx bx-stock'></i> اسم المنتج</label>
+                {{ form.product_name(class="form-control", placeholder="اسم المنتج") }}
+                {% if form.product_name.errors %}
+                    <ul class="errors">
+                        {% for error in form.product_name.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        
+            <div class="form-group">
+                <label for="description"><i class='bx bx-store'></i>وصف المنتج</label>
+                {{ form.description(class="form-control", placeholder="وصف المنتج") }}
+                {% if form.description.errors %}
+                    <ul class="errors">
+                        {% for error in form.description.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="product_category"><i class='bx bx-category'></i> تخصص المتجر:</label>
+                <select id="product_category" name="product_category" class="form-control" required>
+                    <option  value="">اختر التخصص</option>
+                    {% for subcategories in subcategories %}
+                        <option value="{{ subcategories.name }}">{{ subcategories.name }}</option>
+                    {% endfor %}
+                </select>
+                {% if form.product_category.errors %}
+                    <ul class="errors">
+                        {% for error in form.product_category.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="price"><i class='bx bxs-dollar'></i> التكلفة:</label>
+                {{ form.price(class="form-control", placeholder="التكلفة") }}
+                {% if form.price.errors %}
+                    <ul class="errors">
+                        {% for error in form.price.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="discount"><i class='bx bxs-dollar'></i> الخصم ان وجد:</label>
+                {{ form.discount(class="form-control", placeholder="الخصم") }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="stock_quantity"><i class='bx bxs-dollar'></i> كمية المخزون:</label>
+                {{ form.stock_quantity(class="form-control", placeholder="كمية المخزون") }}
+                {% if form.stock_quantity.errors %}
+                    <ul class="errors">
+                        {% for error in form.stock_quantity.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="image1"><i class='bx bxs-image'></i> صورة المنتج 1:</label>
+                {{ form.image1(class="form-control") }}
+                {% if form.image1.errors %}
+                    <ul class="errors">
+                        {% for error in form.image1.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="image2"><i class='bx bxs-image'></i> صورة المنتج 2:</label>
+                {{ form.image2(class="form-control") }}
+                {% if form.image2.errors %}
+                    <ul class="errors">
+                        {% for error in form.image2.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="image3"><i class='bx bxs-image'></i> صورة المنتج 3:</label>
+                {{ form.image3(class="form-control") }}
+                {% if form.image3.errors %}
+                    <ul class="errors">
+                        {% for error in form.image3.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="image4"><i class='bx bxs-image'></i> صورة المنتج 4:</label>
+                {{ form.image4(class="form-control") }}
+                {% if form.image4.errors %}
+                    <ul class="errors">
+                        {% for error in form.image4.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="image5"><i class='bx bxs-image'></i> صورة المنتج 5:</label>
+                {{ form.image5(class="form-control") }}
+                {% if form.image5.errors %}
+                    <ul class="errors">
+                        {% for error in form.image5.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+        <button type="submit" class="submit-button"><i class='bx bx-save'></i> {{ form.submit.label }}</button>
+    
+    </form>
+</div>
+
+
+<!-- جدول المنتجات -->
+<main class="products-page">
+    <div class="header">
+        <div class="title-box">
+            <h2>قائمة المنتجات</h2>
+        </div>
+
+        <!-- محرك البحث -->
+        <div class="search-box">
+            <input 
+                type="text" 
+                id="productSearch" 
+                class="search-input" 
+                placeholder="ابحث عن منتج..."
+                onkeyup="filterProducts()"> <!-- تشغيل التصفية عند الكتابة -->
+            <button id="searchButton" class="search-button" onclick="filterProducts()">بحث</button>
+        </div>
+    </div>
+    
+
+    <table class="products-table" id="productsTable">
+        <thead>
+            <tr>
+                <th>اسم المنتج</th>
+                <th>التصنيف</th>
+                <th>السعر</th>
+                <th>الخصم</th>
+                <th>السعر بعد الخصم</th>
+                <th>الكمية</th>
+                <th>التقييم</th>
+                <th>الإجراءات</th> <!-- عمود الإجراءات -->
+            </tr>
+        </thead>
+        <tbody id="productsTableBody">
+            {% for products in products %} 
+            <tr>
+                <td>
+                    {% if products.product_name|length > 30 %}
+                        {{ products.product_name[:30] }}... 
+                        <a href="#" title="{{ products.product_name }}">المزيد</a>
+                    {% else %}
+                        {{ products.product_name }}
+                    {% endif %}
+                </td>
+                <td>{{ products.product_category }}</td>
+                <td>{{ products.price }}</td>
+                <td>{{ products.discount }}%</td>
+                <td>{{ "%.2f"|format(products.price * (1 - (products.discount / 100))) }} جنيه</td>
+                <td>{{ products.stock_quantity }}</td>
+                <td>{{ products.rating }}</td>
+    
+                <td>                
+                    <div class="d-flex justify-content-end align-items-center">
+                        <!-- زر التعديل -->
+                        <button class="btn custom-yellow me-2" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#editProductModal"
+                                data-id="{{ products['product_id'] }}" 
+                                data-name="{{ products['product_name'] }}" 
+                                data-description="{{ products['description'] }}" 
+                                data-category="{{ products['product_category'] }}" 
+                                data-price="{{ products['price'] }}" 
+                                data-discount="{{ products['discount'] }}" 
+                                data-quantity="{{ products['stock_quantity'] }}"
+                                data-imageone="{{ products['image1'] }}"
+                                data-imagetwo="{{ products['image2'] }}"
+                                data-imagethree="{{ products['image3'] }}"
+                                data-imagefour="{{ products['image4'] }}"
+                                data-imagefive="{{ products['image5'] }}">
+                            <i class="fas fa-edit me-2"></i> تعديل
+                        </button>
+                    
+                        <!-- زر الحذف -->
+                        <form action="{{ url_for('delete_product', product_id=products['product_id']) }}" method="POST">
+                            {{ form.hidden_tag() }}
+                            <button type="submit" class="btn custom-red">
+                                <i class="fas fa-trash-alt me-2"></i> حذف
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            </tr>      
+            {% endfor %}                 
+        </tbody>
+    </table>
+</main>
+<script>
+    // وظيفة التصفية
+    // وظيفة التصفية
+function filterProducts() {
+    var input = document.getElementById('productSearch');
+    var filter = input.value.toLowerCase();
+    var table = document.getElementById('productsTable');
+    var rows = table.getElementsByTagName('tr');
+
+    // تجاهل الصف الأول (عناوين الأعمدة)
+    for (var i = 1; i < rows.length; i++) {
+        var cells = rows[i].getElementsByTagName('td');
+        var match = false;
+
+        // تحقق من كل خلية في الصف
+        for (var j = 0; j < cells.length; j++) {
+            if (cells[j]) {
+                var textValue = cells[j].textContent || cells[j].innerText;
+                if (textValue.toLowerCase().indexOf(filter) > -1) {
+                    match = true;
+                    break;
+                }
+            }
+        }
+
+        // عرض أو إخفاء الصف بناءً على المطابقة
+        rows[i].style.display = match ? '' : 'none';
+    }
+}
+
+</script>
+
+<style>
+    .search-box {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .search-input {
+        padding: 10px;
+        width: 100%;
+        max-width: 400px;
+        font-size: 16px;
+        border:  #ccc;
+        border-radius: 0px 80px 80px 0px;
+        margin-right: 10px;
+    }
+
+    .search-button {
+        padding: 10px 20px;
+        background-color:rgb(14, 133, 245);
+        color: white;
+        border: none;
+        border-radius: 80px 0px 0px 80px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .search-button:hover {
+        background-color:rgb(92, 6, 85);
+    }
+</style>
+
+
+    
+<!-- نافذة تعديل المنتج -->
+<div class="modal fade" id="editProductModal" tabindex="-1" role="dialog" aria-labelledby="editProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form id="editProductForm" action="{{ url_for('update_product_data') }}" method="POST">
+                {{ form.hidden_tag() }}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editProductModalLabel">تعديل بيانات المنتج</h5>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="إغلاق">
+                        إغلاق
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="product_id" id="product_id">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="product_name">اسم المنتج</label>
+                            <input type="text" class="form-control" id="product_name_edit" name="product_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">وصف المنتج</label>
+                            <textarea class="form-control" id="description_edit" name="description" required></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="price">السعر</label>
+                            <input type="number" class="form-control" id="price_edit" name="price" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="stock_quantity">الكمية المتاحة</label>
+                            <input type="number" class="form-control" id="stock_quantity_edit" name="stock_quantity" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="product_category">تصنيف المنتج</label>
+                            <input type="text" class="form-control" id="product_category_edit" name="product_category" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="discount">الخصم</label>
+                            <input type="number" class="form-control" id="discount_edit" name="discount" step="0.01">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="image1">الصورة 1</label>
+                            <input type="file" class="form-control" id="image1_edit" name="image1">
+                        </div>
+                        <div class="form-group">
+                            <label for="image2">الصورة 2</label>
+                            <input type="file" class="form-control" id="image2_edit" name="image2">
+                        </div>
+                        <div class="form-row">
+                        <div class="form-group">
+                            <label for="image3">الصورة 3</label>
+                            <input type="file" class="form-control" id="image3_edit" name="image3">
+                        </div>
+                        <div class="form-group">
+                            <label for="image4">الصورة 4</label>
+                            <input type="file" class="form-control" id="image4_edit" name="image4">
+                        </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="image5">الصورة 5</label>
+                            <input type="file" class="form-control" id="image5_edit" name="image5">
+                        </div>
+                    </div>
+                        
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">حفظ التعديلات</button>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script src="../../static/js/Traderjs/products.js"></script>
+<script src="../../static/js/Traderjs/dashboard.js"></script>
+
+</body>
+</html>

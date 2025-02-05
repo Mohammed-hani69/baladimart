@@ -1,0 +1,441 @@
+.add-service-form {
+    background-color: var(--light); /* خلفية فاتحة */
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* ظل خفيف */
+    width: 97%;
+    max-width: 1400px; /* زيادة العرض ليتناسب مع القائمة */
+    margin: 40px auto; /* زيادة المسافة من الأعلى */
+}
+
+/* العنوان */
+.add-service-form h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #860392; /* لون النص */
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+/* تنسيق الصفوف */
+.form-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+}
+
+/* تنسيق عناصر النموذج */
+.form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #860392; /* تغيير اللون إلى 7A1CAC */
+    margin-bottom: 0.3rem;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%; /* جعل المدخلات تأخذ عرض الحاوية بالكامل */
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid var(--dark-grey); /* لون الحدود */
+    border-radius: 5px;
+    transition: border-color 0.3s; /* تأثير الانتقال */
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: var(--primary); /* تغيير لون الحدود عند التركيز */
+    outline: none;
+}
+
+/* تنسيق زر الإرسال */
+.submit-button {
+    padding: 12px 20px;
+    background: var(--primary);
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.submit-button:hover {
+    background: var(--dark-primary); /* لون الخلفية عند التحويم */
+}
+
+/* تنسيقات الصفحة */
+.services-page {
+    padding: 36px 24px;
+    background: var(--grey);
+}
+
+.services-page .header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* تغيير التبرير إلى اليسار */
+    margin-bottom: 24px;
+}
+
+.services-page .header h1 {
+    font-size: 25px;
+    font-weight: 600;
+    color: #860392;
+}
+
+.add-button {
+    margin-left: 20px; /* زيادة المسافة بين العنوان وزر الإضافة */
+}
+
+
+/* جدول الخدمات */
+.services-page .services-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--light);
+}
+
+.services-page .services-table th,
+.services-page .services-table td {
+    padding: 12px 16px;
+    text-align: left;
+}
+
+.services-page .services-table th {
+    background: var(--dark-grey);
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.services-page .services-table td {
+    border-bottom: 1px solid var(--grey);
+    color: var(--dark);
+    font-size: 13px;
+}
+
+.services-page .services-table tbody tr {
+    transition: background 0.3s ease;
+}
+
+.services-page .services-table tbody tr:hover {
+    background: var(--grey);
+}
+/* أزرار التعديل والحذف */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px; /* تصغير الزر */
+    margin-left: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #860392; /* اللون الجديد */
+    color: white;
+    font-size: 10px; /* تصغير النص */
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #118324; /* لون عند التحويم */
+}
+
+/* تكبير زر إضافة الخدمة قليلاً */
+.add-button .btn-add {
+    padding: 8px 12px; /* زيادة حجم الزر */
+    font-size: 14px; /* زيادة حجم النص */
+    margin-right: 0; /* إزالة المسافة اليسرى */
+}
+.modal-content {
+    max-width: 600px; /* تحديد عرض أقصى للنموذج */
+    margin: 50px auto; /* توسيط النموذج */
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    flex: 1; /* جعل كل مجموعة تأخذ مساحة متساوية */
+    margin-right: 15px; /* إضافة مسافة بين المجموعات */
+}
+
+.form-group:last-child {
+    margin-right: 0; /* إزالة المسافة من المجموعة الأخيرة */
+}
+
+input, select {
+    width: 100%; /* جعل الإدخال يستغل المساحة بالكامل */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+
+.modal {
+    display: none; /* إخفاء النافذة المنبثقة افتراضيًا */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #00000080; /* تظليل الخلفية */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* لتظهر فوق كل المحتويات */
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 1000px; /* يمكنك تعديل العرض حسب الحاجة */
+    max-width: 90%;
+    box-shadow: 0px 4px 8px #00000033;
+    position: relative;
+}
+
+.modal-title {
+    text-align: center; /* محاذاة العنوان في المنتصف */
+    margin-bottom: 20px; /* إضافة مسافة أسفل العنوان */
+    color: #860392; /* لون النص */
+
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+    color: #860392; /* لون النص */
+
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    flex: 1; /* جعل كل مجموعة تأخذ مساحة متساوية */
+    margin-right: 15px; /* إضافة مسافة بين المجموعات */
+}
+
+.form-group:last-child {
+    margin-right: 0; /* إزالة المسافة من المجموعة الأخيرة */
+}
+
+input, select {
+    width: 100%; /* جعل الإدخال يستغل المساحة بالكامل */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #860392; /* لون النص */
+
+}
+
+button.edit-button {
+    display: block; /* لجعل الزر في منتصف الصفحة */
+    width: 100%; /* عرض الزر كامل */
+    padding: 10px;
+    background-color: #860392; /* لون الزر */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px; /* مسافة أعلى الزر */
+    
+}
+
+button.edit-button:hover {
+    background-color: #45a049; /* لون الزر عند التحويم */
+}
+.title-box {
+    display: inline-block; /* جعل الصندوق بحجم النص */
+    background-color: #86039200; /* لون خلفية خفيف */
+    border: 1px solid #860392; /* إطار حول النص */
+    border-radius: 10px; /* حواف دائرية */
+    padding: 5px 10px; /* مساحة داخلية للصندوق */
+    margin-bottom: 10px; /* تباعد أسفل الصندوق */
+    font-size: 1em; /* تكبير النص قليلاً */
+    color: #860392; /* لون النص */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* ظل خفيف */
+}
+
+/* التنسيقات العامة للجوالات الصغيرة */
+@media (max-width: 800px) {
+    .services-page {
+        padding: 20px;
+    }
+
+    .services-page .header h1 {
+        font-size: 20px;
+    }
+
+    .services-page .add-button {
+        margin-left: 10px;
+    }
+
+    /* جعل الجدول أكثر تكاملاً مع شاشات الجوال */
+    .services-page .services-table th,
+    .services-page .services-table td {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+
+    /* الأزرار */
+    .btn {
+        padding: 4px 6px;
+        font-size: 10px;
+    }
+
+    .add-button .btn-add {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+
+    /* تكييف النافذة المنبثقة */
+    .modal-content {
+        max-width: 90%;
+        padding: 15px;
+    }
+
+    /* تعديلات النموذج */
+    .form-row {
+        flex-direction: column;
+    }
+
+    .form-group {
+        margin-right: 0;
+    }
+}
+
+/* أجهزة العرض المتوسطة (تابلت) */
+@media (min-width: 601px) and (max-width: 1024px) {
+    .services-page {
+        padding: 30px;
+    }
+
+    .services-page .header h1 {
+        font-size: 24px;
+    }
+
+    .services-page .add-button {
+        margin-left: 15px;
+    }
+
+    .services-page .services-table th,
+    .services-page .services-table td {
+        padding: 10px 14px;
+        font-size: 13px;
+    }
+
+    .btn {
+        padding: 5px 8px;
+        font-size: 11px;
+    }
+
+    .add-button .btn-add {
+        padding: 7px 10px;
+        font-size: 13px;
+    }
+
+    .modal-content {
+        max-width: 75%;
+        padding: 18px;
+    }
+}
+
+/* الشاشات الكبيرة (سطح المكتب) */
+@media (min-width: 1025px) {
+    .services-page {
+        padding: 40px;
+    }
+
+    .services-page .header h1 {
+        font-size: 28px;
+    }
+
+    .services-page .services-table th,
+    .services-page .services-table td {
+        padding: 12px 16px;
+        font-size: 14px;
+    }
+
+    .btn {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+
+    .add-button .btn-add {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+
+    .modal-content {
+        max-width: 60%;
+    }
+}
+
+
+
+    /* تصميم النافذة */
+    .modal {
+        display: none; /* مخفي بشكل افتراضي */
+        position: fixed; /* يظل في مكانه عند التمرير */
+        z-index: 1; /* يظهر فوق المحتوى */
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* خلفية داكنة */
+    }
+
+    .modal-content {
+        background-color: #fff;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 600px;
+        border-radius: 5px;
+    }
+
+    /* زر الإغلاق */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }

@@ -1,0 +1,236 @@
+/* صفحة البائعون */
+.sellers-page {
+    padding: 36px 24px;
+    background: var(--grey);
+}
+
+.sellers-page .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.sellers-page .header h2 {
+    font-size: 25px;
+    font-weight: 600;
+    color: #860392; /* تغيير لون النص إلى 7A1CAC */
+}
+
+.sellers-page form {
+    margin-bottom: 24px;
+    background: var(--light);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* ظل خفيف */
+}
+
+.sellers-page form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #860392; /* تغيير لون النص إلى 7A1CAC */
+}
+
+.sellers-page form input[type="text"],
+.sellers-page form input[type="email"],
+.sellers-page form input[type="tel"],
+.sellers-page form input[type="file"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid var(--dark-grey);
+    border-radius: 5px;
+    transition: border-color 0.3s; /* تأثير انتقال لتغيير لون الحدود */
+}
+
+.sellers-page form input[type="text"]:focus,
+.sellers-page form input[type="email"]:focus,
+.sellers-page form input[type="tel"]:focus {
+    border-color: var(--primary); /* تغيير لون الحدود عند التركيز */
+    outline: none; /* إزالة التحديد الافتراضي */
+}
+
+.sellers-page form button {
+    padding: 12px 20px;
+    background: var(--primary);
+    color: #ffffff; /* تغيير لون النص إلى 7A1CAC */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s; /* تأثير انتقال لتغيير لون الخلفية */
+}
+
+.sellers-page form button:hover {
+    background: var(--derk-primary);
+}
+
+.sellers-page .sellers-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.sellers-page .sellers-table th,
+.sellers-page .sellers-table td {
+    padding: 8px 10px;
+    text-align: left;
+}
+
+.sellers-page .sellers-table th {
+    background: var(--dark-grey);
+    color: #ffffff; /* تغيير لون النص إلى 7A1CAC */
+    font-size: small;
+}
+
+.sellers-page .sellers-table td {
+    border-bottom: 1px solid var(--grey);
+    color: var(--dark);
+}
+
+.sellers-page .sellers-table tbody tr:hover {
+    background: var(--light-grey); /* تغيير لون الخلفية عند التمرير فوق الصف */
+}
+
+@media screen and (max-width: 768px) {
+    .sellers-page {
+        padding: 20px;
+    }
+
+    .sellers-page .header h2 {
+        font-size: 28px;
+    }
+
+    .sellers-page form input[type="text"],
+    .sellers-page form input[type="email"],
+    .sellers-page form input[type="tel"],
+    .sellers-page form input[type="file"] {
+        width: 100%; /* استخدام العرض الكامل على الشاشات الصغيرة */
+    }
+}
+
+.form-row {
+    display: flex; /* استخدام الفليكس لتخطيط الحقول بجانب بعضها */
+    justify-content: space-between; /* توزيع الفضاء بالتساوي */
+    margin-bottom: 15px; /* مسافة أسفل الصف */
+}
+
+.form-group {
+    flex: 1; /* جعل كل حقل يأخذ مساحة متساوية */
+    margin-right: 10px; /* مسافة بين الحقول */
+}
+
+.form-group:last-child {
+    margin-right: 0; /* إزالة المسافة عن آخر حقل */
+}
+
+/* إضافة بعض الأنماط لتحسين المظهر */
+.submit-btn {
+    padding: 10px 15px;
+    background-color: var(--primary);
+    color: #860392; /* تغيير لون النص إلى 7A1CAC */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.title-box {
+    display: inline-block; /* جعل الصندوق بحجم النص */
+    background-color: #86039200; /* لون خلفية خفيف */
+    border: 1px solid #860392; /* إطار حول النص */
+    border-radius: 10px; /* حواف دائرية */
+    padding: 5px 10px; /* مساحة داخلية للصندوق */
+    margin-bottom: 10px; /* تباعد أسفل الصندوق */
+    font-size: 1em; /* تكبير النص قليلاً */
+    color: #860392; /* لون النص */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* ظل خفيف */
+}
+/*تنسيق رسالة الفلاش*/
+
+.flash-message {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+    animation: fadeOut 5s forwards;
+}
+
+/* رسائل النجاح */
+.flash-message.success {
+    background-color: rgba(0, 255, 0, 0.2); /* خلفية خضراء شفافة */
+    border: 2px solid darkgreen; /* إطار أخضر غامق */
+    color: darkgreen; /* لون النص */
+}
+
+/* رسائل الخطأ */
+.flash-message.error {
+    background-color: rgba(255, 0, 0, 0.2); /* خلفية حمراء شفافة */
+    border: 2px solid darkred; /* إطار أحمر غامق */
+    color: darkred; /* لون النص */
+}
+
+/* تأثير الاختفاء التدريجي */
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    90% { opacity: 0.2; }
+    100% { opacity: 0; display: none; }
+}
+
+.instruction {
+    font-size: 13px; /* حجم الخط صغير */
+    color: red; /* اللون أحمر */
+    margin-right: 10px; /* مسافة علوية صغيرة */
+}
+
+
+/* زر التبديل (Switch) */
+.theme-toggle {
+    position: relative;
+    display: inline-block;
+    width: 50px; /* تصغير الحجم */
+    height: 28px; /* تصغير الحجم */
+}
+
+.theme-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 50px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;  /* تصغير الـ knob */
+    width: 22px;   /* تصغير الـ knob */
+    border-radius: 50%;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+}
+
+input:checked + .slider {
+    background-color: #860392; /* اللون الأخضر عند التفعيل */
+}
+
+input:checked + .slider:before {
+    transform: translateX(22px); /* حركة الـ knob */
+}
+
+/* إزالة النص الذي يظهر مع الزر */
+.status-label {
+    display: none;  /* إزالة النص تمامًا */
+}

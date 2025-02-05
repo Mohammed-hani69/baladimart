@@ -1,0 +1,295 @@
+/* صفحة المنتجات */
+.products-page {
+    padding: 36px 24px;
+    background: var(--grey);
+}
+
+.products-page .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.products-page .header h1 {
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.products-page .header .add-product {
+    padding: 12px 24px;
+    background: var(--primary);
+    color: var(--light);
+    border-radius: 24px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.products-page .header .add-product:hover {
+    background: var(--light-primary);
+}
+
+.products-page .products-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--light);
+}
+
+.products-page .products-table th, .products-page .products-table td {
+    padding: 8px 12px;
+    text-align: left;
+}
+
+.products-page .products-table th {
+    background: var(--dark-grey);
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.products-page .products-table td {
+    border-bottom: 1px solid var(--grey);
+    color: var(--dark);
+    font-size: 13px;
+}
+
+.products-page .products-table tbody tr {
+    transition: background 0.3s ease;
+}
+
+.products-page .products-table tbody tr:hover {
+    background: var(--grey);
+}
+
+/* الوضع الليلي */
+.products-page.night-mode .products-table {
+    background: #860392;
+}
+
+.products-page .products-table .status {
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.products-page .products-table .status.available {
+    background: var(--success);
+    color: var(--light);
+}
+
+.products-page .products-table .status.unavailable {
+    background: var(--danger);
+    color: var(--light);
+}
+
+@media screen and (max-width: 768px) {
+    .products-page {
+        padding: 20px;
+    }
+
+    .products-page .header h1 {
+        font-size: 28px;
+    }
+
+    .products-page .products-table {
+        font-size: 12px;
+    }
+}
+
+/* أنماط عامة */
+.recent-products {
+    overflow-x: auto;
+}
+
+/* استجابة التصميم */
+@media screen and (max-width: 768px) {
+    .products-page {
+        padding: 20px;
+    }
+
+    .products-page .header h1 {
+        font-size: 28px;
+    }
+
+    .products-page .products-table {
+        font-size: 12px;
+        display: block;
+        overflow-x: auto;
+    }
+
+    .products-page .products-table thead {
+        display: none;
+    }
+
+    .products-page .products-table tr {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 1rem;
+        border: 1px solid #ffffff00;
+        padding: 0.5rem;
+        justify-content: space-between;
+    }
+
+    .products-page .products-table td {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.5rem;
+        border-bottom: 1px solid #ddd;
+        width: calc(100% / 4);
+    }
+
+    .products-page .products-table td:before {
+        content: attr(data-label);
+        font-weight: bold;
+        margin-right: 0.5rem;
+    }
+}
+.title-box {
+    display: inline-block; /* جعل الصندوق بحجم النص */
+    background-color: #86039200; /* لون خلفية خفيف */
+    border: 1px solid #860392; /* إطار حول النص */
+    border-radius: 10px; /* حواف دائرية */
+    padding: 5px 10px; /* مساحة داخلية للصندوق */
+    margin-bottom: 10px; /* تباعد أسفل الصندوق */
+    font-size: 1em; /* تكبير النص قليلاً */
+    color: #860392; /* لون النص */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* ظل خفيف */
+}
+/* xs */
+/* @media (min-width: 475px) {} */
+
+/* sm */
+/* @media (min-width: 640px) {} */
+
+/* md */
+/* @media (min-width: 768px) {} */
+
+/* lg */
+/* @media (min-width: 1024px) {} */
+
+/* xl */
+/* @media (min-width: 1280px) {} */
+
+/* 2xl */
+/* @media (min-width: 1536px) {} */
+
+/* 2xl */
+@media (max-width: 1536px) {}
+
+/* xl */
+@media (max-width: 1280px) {}
+
+/* lg */
+@media (max-width: 1024px) {}
+
+/* md */
+@media (max-width: 768px) {}
+
+/* sm */
+@media (max-width: 640px) {}
+
+/* xs */
+@media (max-width: 475px) {}
+
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+/* xs */
+@media (min-width: 475px) {
+  .container {
+    max-width: 475px;
+  }
+}
+
+/* sm */
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+
+/* md */
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+/* lg */
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+/* xl */
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+/* 2xl */
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}
+
+.container {
+  max-width: 1536px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+/* 2xl */
+@media (max-width: 1536px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+/* xl */
+@media (max-width: 1280px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+/* lg */
+@media (max-width: 1024px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+/* md */
+@media (max-width: 768px) {
+  .container {
+    max-width: 640px;
+  }
+}
+
+/* sm */
+@media (max-width: 640px) {
+  .container {
+    max-width: 475px;
+  }
+}
+
+/* xs */
+@media (max-width: 475px) {
+  .container {
+    width: 100%;
+  }
+}

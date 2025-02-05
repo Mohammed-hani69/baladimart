@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='/img/1.png') }}" type="image/x-icon">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="static/css/orders.css">
+    <title>الطلبات</title>
+<body>
+<!-- الشريط الجانبي -->
+<div class="sidebar">
+    <a href="dashboard.html" class="logo">
+        <i class='bx bx-code-alt'></i>
+        <div class="logo-name"><span>مدينة</span>العبور</div>
+    </a>
+    <ul class="side-menu">
+        <li><a href="/dashboard"><i class='bx bxs-dashboard'></i>لوحة التحكم</a></li>
+        <li><a href="/products"><i class='bx bx-store-alt'></i>المنتجات</a></li>
+        <li><a href="/banner"><i class='bx bx-image'></i>البانرات الاعلانيه</a></li>
+        <li><a href="/sellers"><i class='bx bx-group'></i>البائعون</a></li>
+        <li><a href="/Orders"><i class='bx bx-receipt'></i>الطلبات</a></li>
+        <li><a href="/services"><i class='bx bx-message-square-dots'></i>الخدمات</a></li>
+        <li><a href="/Types_of_services"><i class="bx bx-briefcase"></i>انواع الخدمات</a></li>
+        <li><a href="/category"><i class='bx bx-category'></i>الاقسام</a></li>
+        <li><a href="/offers_admin"><i class='bx bx-gift'></i>العروض</a></li>
+        <li><a href="/settings"><i class='bx bx-cog'></i>الإعدادات</a></li>
+        <li><a href="#" id="language-toggle"><i class='bx bx-globe'></i>اللغة</a></li>
+    </ul>
+    <ul class="side-menu">
+        <li>
+            <a href="admin.html" class="logout">
+                <i class='bx bx-log-out-circle'></i>
+                تسجيل الخروج
+            </a>
+        </li>
+    </ul>
+
+</div>
+<!-- نهاية الشريط الجانبي -->
+
+    <!-- المحتوى الرئيسي -->
+    <div class="content">
+        <!-- شريط التنقل -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            <form action="#">
+                <div class="form-input" style="direction: rtl; display: flex; align-items: center;">
+                    <button class="search-btn" type="submit" style="margin-right: 5px;"><i class='bx bx-search'></i></button>
+                    <input type="search" placeholder="بحث..." style="text-align: right;">
+                </div>
+            </form>
+            <!-- تبديل الوضع الليلي -->
+            <input type="checkbox" id="theme-toggle" hidden>
+            <label for="theme-toggle" class="theme-toggle"></label>
+<!-- زر الإشعارات الجديد -->
+<a href="/notifications">
+    <button class="button">
+        <svg viewBox="0 0 448 512" class="bell">
+            <path d="M224 0c-17.7 0-32 14.3-32 32V49.9C119.5 61.4 64 124.2 64 200v33.4c0 45.4-15.5 89.5-43.8 124.9L5.3 377c-5.8 7.2-6.9 17.1-2.9 25.4S14.8 416 24 416H424c9.2 0 17.6-5.3 21.6-13.6s2.9-18.2-2.9-25.4l-14.9-18.6C399.5 322.9 384 278.8 384 233.4V200c0-75.8-55.5-138.6-128-150.1V32c0-17.7-14.3-32-32-32zm0 96h8c57.4 0 104 46.6 104 104v33.4c0 47.9 13.9 94.6 39.7 134.6H72.3C98.1 328 112 281.3 112 233.4V200c0-57.4 46.6-104 104-104h8zm64 352H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7s18.7-28.3 18.7-45.3z"></path>
+        </svg>
+        الاشعارات
+    </button>
+</a>
+ 
+            <!-- أيقونة الملف الشخصي -->
+            <a href="settings.html" class="profile">
+                <img src="images/logo.png" alt="الملف الشخصي">
+            </a>
+        </nav>
+        <!-- نهاية شريط التنقل -->
+
+        <main class="orders-page">
+            <div class="header">
+                <h2>قائمة الطلبات</h2>
+        
+                <!-- محرك البحث -->
+                <div class="search-box">
+                    <input 
+                        type="text" 
+                        id="orderSearch" 
+                        class="search-input" 
+                        placeholder="ابحث عن رقم الطلب..."
+                        onkeyup="filterOrdersByOrderNumber()"> <!-- تشغيل الفلترة عند الكتابة -->
+                    <button id="searchOrderButton" class="search-button" onclick="filterOrdersByOrderNumber()">بحث</button>
+                </div>
+        
+                <!-- زر الفلترة باستخدام القائمة المنسدلة المحسنة -->
+                <div class="dropdown">
+                    <button class="dropdown-button">
+                        <i class='bx bx-filter'></i> التصفيه حسب حالة الطلب
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="javascript:void(0);" onclick="filterOrdersByStatus('all')">
+                            <i class='bx bx-list-ul'></i> جميع الطلبات
+                        </a>
+                        <a class="badge badge-pending" href="javascript:void(0);" onclick="filterOrdersByStatus('pending')">
+                            <i class='bx bx-time-five'></i> طلبات قيد الانتظار
+                        </a>
+                        <a class="badge badge-approved" href="javascript:void(0);" onclick="filterOrdersByStatus('approved')">
+                            <i class='bx bx-check-circle'></i> طلبات مكتملة
+                        </a>
+                        <a class="badge badge-startpreper" href="javascript:void(0);" onclick="filterOrdersByStatus('startpreper')">
+                            <i class='bx bx-time-five'></i> طلبات يتم التجهيز
+                        </a>
+                        <a class="badge badge-onroad" href="javascript:void(0);" onclick="filterOrdersByStatus('onroad')">
+                            <i class='bx bx-truck'></i> الطلبات في الطريق
+                        </a>
+                        
+                    </div>
+                </div>
+                
+                
+                <script>
+                    // وظيفة التصفية بالحالة
+                    function filterOrdersByStatus(status) {
+                        var rows = document.querySelectorAll('.order-row'); // تحديد جميع الصفوف في الجدول
+                    
+                        rows.forEach(function(row) {
+                            var orderStatus = row.getAttribute('data-status'); // الحصول على حالة الطلب من السمة data-status
+                    
+                            if (status === 'all' || orderStatus === status) {
+                                row.style.display = ''; // عرض الصف
+                            } else {
+                                row.style.display = 'none'; // إخفاء الصف
+                            }
+                        });
+                    }
+                    
+                    // تحديث حالة الطلب من خلال الـ select
+                    function updateOrderStatus(orderId, status) {
+                        // إرسال التحديث إلى الخادم أو تحديث الحالة على الواجهة
+                        console.log('تم تحديث حالة الطلب:', orderId, 'إلى', status);
+                        // تحديث البيانات داخل السمة data-status في الصف
+                        var row = document.querySelector('.order-row[data-order-id="' + orderId + '"]');
+                        row.setAttribute('data-status', status);
+                    }
+
+                    </script>
+                
+            </div>
+        
+            <!-- جدول الطلبات -->
+            <div class="product-list-box">
+                <table class="orders-table" id="ordersTable">
+                    <thead>
+                        <tr>
+                            <th>رقم الطلب</th>
+                            <th>اسم العميل</th>
+                            <th>تاريخ الطلب</th>
+                            <th>المبلغ الإجمالي</th>
+                            <th>حالة الطلب</th>
+                            <th>نوع الدفع</th>
+                            <th>رقم التحويل</th>
+                            <th>مبلغ التحويل</th>
+                            <th>حالة الدفع</th>
+                            <th>موقع العميل</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for orders in orders %}
+                        <tr class="order-row" data-status="{{ orders.order_status }}">
+                            <td><a href="{{ url_for('order_details_admin', order_id=orders.order_id) }}" class="order-link">{{ orders.order_id }}</a></td>
+                            <td>{{ orders.customer_name }}</td>
+                            <td>{{ orders.order_date.strftime('%I:%M %p %d %B %Y') }}</td>
+                            <td>{{ "%.2f"|format(orders.total_amount) }} ج.م</td>
+                            <td>
+                                <!-- إعادة إضافة اختيار حالة الطلب -->
+                                <div class="form-group">
+                                    <select id="order-status-select-{{ orders.order_id }}" 
+                                            class="form-control small-select" 
+                                            onchange="updateOrderStatus({{ orders.order_id }}, this.value)">
+                                        <option class="badge badge-pending" value="pending" {% if orders.order_status == 'pending' %}selected{% endif %}>قيد الانتظار</option>
+                                        <option class="badge badge-approved" value="approved" {% if orders.order_status == 'approved' %}selected{% endif %}>مكتمل</option>
+                                        <option class="badge badge-startpreper" value="startpreper" {% if orders.order_status == 'startpreper' %}selected{% endif %}>يتم التجهيز</option>
+                                        <option class="badge badge-onroad" value="onroad" {% if orders.order_status == 'onroad' %}selected{% endif %}>الطلب في الطريق</option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td>
+                                {% if orders.payment_method == 'online' %}
+                                    الدفع بالمحافظ الالكترونية
+                                {% elif orders.payment_method == 'cod' %}
+                                    الدفع عند الاستلام
+                                {% endif %}
+                            </td>
+                            <td>{{ orders.payment_phone }}</td>
+                            <td>{{ orders.payment_price }}</td>
+                            <td>
+                                <div class="form-group">
+                                    <select id="payment-status-select-{{ orders.order_id }}" 
+                                            class="form-control small-select" 
+                                            onchange="updatePaymentStatus({{ orders.order_id }}, this.value)">
+                                        <option class="badge badge-paid" value="paid" {% if orders.payment_status %}selected{% endif %}>مدفوع</option>
+                                        <option class="badge badge-unpaid" value="unpaid" {% if not orders.payment_status %}selected{% endif %}>غير مدفوع</option>
+                                    </select>
+                                </div>
+                            </td> 
+                            <td>
+                                <a id="open-map" 
+                                   href="https://www.google.com/maps?q={{ orders.latitude }},{{ orders.longitude }}" 
+                                   target="_blank" 
+                                   class="btn btn-primary">
+                                   عرض الموقع على الخريطة
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                
+            </div>
+        </main>
+        
+        <script>
+            // وظيفة التصفية بالنص
+            function filterOrdersByOrderNumber() {
+                var input = document.getElementById('orderSearch');
+                var filter = input.value.toLowerCase().trim();
+                var table = document.getElementById('ordersTable');
+                var rows = table.getElementsByTagName('tr');
+            
+                // تجاهل الصف الأول (عناوين الأعمدة)
+                for (var i = 1; i < rows.length; i++) {
+                    var cells = rows[i].getElementsByTagName('td');
+                    var orderNumberCell = cells[0]; // نفترض أن رقم الطلب في العمود الأول
+                    
+                    if (orderNumberCell) {
+                        var orderNumber = orderNumberCell.textContent || orderNumberCell.innerText;
+                        // عرض أو إخفاء الصف بناءً على المطابقة
+                        rows[i].style.display = orderNumber.toLowerCase().includes(filter) ? '' : 'none';
+                    }
+                }
+            }
+            
+        
+            // وظيفة التصفية بالحالة
+            function filterOrdersByStatus(status) {
+                var table = document.getElementById('ordersTable');
+                var rows = table.getElementsByClassName('order-row');
+        
+                for (var i = 0; i < rows.length; i++) {
+                    var rowStatus = rows[i].getAttribute('data-status');
+                    if (status === 'all' || rowStatus === status) {
+                        rows[i].style.display = '';
+                    } else {
+                        rows[i].style.display = 'none';
+                    }
+                }
+            }
+        </script>
+        <style>
+            .search-box {
+                display: flex;
+                align-items: center;
+                margin-bottom: 15px;
+            }
+        
+            .search-input {
+                padding: 10px;
+                width: 100%;
+                max-width: 400px;
+                font-size: 16px;
+                border:  #ccc;
+                border-radius: 0px 80px 80px 0px;
+                margin-right: 10px;
+            }
+        
+            .search-button {
+                padding: 10px 20px;
+                background-color: #860392;
+                color: white;
+                border: none;
+                border-radius: 80px 0px 0px 80px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+        
+            .search-button:hover {
+                background-color:rgb(92, 6, 85);
+            }
+        </style>        
+    </div>
+
+
+    <script src="static/js/orders.js"></script>
+    <script src="static/js/dashboard.js"></script>
+    <script src="static/js/settings.js"></script>
+
+</body>
+
+</html>

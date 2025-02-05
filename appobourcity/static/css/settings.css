@@ -1,0 +1,106 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: rgba(249, 250, 251, 0); /* اللون الخلفي مع بعض الشفافية */
+}
+
+.settings-form {
+    background-color: rgba(255, 255, 255, 0); /* لون خلفية النموذج مع شفافية */
+    padding: 1.2rem; /* تقليل البادينغ */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px #860392;
+    width: 100%;
+    max-width: 1000px; /* تقليل الحد الأقصى للعرض */
+    padding: 50px;
+
+}
+
+.settings-form h2 {
+    font-size: 1.2rem; /* تقليل حجم الخط */
+    color: #860392;
+    text-align: center;
+    margin-bottom: 1rem; /* تقليل المسافة السفلية */
+}
+
+.settings-section {
+    margin-bottom: 1.5rem; /* تقليل المسافة السفلية */
+}
+
+.settings-section h3 {
+    font-size: 1rem; /* تقليل حجم الخط */
+    color: #860392;
+    margin-bottom: 0.8rem; /* تقليل المسافة السفلية */
+}
+
+.form-row {
+    display: flex;
+    gap: 0.8rem; /* تقليل المسافة بين الأعمدة */
+    margin-bottom: 1rem; /* تقليل المسافة السفلية */
+}
+
+.form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 0.85rem; /* تقليل حجم الخط */
+    color: #860392;
+    margin-bottom: 0.3rem;
+}
+
+.form-group input,
+.form-group select {
+    padding: 0.4rem; /* تقليل البادينغ */
+    font-size: 0.95rem; /* تقليل حجم الخط */
+    border: 1px solid #dddddd; /* إزالة الشفافية في الحدود */
+    border-radius: 5px;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #860392;
+    outline: none;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 0.6rem; /* تقليل البادينغ */
+    font-size: 0.95rem; /* تقليل حجم الخط */
+    color: #fff;
+    background-color: #860392;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s; /* إضافة تأثير التحول */
+}
+
+.submit-button:hover {
+    background-color: #2bb032; /* تغيير لون الخلفية عند التمرير */
+    transform: scale(1.05); /* تأثير التحجيم عند التمرير */
+}
+
+/* إضافة تأثيرات صغيرة على عناصر الإدخال */
+.form-group input::placeholder,
+.form-group select {
+    color: #860392; /* لون النص التلقائي */
+}
+
+.form-group input:focus::placeholder {
+    color: transparent; /* إخفاء النص التلقائي عند التركيز */
+}
+
+/* ألوان الموقع */
+:root {
+    --primary-color: #FF5733; /* اللون الرئيسي الافتراضي */
+    --secondary-color: #33FF57; /* اللون الثانوي الافتراضي */
+}
+.error-message {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}

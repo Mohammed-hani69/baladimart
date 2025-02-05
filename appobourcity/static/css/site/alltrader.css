@@ -1,0 +1,137 @@
+body {
+    font-family: 'Tajawal', serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    direction: rtl;
+    gap: 20px;
+    margin: 20px auto;
+    max-width: 1200px;
+}
+
+.order-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    position: relative;
+}
+
+.order-card:hover {
+    transform: translateY(-5px);
+    transition: transform 0.3s ease-in-out;
+}
+
+.banner img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.logo-container {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 4px solid #fff;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.order-info {
+    margin-top: 20px;
+    padding: 5px 10px;
+}
+
+.order-info h5 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #730677;
+    margin: 5px 0;
+}
+
+.details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* لضبط العناصر على نفس الارتفاع */
+    margin-top: 15px;
+    height: auto; /* أو تحديد ارتفاع معين إذا كان مطلوبًا */
+}
+
+.divider {
+    width: 1px;
+    height: 50px; /* يمكن تغييره إذا أردت طول الخط يعتمد على التصميم */
+    background-color: #730677;
+    margin: 0 15px;
+}
+
+
+.right-side, .left-side {
+    flex: 1;
+    text-align: start;
+}
+
+.right-side p, .left-side p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #730677;
+}
+
+
+.rating-stars {
+    display: flex;
+    justify-content: center; /* لتوسيط النجوم */
+    gap: 5px; /* مسافة بين النجوم */
+    margin-top: 5px; /* مسافة أعلى */
+}
+
+.rating-stars .fa-star {
+    font-size: 20px;
+    color: #afabaf; /* لون النجمة المعبأة */
+}
+
+.rating-stars .filled {
+    color: #FFD700; /* لون النجوم المعبأة */
+}
+
+
+.pagination {
+    display: flex;
+    justify-content: center; /* لضمان توسيط الأزرار */
+    align-items: center;
+    margin: 20px 0; /* لإضافة مسافة من الأعلى والأسفل */
+    list-style: none; /* إزالة النقاط من الأزرار */
+    padding: 0;
+}
+
+.pagination .page-btn {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    border-radius: 5px; /* لإضافة زوايا مستديرة */
+    text-align: center;
+}
+
+.pagination .page-btn.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.pagination .page-btn:hover {
+    background-color: #0056b3;
+    color: white;
+}

@@ -1,0 +1,161 @@
+/* تعريف متغيرات الألوان */
+:root {
+    --background-color: #f4f4f4; /* اللون الخلفي في الوضع النهاري */
+    --text-color: #000; /* لون النص في الوضع النهاري */
+    --card-background: white; /* لون خلفية الكروت في الوضع النهاري */
+    --button-background: #0096FF; /* لون خلفية الأزرار في الوضع النهاري */
+    --button-hover: #0096FF; /* لون الخلفية عند التمرير */
+    --border-color: #ddd; /* لون الحدود في الوضع النهاري */
+}
+
+/* الوضع الليلي */
+body.dark-mode {
+    --background-color: #2C2C2C; /* اللون الخلفي في الوضع الليلي */
+    --text-color: #f4f4f4; /* لون النص في الوضع الليلي */
+    --card-background: #3C3C3C; /* لون خلفية الكروت في الوضع الليلي */
+    --button-background: #111985; /* لون خلفية الأزرار في الوضع الليلي */
+    --button-hover: #5D3F8B; /* لون الخلفية عند التمرير */
+    --border-color: #555; /* لون الحدود في الوضع الليلي */
+}
+
+.header {
+    background-color: #0096FF; /* لون الرأس */
+    color: white;
+    padding: 2px;
+    border-radius: 5px;
+    margin-bottom: 10px; /* التباعد بين الرأس والمحتوى */
+}
+
+/* حاوية تفاصيل الطلب */
+.order-details-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* تباعد بين البوكسات */
+    padding: 20px;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end; /* محاذاة الأزرار لليمين */
+    gap: 10px; /* تباعد بين الأزرار */
+}
+
+.edit-button {
+    background-color: var(--button-background);
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.edit-button:hover {
+    background-color: var(--button-hover);
+}
+
+.order-box {
+    background-color: var(--card-background);
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+/* هيدر القسم */
+.section-header {
+    background-color: var(--button-background); /* اللون الخلفي */
+    color: white; /* لون النص */
+    padding: 10px; /* تباعد داخلي */
+    border-radius: 0 0 8px 8px; /* انحناءات من الجانبين فقط */
+    margin-bottom: 15px; /* تباعد أسفل الهيدر */
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.1em; /* حجم خط الهيدر متوسط */
+}
+
+.header h2 {
+    margin: 0;
+}
+
+.order-details-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+
+.order-details-table th,
+.order-details-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid var(--border-color); /* استخدام لون الحدود من المتغير */
+    color: var(--text-color); /* استخدام لون النص من المتغير */
+}
+
+.summary {
+    margin-top: 15px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+}
+
+.total {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.order-box h3 {
+    margin: 10px 0;
+    display: flex;
+    align-items: center; /* محاذاة الأيقونات */
+}
+
+.order-box h3 i {
+    margin-right: 10px; /* تباعد بين الأيقونة والعنوان */
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group select,
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: var(--text-color); /* استخدام لون النص من المتغير */
+}
+
+.save-button {
+    background-color: var(--button-background);
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.save-button:hover {
+    background-color: #05aed8;
+}
+
+@media print {
+    /* أنماط خاصة بالطباعة */
+    body {
+        font-size: 12px;
+    }
+    #printable-area {
+        page-break-after: always;
+    }
+}

@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: Baladimart
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn run:app
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: DATABASE_URL
+        value: sqlite:///instance/database.db
+      - key: SECRET_KEY
+        value: Y5lKJk50mo_mx0N-ZY0fYCxnn6SUHlUvnzPzOQ
+      - key: API_KEY
+        value: b4b38504c6b61a7529e353a1c5b3d42b142739b23ce8ca8ac2c7770c24259bf7
+
+  - type: worker
+    name: background-worker
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python run.py
+    envVars:
+      - key: FLASK_ENV
+        value: production

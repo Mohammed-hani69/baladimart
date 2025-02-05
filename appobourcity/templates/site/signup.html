@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب</title>
+    <!-- روابط الخطوط والأيقونات -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../../static/css/site/signup.css">
+    <link rel="icon" href="{{ url_for('static', filename='/img/1.png') }}" type="image/x-icon">
+</head>
+<body>
+    <!-- الحاوية الرئيسية -->
+    <div class="container">
+        <!-- الشعار خارج الفورم وفي المنتصف -->
+        <div class="site-logo">
+            <img src="../../static/img/site/alpha.png" alt="شعار الموقع" class="logo-img">
+        </div>
+
+        <!-- القسم الأيمن: صورة التسوق -->
+        <div class="image-container">
+            <img src="../../static/img/site/imge.svg" alt="صورة تعبر عن التسوق">
+        </div>
+
+        <!-- نموذج إنشاء الحساب -->
+        <div class="form-container" id="signup-form">
+
+            <h2>إنشاء حساب جديد</h2>
+                 <form action="{{ url_for('signup') }}" method="POST">
+                    {{ form.hidden_tag() }} <!-- لإضافة التحقق من CSRF -->
+                        <!-- عرض رسائل الفلاش -->
+                        {% with messages = get_flashed_messages(with_categories=True) %}
+                            {% if messages %}
+                                <div id="flash-messages">
+                                    {% for category, message in messages %}
+                                        <div class="flash-message {{ category }}">
+                                            {{ message }}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="seller_name"><i class="fa-solid fa-user" style="color: #9c0797;"></i> الاسم:</label>
+                            {{ form.seller_name(placeholder="أدخل اسمك الكامل", required=True) }}
+                        </div>
+                        <div class="input-group">
+                            <label for="email"><i class="fa-solid fa-envelope" style="color: #9c0797;"></i> البريد الإلكتروني:</label>
+                            {{ form.email(placeholder="example@email.com", required=True) }}
+                        </div>
+                    </div>
+                
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="phone"><i class="fa-solid fa-phone" style="color: #9c0797;"></i> رقم الهاتف:</label>
+                            {{ form.phone(placeholder="05X-XXX-XXXX", required=True) }}
+                        </div>
+                        <div class="input-group">
+                            <label for="governorate"><i class="fa-solid fa-city" style="color: #9c0797;"></i> المحافظة:</label>
+                                <select id="governorate" name="governorate" class="form-control" required>
+                                    <option value="" disabled selected>اختر المحافظة</option>
+                                    {% for gov in data.keys() %}
+                                    <option value="{{ gov }}">{{ gov }}</option>
+                                    {% endfor %}
+                                </select>
+                        </div>
+                    </div>
+
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="city"><i class="fa-solid fa-building" style="color: #9c0797;"></i> المدينة:</label>
+                            <select id="city" name="city" class="form-control" required>
+                                <option value="" disabled selected>اختر المدينة</option>
+                            </select>
+                        </div>
+                        
+                        
+                        <div class="input-group">
+                            <label for="village"><i class="fa-solid fa-map-location-dot" style="color: #9c0797;"></i> الحي:</label>
+                            <select id="village" name="village" class="form-control" required>
+                                <option value="" disabled selected>اختر الحي</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="street_address"><i class="fa-solid fa-phone" style="color: #9c0797;"></i> الشارع ورقم العماره :</label>
+                            {{ form.street_address(placeholder="اسم الشارع - رقم العماره - رقم الدور", required=True) }}
+                        </div>
+                        
+                        <div class="input-group full-width">
+                            <label for="password"><i class="fa-solid fa-lock" style="color: #9c0797;"></i> كلمة المرور:</label>
+                            {{ form.password(placeholder="••••••••", required=True) }}
+                        </div>
+                    </div>
+                
+                    <div class="input-row">
+                        <div class="input-group full-width">
+                            {{ form.submit(class="btn-custom") }}
+                        </div>
+                    </div>
+                    
+                 </form>
+                
+                
+
+            <div class="login-link">
+                <p>لديك حساب بالفعل؟ <a href="{{ url_for('login') }}">تسجيل الدخول</a></p>
+            </div>
+        </div>
+
+    <!-- كود JavaScript للتبديل بين النماذج -->
+    <script src="../../static/js/site/signup.js"></script>
+</body>
+</html>

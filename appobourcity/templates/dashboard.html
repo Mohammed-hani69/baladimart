@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="icon" href="{{ url_for('static', filename='/img/1.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="static/css/dashboard.css">
+    <link rel="stylesheet" href="static/css/responsive.css">
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <title>لوحة التحكم الإدارية</title>
+</head>
+
+<body>
+<!-- الشريط الجانبي -->
+<div class="sidebar">
+    <a href="dashboard.html" class="logo">
+        <i class='bx bx-code-alt'></i>
+        <div class="logo-name"><span>مدينة</span>العبور</div>
+    </a>
+    <ul class="side-menu">
+        <li><a href="/dashboard"><i class='bx bxs-dashboard'></i>لوحة التحكم</a></li>
+        <li><a href="/products"><i class='bx bx-store-alt'></i>المنتجات</a></li>
+        <li><a href="/banner"><i class='bx bx-image'></i>البانرات الاعلانيه</a></li>
+        <li><a href="/sellers"><i class='bx bx-group'></i>البائعون</a></li>
+        <li><a href="/Orders"><i class='bx bx-receipt'></i>الطلبات</a></li>
+        <li><a href="/services"><i class='bx bx-message-square-dots'></i>الخدمات</a></li>
+        <li><a href="/Types_of_services"><i class="bx bx-briefcase"></i>انواع الخدمات</a></li>
+        <li><a href="/category"><i class='bx bx-category'></i>الاقسام</a></li>
+        <li><a href="/offers_admin"><i class='bx bx-gift'></i>العروض
+            {% if unread_offer > 0 %}
+            <p id="unreadCount" style="display: inline-block; background-color: red; color: white; padding: 0; border-radius: 50%; font-size: 10px; font-weight: bold; text-align: center; width: 16px; height: 16px; line-height: 16px; vertical-align: middle;">
+                {{ unread_offer }}
+            </p>
+        
+        {% endif %} 
+        </a></li>
+        <li><a href="/settings"><i class='bx bx-cog'></i>الإعدادات</a></li>
+        <li><a href="#" id="language-toggle"><i class='bx bx-globe'></i>اللغة</a></li>
+    </ul>
+    <ul class="side-menu">
+        <li>
+            <a href="/" class="logout">
+                <i class='bx bx-log-out-circle'></i>
+                تسجيل الخروج
+            </a>
+        </li>
+    </ul>
+
+    <!-- التأثير تحت زر تسجيل الخروج -->
+    
+</div>
+<!-- نهاية الشريط الجانبي -->
+
+
+    <!-- المحتوى الرئيسي -->
+    <div class="content">
+        <!-- شريط التنقل -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            <form action="#">
+                <div class="form-input">
+                    <button class="search-btn" type="submit"><i class='bx bx-search'></i></button>
+                    <input type="search" placeholder="بحث...">
+                </div>
+            </form>
+            <input type="checkbox" id="theme-toggle" hidden>
+            <label for="theme-toggle" class="theme-toggle"></label>
+    <!-- زر الإشعارات -->
+    <a href="/notifications">
+        <button class="button">
+            <svg viewBox="0 0 448 512" class="bell">
+                <path d="M224 0c-17.7 0-32 14.3-32 32V49.9C119.5 61.4 64 124.2 64 200v33.4c0 45.4-15.5 89.5-43.8 124.9L5.3 377c-5.8 7.2-6.9 17.1-2.9 25.4S14.8 416 24 416H424c9.2 0 17.6-5.3 21.6-13.6s2.9-18.2-2.9-25.4l-14.9-18.6C399.5 322.9 384 278.8 384 233.4V200c0-75.8-55.5-138.6-128-150.1V32c0-17.7-14.3-32-32-32zm0 96h8c57.4 0 104 46.6 104 104v33.4c0 47.9 13.9 94.6 39.7 134.6H72.3C98.1 328 112 281.3 112 233.4V200c0-57.4 46.6-104 104-104h8zm64 352H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7s18.7-28.3 18.7-45.3z"></path>
+            </svg>
+            الاشعارات
+        </button>
+    </a>
+
+    <a href="settings.html" class="profile">
+        <img src="static/img/1.png" alt="الملف الشخصي">
+            </a>
+        </nav>
+        <!-- نهاية شريط التنقل -->
+
+        <main>
+<!-- قسم الترحيب بالمستخدم -->
+<div class="title-box">
+    <h2>مرحباً بك، المستخدم</h2>
+</div>
+<div class="welcome-user">
+    <div class="user-info-container">
+        <div class="user-profile">
+            <img id="user-profile-pic" src="static/img/1.png" alt="صورة الملف الشخصي">
+            <div class="user-details">
+                <p><strong>اسم المستخدم:</strong> <span id="username">user123</span></p>
+                <p><strong>كلمة المرور:</strong> <span id="password">********</span></p>
+                <button class="edit-button" onclick="showPopup()">
+                    <svg class="icon" stroke-linejoin="round" stroke-linecap="round" fill="none" stroke-width="2" stroke="#FFFFFF" height="24" width="24" viewBox="0 0 24 24">
+                        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                    </svg>
+                    تعديل
+                </button>
+            </div>
+        </div>
+
+        <!-- صندوق الإحصائيات -->
+        <div class="stats-box">
+            <h3>إحصائيات الحساب</h3>
+            <ul>
+                <li><strong>تاريخ الانضمام:</strong> <span>01 يناير 2022</span></li>
+                <li><strong>آخر تسجيل دخول:</strong> <span>02 نوفمبر 2024</span></li>
+                <li><strong>عدد المشاركات:</strong> <span>45</span></li>
+            </ul>
+        </div>
+
+        <!-- صندوق الملاحظات السريعة -->
+        <div class="quick-notes-box">
+            <h3>ملاحظات سريعة</h3>
+            <ul>
+                <li>تأكد من تحديث كلمة المرور الخاصة بك بانتظام.</li>
+                <li>راجع تقارير الأداء في قسم الإحصائيات.</li>
+                <li>لا تتردد في الاتصال بفريق الدعم لأي استفسارات.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% if orders %}
+<!-- قسم الطلبات الأخيرة -->
+<div class="title-box">
+    <h3><i class='bx bx-list-ul'></i> الطلبات الأخيرة</h3>
+</div>
+<div class="recent-orders">
+    <!-- جدول الطلبات -->
+        <table class="orders-table">
+            <thead>
+                <tr>
+                    <th>رقم الطلب</th>
+                    <th>اسم العميل</th>
+                    <th>تاريخ الطلب</th>
+                    <th>المبلغ الإجمالي</th>
+                    <th>حالة الطلب</th>
+                    <th>نوع الدفع</th>
+                    <th>رقم التحويل</th>
+                    <th>مبلغ التحويل</th>
+                    <th>حالة الدفع</th>
+                    <th>مبلغ العمولة</th>
+                    <th>موقع العميل</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr class="order-row" data-status="pending">
+                    <td><a href="{{ url_for('order_details_admin', order_id=order.order_id) }}" class="order-link">{{ order.order_id }}</a></td>
+                    <td>{{ order.customer_name }}</td>
+                    <td>{{ order.order_date.strftime('%I:%M %p %d %B %Y') }}</td>
+                    <td>{{ "%.2f"|format(order.total_amount) }} ج.م</td>
+                    <td>
+                        <div class="form-group">
+                            <select id="order-status-select-{{ order.order_id }}" 
+                                    class="form-control small-select" 
+                                    onchange="updateOrderStatus({{ order.order_id }}, this.value)">
+                                <option class="badge badge-pending" value="pending" {% if order.order_status == 'pending' %}selected{% endif %}>قيد الانتظار</option>
+                                <option class="badge badge-approved" value="approved" {% if order.order_status == 'approved' %}selected{% endif %}>مكتمل</option>
+                                <option class="badge badge-startpreper" value="startpreper" {% if order.order_status == 'startpreper' %}selected{% endif %}>يتم التجهيز</option>
+                                <option class="badge badge-onroad" value="onroad" {% if order.order_status == 'onroad' %}selected{% endif %}>الطلب في الطريق</option>
+                            </select>
+                        </div>
+                    </td>                            
+                    <td>
+                        {% if order.payment_method == 'online' %}
+                            الدفع بالمحافظ الالكترونية
+                        {% elif order.payment_method == 'cod' %}
+                            الدفع عند الاستلام
+                        {% endif %}
+                    </td>
+                    <td>{{ order.payment_phone }}</td>
+                    <td>{{ order.payment_price }}</td>
+                    <td>
+                        <div class="form-group">
+                            <select id="payment-status-select-{{ order.order_id }}" 
+                                    class="form-control small-select" 
+                                    onchange="updatePaymentStatus({{ order.order_id }}, this.value)">
+                                <option class="badge badge-paid" value="paid" {% if order.payment_status %}selected{% endif %}>مدفوع</option>
+                                <option class="badge badge-unpaid" value="unpaid" {% if not order.payment_status %}selected{% endif %}>غير مدفوع</option>
+                            </select>
+                        </div>
+                    </td>                                                    
+                    <td>{{ "%.2f"|format(order.total_amount * 0.05) }} ج.م</td>
+                    <td>
+                        <a id="open-map" 
+                        href="https://www.google.com/maps?q={{ order.latitude }},{{ order.longitude }}" 
+                        target="_blank" 
+                        class="btn btn-primary">
+                        عرض الموقع على الخريطة
+                     </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+</div>
+{% endif %}
+<!-- رسالة عند عدم وجود طلبات -->
+
+<!-- قسم معلومات البائع -->
+<div class="title-box">
+    <h3><i class='bx bx-user'></i> معلومات البائع</h3>
+</div>
+<div class="seller-info">
+    <table>
+        <thead>
+            <tr>
+                <th>اسم التاجر</th>
+                <th>اسم المتجر</th>
+                <th>تخصص المتجر</th>
+                <th>البريد الإلكتروني</th>
+                <th>رقم الهاتف</th>
+                <th>العنوان</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for seller in seller %}
+            <tr>
+                <td>{{ seller.seller_name }}</td>
+                <td>{{ seller.store_name }}</td>
+                <td>{{ seller.store_category }}</td>
+                <td>{{ seller.email }}</td>
+                <td>{{ seller.phone }}</td>
+                <td>{{ seller.governorate }} - {{ seller.city }} - {{ seller.village }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+            <!-- قسم تحليل البيانات -->
+            <div class="data-analysis">
+                <h2>تحليل البيانات</h2>
+                <p>تقدم هذه البوكسات لمحة سريعة عن الأداء العام للنظام، مما يساعد على اتخاذ قرارات مستنيرة.</p>
+            </div>
+            <div class="summary-boxes">
+                <div class="summary-box">
+                    <i class='bx bx-receipt'></i>
+                    <div class="summary-text">
+                        <h3>إجمالي الطلب</h3>
+                        <p>{{ order }}</p>
+                    </div>
+                </div>
+                <div class="summary-box">
+                    <i class='bx bx-store-alt'></i>
+                    <div class="summary-text">
+                        <h3 style="text-align: center;">عدد المستخدمين : {{ user }}</h3>
+                        <p>{{ users_count }}</p>
+                        
+                        <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                            <div style="text-align: right; width: 48%;">
+                                <h3>عدد التجار</h3>
+                                <p>{{ sellers_count }}</p>
+                            </div>
+                            <div style="text-align: left; width: 48%;">
+                                <h3>عدد العملاء</h3>
+                                <p>{{ customers_count }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="summary-box">
+                    <i class='bx bx-package'></i>
+                    <div class="summary-text">
+                        <h3>المنتج الاجمالي</h3>
+                        <p>{{products_count}}</p>
+                    </div>
+                </div>
+                <div class="summary-box">
+                    <i class='bx bx-dollar-circle'></i>
+                    <div class="summary-text">
+                        <h3>الأرباح الداخلية</h3>
+                        <p>{{total_profit}}ج.م</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- قسم الرسوم البيانية -->
+            <div class="title-box">
+                <h3><i class='bx bx-chart'></i> التحليلات والرسوم البيانية</h3>
+            </div>
+            <!--مبيعات المنتجات-->
+
+            <div class="charts-row">
+                <!-- مبيعات المنتجات -->
+                <div class="chart-container">
+                    <div id="salesChart" 
+                         data-sales-months='{{ sales_months_labels | tojson }}' 
+                         data-sales-data='{{ sales | tojson }}'>
+                    </div>
+                    <div class="chart-label">مبيعات المنتجات</div>
+                </div>
+
+                
+            <!--عدد المستخدمين و البائعين-->
+                <div class="chart-container">
+                    <div id="userChart" 
+                        data-user-counts='{{ users_data | tojson }}' 
+                        data-seller-counts='{{ sellers_data | tojson }}' 
+                        data-months='{{ months | tojson }}'>
+                    </div>              
+                <div class="chart-label">عدد المستخدمين و البائعين</div>
+                </div>
+
+
+
+                <div class="chart-container">
+                    <!-- مكان الرسم البياني -->
+                    <div id="categorySalesChart" style="width: 100%; height: 350px;"></div>
+                    <div class="chart-label">نسبة المبيعات حسب الفئة</div>
+                </div>
+                <script id="categoriesData" type="application/json">
+                    {{ categories | tojson }}
+                </script>
+                <script id="categorySalesData" type="application/json">
+                    {{ category_sales | tojson }}
+                </script>
+                
+                
+            </div>
+
+
+
+            <div class="charts-row">
+                <div class="chart-container">
+                    <div id="visitorChart"></div>
+                    <div class="chart-label">عدد الزيارات</div>
+                </div>
+
+                <div class="chart-container">
+                    <div id="sellerPerformanceChart"></div>
+                    <div class="chart-label">أداء البائعين</div>
+                </div>
+
+                <div class="chart-container">
+                    <div id="chartData"
+                         data-months="{{ monthly | tojson }}"
+                         data-monthly-sales="{{ monthly_sales | tojson }}">
+                    </div>
+                    <div class="chart-label">نمو المبيعات</div>
+                </div>
+
+            
+                <!-- تضمين البيانات في HTML عبر data attributes -->
+                
+            </div>
+
+            <div class="charts-row">
+                <div class="chart-container">
+                    <div id="productAnalysisChart"></div>
+                    <div class="chart-label">تحليل المنتجات</div>
+                </div>
+
+                <div class="chart-container">
+                    <div id="customerSatisfactionChart"></div>
+                    <div class="chart-label">رضا العملاء</div>
+                </div>
+
+                <div class="chart-container">
+                    <div id="productPopularityChart"></div>
+                    <div class="chart-label">شعبية المنتجات</div>
+                </div>
+            </div>
+            
+
+        </main>
+        <!-- نهاية المحتوى الرئيسي -->
+
+        <!-- نافذة منبثقة لتعديل معلومات المستخدم -->
+        <div class="popup" id="editPopup">
+            <div class="popup-content">
+                <span class="close-btn" onclick="closePopup()">&times;</span>
+                <h3>تعديل معلومات المستخدم</h3>
+                <form id="editForm" onsubmit="updateUserInfo(event)">
+                    <input type="file" id="profilePic" accept="image/*">
+                    <input type="text" id="newUsername" placeholder="اسم المستخدم الجديد" required>
+                    <input type="password" id="newPassword" placeholder="كلمة المرور الجديدة" required>
+                    <button type="submit">تحديث</button>
+                </form>
+            </div>
+        </div>
+
+        <script src="static/js/dashboard.js"></script>
+        <script src="static/js/orders.js"></script>
+        <!-- إضافة مكتبة ApexCharts -->
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+        <script src="static/js/Chart.js"></script>
+
+
+    </div>
+</body>
+
+</html>

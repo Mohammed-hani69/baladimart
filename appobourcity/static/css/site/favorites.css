@@ -1,0 +1,70 @@
+.favorites {
+    text-align: center;
+    background-color: #f5f6f9; /* الخلفية البيضاء */
+}
+
+.title{
+    font-size: 24px;
+    font-weight: bold;
+    background: linear-gradient(to bottom, #007bff 50%, #0056b3); /* انحناء في الخلفية */
+    border-radius: 0px 0px 20px 20px;
+    color: #fff;
+    display: inline-block;
+    padding: 0px 20px 0px 20px;
+    
+}
+
+.products {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding-top: 50px;
+}
+
+.product-card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    width: 250px;
+    text-align: center;
+    background-color: #fff; /* خلفية بيضاء */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* الظل حول العنصر */
+    transition: all 0.3s ease; /* تأثير عند التفاعل */
+}
+
+.product-card:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* زيادة الظل عند التفاعل */
+}
+
+.product-card img {
+    max-width: 100%;
+    height: 200px; /* تصغير الصورة وتثبيتها */
+    object-fit: cover; /* تأكد من أن الصورة لا تغير أبعادها */
+    border-radius: 5px;
+}
+
+.details-btn, .remove-btn {
+    display: none; /* إخفاء الأزرار بشكل افتراضي */
+    margin: 10px 0;
+    padding: 10px 15px;
+    text-decoration: none;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    width: 100%; /* تأكد من أن الأزرار بنفس العرض */
+}
+
+.remove-btn {
+    background-color: #dc3545;
+}
+
+.product-card:hover .details-btn, 
+.product-card:hover .remove-btn {
+    display: block; /* إظهار الأزرار عند مرور المؤشر */
+}
+
+.product-card .details-btn {
+    margin-bottom: 10px; /* ترك مسافة بين الأزرار */
+}

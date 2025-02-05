@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
+   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/heroicons@1.0.6/outline.min.js"></script>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+   <link rel="stylesheet" href="../../static/css/site/scroll_bar.css">
+   <link rel="stylesheet" href="../../static/css/site/about.css">
+   <link rel="stylesheet" href="../../static/css/site/min.css">
+   <link rel="stylesheet" href="../../static/css/site/home.css">
+
+   <title>خدمات العبور</title>
+    <link rel="icon" href="{{ url_for('static', filename='/img/1.png') }}" type="image/x-icon">
+</head>
+<body>
+    <header class="header" id="header">
+        <nav class="nav container">
+           <!-- شعار كصورة -->
+           <a href="#" class="nav__logo">
+             <img src="images/5444.png" alt="الشعار" class="nav__logo-img">
+          </a>
+          
+          <div class="nav__menu" id="nav-menu">
+             <ul class="nav__list">
+                <li class="nav__item">
+                   <a href="index.html" class="nav__link"><i class="bi bi-house-door"></i> الرئيسية</a>
+                </li>
+                <li class="nav__item">
+                   <a href="about.html" class="nav__link"><i class="bi bi-info-circle"></i> TEAM</a>
+                </li>
+                <li class="nav__item">
+                   <a href="#" class="nav__link"><i class="bi bi-tools"></i> الخدمات</a>
+                   <ul class="nav__sublist">
+                      <li class="nav__subitem"><a href="hypermarket.html" class="nav__sublink"><i class="bi bi-shop"></i> الهايبر ماركت</a></li>
+                      <li class="nav__subitem"><a href="pharmacies.html" class="nav__sublink"><i class="bi bi-capsule"></i> الصيدليات</a></li>
+                      <li class="nav__subitem"><a href="hospitals.html" class="nav__sublink"><i class="bi bi-hospital"></i> المستشفيات</a></li>
+                      <li class="nav__subitem"><a href="restaurants.html" class="nav__sublink"><i class="bi bi-utensils"></i> المطاعم</a></li>
+                      <li class="nav__subitem"><a href="car-services.html" class="nav__sublink"><i class="bi bi-car-front"></i> خدمات السيارات</a></li>
+                      <li class="nav__subitem"><a href="laboratories.html" class="nav__sublink"><i class="bi bi-bug"></i> معامل التحاليل</a></li>
+                   </ul>
+                </li>
+                <li class="nav__item">
+                   <a href="features.html" class="nav__link"><i class="bi bi-star"></i> المميزات</a>
+                </li>
+                <li class="nav__item">
+                   <a href="offers.html" class="nav__link"><i class="bi bi-gift"></i> العروض</a>
+                </li>
+                <li class="nav__item">
+                   <a href="products.html" class="nav__link"><i class="bi bi-box"></i> المنتجات</a>
+                </li>
+                <li class="nav__item">
+                   <a href="cart.html" class="nav__link"><i class="bi bi-cart"></i> السلة</a>
+                </li>
+                   <!--==================== LOGIN ====================-->
+    
+                <!-- إضافة قسم الحساب مع القائمة المنسدلة -->
+                <li class="nav__item">
+                   <a href="#" class="nav__link" id="account-toggle"><i class="bi bi-person-circle"></i> الحساب</a>
+                   <ul class="nav__sublist" id="account-dropdown">
+                      <li class="nav__subitem"><a href="#" class="nav__sublink" id="login-toggle"><i class="bi bi-box-arrow-in-right"></i> تسجيل الدخول</a></li>
+                      <li class="nav__subitem"><a href="#" class="nav__sublink" id="/logout"><i class="bi bi-box-arrow-right"></i> تسجيل الخروج</a></li>
+                      <li class="nav__subitem"><a href="account-settings.html" class="nav__sublink"><i class="bi bi-gear"></i> إعدادات الحساب</a></li>
+                      <li class="nav__subitem"><a href="signup.html" class="nav__sublink"><i class="bi bi-person-plus"></i> إنشاء حساب</a></li>
+                   </ul>
+                </li>
+             </ul>
+          </div>
+              <!-- زر الإغلاق -->
+              <div class="nav__close" id="nav-close">
+                 <i class="ri-close-line"></i>
+              </div>
+           </div>
+     
+           <div class="nav__actions">
+              <!-- زر البحث -->
+              <i class="ri-search-line nav__search" id="search-btn"></i>
+    
+              <!-- زر القائمة -->
+              <div class="nav__toggle" id="nav-toggle">
+                 <i class="ri-menu-line"></i>
+              </div>
+           </div>
+        </nav>
+     </header>
+     
+    
+       <!--==================== SEARCH ====================-->
+       <div class="search" id="search">
+          <form action="" class="search__form">
+             <i class="ri-search-line search__icon"></i>
+             <input type="search" placeholder="ما الذي تبحث عنه؟" class="search__input">
+          </form>
+    
+          <i class="ri-close-line search__close" id="search-close"></i>
+       </div>
+
+
+   <section class="hero-banner">
+    <div class="hero-container">
+        <div class="hero-text">
+            <h1>مرحبًا بكم في عالمنا!</h1>
+            <p>نشكركم على ثقتكم بنا. نحن هنا لخدمتكم بأفضل المنتجات والخدمات المتميزة. كل ما تحتاجه، نحن نقدمه لكم بأعلى معايير الجودة والابتكار.</p>
+            <div class="cta-buttons">
+                <a href="/" class="btn-main">الصفحة الرئيسية</a>
+                <a href="#products" class="btn-secondary">اكتشف المزيد</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+   
+<!--==================== ABOUT US SECTION ====================-->
+<section class="about-us">
+    <div class="container">
+        <!-- مقدمة عن الشركة -->
+        <div class="form-section">
+            <div class="form-section__image">
+                <img src="images/13887.jpg" alt="عن الشركة">
+            </div>
+            <div class="form-section__content">
+                <h1 class="section-title">من نحن</h1>
+                <p>نحن شركة متخصصة في تقديم خدمات متنوعة في عدة مجالات مثل الهايبر ماركت، الصيدليات، المطاعم، المستشفيات، وغيرها. نسعى دائمًا لتقديم الأفضل لعملائنا من خلال توفير مجموعة واسعة من المنتجات والخدمات عالية الجودة.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--==================== VALUES AND VISION SECTION ====================-->
+<section class="about-us__values">
+    <div class="container">
+        <div class="form-section">
+            <div class="form-section__image">
+                <img src="images/108518.jpg" alt="قيمنا ورؤيتنا">
+            </div>
+            <div class="form-section__content">
+                <h2 class="section-title">قيمنا ورؤيتنا</h2>
+                <p>نؤمن أن النجاح يكمن في تقديم قيمة حقيقية لعملائنا. نحن ملتزمون بتقديم خدمات مبتكرة وموثوقة تسهم في تحسين جودة حياة الأفراد والمجتمعات.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--==================== HISTORY SECTION ====================-->
+<section class="about-us__history">
+    <div class="container">
+        <div class="form-section">
+            <div class="form-section__image">
+                <img src="images/2147654593.jpg" alt="تاريخنا">
+            </div>
+            <div class="form-section__content">
+                <h2 class="section-title">تاريخنا</h2>
+                <p>تأسست شركتنا في عام 2024 بهدف تقديم خدمات عالية الجودة في مجالات متعددة. منذ ذلك الحين، ونحن نحقق نجاحًا كبيرًا ونوسع نطاق خدماتنا لتشمل مختلف المجالات. في 2024، نحن في مرحلة جديدة من التطور والتوسع في خدماتنا.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--==================== TEAM SECTION ====================-->
+<section class="about-us__team">
+    <div class="container">
+        <div class="form-section">
+            <div class="form-section__image">
+                <img src="images/our-team.jpg" alt="فريقنا">
+            </div>
+            <div class="form-section__content">
+                <h2 class="section-title">فريقنا</h2>
+                <div class="team-members">
+                    <!-- إضافة 10 أعضاء في الفريق -->
+                    <div class="team-member">
+                        <img src="images/99 (4).jpg" alt="عضو الفريق" class="team-img">
+                        <h3>أحمد علي</h3>
+                        <p>الرئيس التنفيذي</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="images/99 (4).jpg" alt="عضو الفريق" class="team-img">
+                        <h3>فاطمة محمد</h3>
+                        <p>مديرة العمليات</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="images/99 (4).jpg" alt="عضو الفريق" class="team-img">
+                        <h3>محمود سعد</h3>
+                        <p>مدير التسويق</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="images/99 (4).jpg" alt="عضو الفريق" class="team-img">
+                        <h3>سارة أحمد</h3>
+                        <p>مديرة الموارد البشرية</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="images/99 (4).jpg" alt="عضو الفريق" class="team-img">
+                        <h3>إبراهيم يوسف</h3>
+                        <p>مطور برمجيات</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="images/99 (4).jpg" alt="عضو الفريق" class="team-img">
+                        <h3>ندى علي</h3>
+                        <p>مدير الدعم الفني</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="images/99 (4).jpg" alt="عضو الفريق" class="team-img">
+                        <h3>سامي محمد</h3>
+                        <p>مستشار قانوني</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="images/99 (4).jpg" alt="عضو الفريق" class="team-img">
+                        <h3>رغد سالم</h3>
+                        <p>مدير المبيعات</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="images/99 (4).jpg" alt="عضو الفريق" class="team-img">
+                        <h3>ريم عبد الله</h3>
+                        <p>مطور واجهات المستخدم</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="images/99 (4).jpg" alt="عضو الفريق" class="team-img">
+                        <h3>أيمن عمر</h3>
+                        <p>مدير الإنتاج</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--==================== TESTIMONIALS SECTION ====================-->
+<section class="about-us__testimonials">
+    <div class="container">
+        <div class="form-section">
+            <div class="form-section__image">
+                <img src="images/testimonials.jpg" alt="شهادات العملاء">
+            </div>
+            <div class="form-section__content">
+                <h2 class="section-title">ماذا يقول عملائنا</h2>
+                <div class="testimonials">
+                    <div class="testimonial">
+                        <p>"خدمة رائعة وسريعة. كل شيء تم توصيله في الوقت المحدد وبحالة ممتازة."</p>
+                        <span>- يوسف أحمد</span>
+                    </div>
+                    <div class="testimonial">
+                        <p>"نحن نثق في خدماتكم بشكل كامل. دائمًا ما نقدم الأفضل لعملائنا بفضلكم."</p>
+                        <span>- سارة حسين</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--==================== CONTACT US SECTION ====================-->
+<section class="contact-us">
+    <div class="container">
+        <div class="form-section">
+            <div class="form-section__image">
+                <img src="images/contactus.jpg" alt="اتصل بنا">
+            </div>
+            <div class="form-section__content">
+                <h2 class="section-title">اتصل بنا</h2>
+                <form class="contact-us__form">
+                    <label for="name">الاسم الكامل</label>
+                    <input type="text" id="name" name="name" placeholder="اكتب اسمك الكامل" required>
+
+                    <label for="email">البريد الإلكتروني</label>
+                    <input type="email" id="email" name="email" placeholder="اكتب بريدك الإلكتروني" required>
+
+                    <label for="message">الرسالة</label>
+                    <textarea id="message" name="message" placeholder="اكتب رسالتك هنا" required></textarea>
+
+                    <button type="submit">إرسال</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+ 
+
+   <!--==================== FOOTER ====================-->
+   <footer class="footer" dir="rtl">
+    <div class="footer__circles"></div>
+    <div class="container footer__container">
+       <div class="footer__section">
+          <h2 class="footer__title">Obour City Services</h2>
+          <p class="footer__description">
+             هذا النص مثال يمكن استبداله بأي نص آخر. يوفر وصفًا موجزًا عن الموقع أو الشركة.
+          </p>
+       </div>
+ 
+       <div class="footer__section">
+          <h3 class="footer__subtitle">روابط سريعة</h3>
+          <ul class="footer__links">
+             <li><a href="#" class="footer__link">الرئيسية</a></li>
+             <li><a href="#" class="footer__link">من نحن</a></li>
+             <li><a href="#" class="footer__link">الخدمات</a></li>
+             <li><a href="#" class="footer__link">تواصل معنا</a></li>
+          </ul>
+       </div>
+ 
+       <div class="footer__section">
+          <h3 class="footer__subtitle">معلومات التواصل</h3>
+          <ul class="footer__contact">
+             <li><i class="ri-map-pin-line"></i> العنوان: 123 شارع النموذج، المدينة</li>
+             <li><i class="ri-phone-line"></i> الهاتف: +1 234 567 890</li>
+             <li><i class="ri-mail-line"></i> البريد الإلكتروني: info@example.com</li>
+          </ul>
+       </div>
+    </div>
+    <div class="footer__bottom">
+       <p>© 2024 جميع الحقوق محفوظة. موقعك الإلكتروني.</p>
+    </div>
+ </footer>
+ 
+   <!--=============== MAIN JS ===============-->
+   <script src="js/scripts.js"></script>
+   <script src="js/min.js"></script>
+   <script src="js/Transfer.js"></script>
+
+</body>
+</html>

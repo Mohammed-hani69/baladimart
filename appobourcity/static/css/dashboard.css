@@ -1,0 +1,692 @@
+
+:root {
+    --primary-color: #860392;
+    --secondary-color: #333;
+    --light-background: #fff;
+    --dark-background: #2c2c2c;
+}
+
+/* Styles for the popup */
+.popup {
+    display: none;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+.close-btn {
+    float: right;
+    cursor: pointer;
+    font-size: 18px;
+    color: #333;
+}
+
+.popup-content h3 {
+    margin: 0 0 10px;
+}
+
+.popup-content input {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+}
+
+.popup-content button {
+    padding: 10px;
+    background-color: #860392;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.popup-content button:hover {
+    background-color: #218838;
+}
+
+.welcome-user {
+    background: var(--light);
+    padding: 36px 24px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Align items to the left */
+    grid-gap: 16px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
+}
+
+.user-info-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background-color: #86039200;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px #860392;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+#user-profile-pic {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* نص البروفايل */
+.user-details p {
+    margin: 0.5rem 0;
+    color: #860392; /* تغيير اللون إلى الأبيض */
+    font-size: 1rem;
+}
+
+/* زر التعديل */
+.edit-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: white; /* تغيير لون الخلفية إلى الأبيض */
+    color: #860392; /* تغيير لون النص إلى اللون المفضل لديك */
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.edit-button:hover {
+    background-color: #f0f0f0; /* ظل داكن قليلاً عند التمرير */
+}
+
+
+.icon {
+    width: 20px;
+    height: 20px;
+}
+
+.welcome-user h2 {
+    font-size: 28px; /* Adjusted font size */
+    font-weight: 600;
+    color: #860392;
+    transition: color 0.3s ease; /* Transition for color change */
+}
+
+.welcome-user img {
+    width: 100px; /* Adjusted width */
+    height: 100px; /* Adjusted height */
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* New styles for dark mode */
+.dark-mode .welcome-user h2,
+.dark-mode .welcome-user {
+    color: white; /* Change color to white in dark mode */
+    background: var(--dark); /* Change background to dark in dark mode */
+}
+
+.recent-orders,
+.seller-info {
+    background: var(--light);
+    padding: 36px 24px; /* Adjusted padding */
+    border-radius: 20px;
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column; /* Allow centering */
+    align-items: center; /* Center content horizontally */
+}
+
+.recent-orders h2,
+.seller-info h2 {
+    text-align: center; /* Center text */
+    transition: color 0.3s ease; /* Transition for color change */
+}
+
+.dark-mode .recent-orders h2,
+.dark-mode .seller-info h2 {
+    color: white; /* Change color to white in dark mode */
+}
+
+.recent-orders table,
+.seller-info table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px; /* Added border radius */
+    overflow: hidden; /* Ensure no overflow */
+}
+
+.recent-orders th,
+.recent-orders td,
+.seller-info th,
+.seller-info td {
+    padding: 12px 16px; /* Adjusted padding */
+    text-align: left;
+    border-bottom: 1px solid var(--grey);
+}
+
+.recent-orders th,
+.seller-info th {
+    background: var(--dark-grey);
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.recent-orders td,
+.seller-info td {
+    color: var(--dark);
+    font-size: 13px;
+}
+
+.recent-orders tbody tr,
+.seller-info tbody tr {
+    transition: background 0.3s ease;
+}
+
+.recent-orders tbody tr:hover,
+.seller-info tbody tr:hover {
+    background: var(--grey); /* Highlight row on hover */
+}
+
+.seller-info .toggle-status {
+    cursor: pointer;
+    color: var(--primary);
+}
+
+
+
+/* Change activation status text color in dark mode */
+.dark-mode .activation-status span {
+    color: white; /* Change to white in dark mode */
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 576px) {
+    .welcome-user h2 {
+        font-size: 20px;
+    }
+
+    .recent-orders table,
+    .seller-info table {
+        min-width: 320px; /* Ensure tables fit smaller screens */
+    }
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #860392;
+    margin: 10% auto;
+    padding: 10px;
+    border: 1px solid #860392;
+    width: 70%;
+}
+
+/* Button styles */
+.edit-button,
+.save-button {
+    background-color: #860392;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.edit-button:hover,
+.save-button:hover {
+    background-color: #5e1a6b; /* Darker shade on hover */
+}
+
+
+/* General Styles for tables */
+.recent-orders,
+.seller-info {
+    overflow-x: auto; /* Enable horizontal scrolling */
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 1024px) {
+    .seller-info table {
+        font-size: 14px; /* تصغير حجم الخط للشاشات الأصغر */
+    }
+}
+
+@media screen and (max-width: 768px) {
+    /* جعل الجدول قابلاً للتمرير الأفقي على الشاشات الصغيرة */
+    .seller-info table {
+        font-size: 12px;
+        display: block;
+        overflow-x: auto;
+    }
+
+    /* إخفاء الرأس في الجدول على الشاشات الصغيرة */
+    .seller-info table thead {
+        display: none;
+    }
+
+    /* تحويل الصفوف إلى عرض عمودي باستخدام flexbox */
+    .seller-info table tr {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px; /* مسافة بين الصفوف */
+        border: 1px solid #ddd;
+    }
+
+    /* تنسيق الخلايا عندما يكون الجدول في وضع العمودي */
+    .seller-info table td {
+        display: block;
+        text-align: left;
+        padding: 10px;
+        border: none;
+        background-color: #f9f9f9;
+    }
+
+    .seller-info table td::before {
+        /* إضافة تسمية قبل محتويات الخلايا */
+        content: attr(data-label);
+        font-weight: bold;
+        margin-right: 10px;
+    }
+
+    .seller-info table td:first-child {
+        margin-top: 10px;
+    }
+}
+
+/* للمزيد من الشاشات الصغيرة مثل الهواتف المحمولة */
+@media screen and (max-width: 480px) {
+    .title-box h3 {
+        font-size: 20px; /* تقليل حجم العنوان */
+    }
+}
+.title-box {
+    display: inline-block;
+    background-color: #ffffff00;
+    border: 1px solid #860392;
+    border-radius: 4px;
+    padding: 8px 10px; /* زيادة التباعد الداخلي */
+    margin: 8px 0; /* زيادة المسافة العلوية والسفلية */
+    border-radius: 10px; /* حواف دائرية */
+    font-size: 1em;
+    color: #860392;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center; /* لضبط النص في الوسط */
+}
+/* تنسيق حاويات الرسوم البيانية */
+.chart-container {
+    background-color: #fff; /* خلفية بيضاء */
+    border-radius: 8px; /* زوايا مدورة */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* ظل خفيف */
+    padding: 20px; /* تباعد داخلي */
+    margin-bottom: 20px; /* تباعد سفلي */
+    width: 100%; /* عرض كامل */
+    max-width: 1000px; /* عرض أقصى */
+    height: auto; /* ارتفاع تلقائي */
+}
+
+/* تحسين استجابة الرسوم البيانية */
+canvas {
+    width: 100% !important; /* عرض 100% من الحاوية */
+    height: auto !important; /* ارتفاع تلقائي للحفاظ على النسب */
+    max-height: 400px; /* ارتفاع أقصى للرسوم البيانية */
+}
+
+/* عنوان الرسوم البيانية */
+.chart-container h3 {
+    margin-bottom: 15px; /* تباعد سفلي */
+    font-size: 20px; /* حجم الخط */
+    color: #333; /* لون النص */
+    text-align: center; /* محاذاة العنوان إلى المنتصف */
+}
+
+/* تنسيق الرسوم البيانية عند عرضها في وضع الظلام */
+body.dark-mode .chart-container {
+    background-color: #2c2c2c; /* خلفية داكنة */
+    color: #fff; /* لون النص */
+}
+
+body.dark-mode .chart-container h3 {
+    color: #fff; /* لون عنوان الرسوم البيانية في وضع الظلام */
+}
+.charts-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.chart-container {
+    flex: 1;
+    margin: 0 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #f9f9f9; /* لون الخلفية */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* ظل للصندوق */
+}
+
+.chart-label {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #333; /* لون النص */
+}
+.summary-boxes {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.summary-box {
+    background-color: #fff; /* لون الخلفية */
+    border: 1px solid #e0e0e0; /* لون الحدود */
+    border-radius: 10px; /* زوايا مستديرة */
+    padding: 20px; /* المساحة الداخلية */
+    flex: 1; /* عرض متساوي بين المربعات */
+    margin: 0 10px; /* المساحة بين المربعات */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* ظل خفيف */
+    text-align: center; /* محاذاة النص للوسط */
+    transition: transform 0.3s; /* تأثير التحويل */
+}
+
+.summary-box:hover {
+    transform: scale(1.05); /* تكبير طفيف عند التحويم */
+}
+
+.summary-box i {
+    font-size: 40px; /* حجم الأيقونة */
+    color: #860392; /* لون الأيقونة */
+    margin-bottom: 10px; /* المسافة أسفل الأيقونة */
+}
+
+.summary-text h3 {
+    font-size: 18px; /* حجم العنوان */
+    margin: 0; /* إزالة المسافة العلوية */
+    color: #333; /* لون العنوان */
+}
+
+.summary-text p {
+    font-size: 24px; /* حجم الرقم */
+    margin: 5px 0 0; /* المسافة العلوية والسفلية */
+    color: #666; /* لون الرقم */
+}
+
+/* تحليل البيانات */
+.data-analysis {
+    margin-top: 20px; /* المسافة العلوية */
+    padding: 20px; /* المساحة الداخلية */
+    border: 1px solid #860392; /* لون الحدود */
+    border-radius: 10px; /* زوايا مستديرة */
+    background-color: #ffffff00; /* لون خلفية التحليل */
+    text-align: center; /* محاذاة النص للوسط */
+    box-shadow: 0 4px 10px #860392; /* ظل للصندوق باللون الجديد */
+
+}
+
+
+.data-analysis h2 {
+    font-size: 24px; /* حجم العنوان */
+    color: #860392; /* لون العنوان */
+    margin-bottom: 15px; /* المسافة السفلية */
+}
+
+.data-analysis p {
+    font-size: 16px; /* حجم النص */
+    color: #860392; /* لون النص */
+}
+    /* تنسيق الفورم */
+    .notifications-form {
+        max-width: 100%;
+        padding: 40px;
+        margin: 20px auto;
+        background-color: #f4f6f9;
+        border-radius: 10px;
+        box-sizing: border-box;
+        margin-top: 50px;
+    }
+
+    /* تنسيق عنوان صندوق الإشعارات */
+    .notifications-title {
+        text-align: center;
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 30px;
+        color: #860392;
+    }
+
+    /* تنسيق حاوية الإشعارات */
+    .notifications-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: space-between;
+        padding: 10px 0;
+    }
+
+    /* تنسيق كل إشعار */
+    .notification-box {
+        background-color: #ffffff;
+        border-radius: 10px;
+        padding: 20px;
+        width: calc(50% - 20px);
+        box-sizing: border-box;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px #860392, 0 1px 3px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e2e6ea;
+        position: relative;
+    }
+
+    /* تأثير عند تمرير الفأرة على الإشعار */
+    .notification-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px #5ab81b, 0 3px 5px rgba(0, 0, 0, 0.08);
+    }
+
+    /* تنسيق رأس الإشعار */
+    .notification-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 18px;
+        font-weight: 600;
+        color: #860392;
+    }
+
+    /* تنسيق الأيقونة */
+    .icon {
+        font-size: 30px;
+        color: #860392;
+        transition: color 0.3s ease;
+    }
+
+    /* تأثير عند التمرير على الأيقونة */
+    .notification-box:hover .icon {
+        color: #5ab81b;
+    }
+
+    /* تنسيق تفاصيل الإشعار */
+    .notification-details {
+        margin-top: 15px;
+        font-size: 15px;
+        color: #000000;
+        line-height: 1.5;
+    }
+
+    /* تنسيق الرابط داخل الإشعار */
+    .notification-box a {
+        color: #860392;
+        text-decoration: none;
+        font-weight: bold;
+        margin-top: 15px;
+        display: inline-block;
+        transition: color 0.3s ease;
+    }
+
+    /* تأثير عند التمرير على الرابط */
+    .notification-box a:hover {
+        color: #0056b3;
+    }
+/* تحسينات للتجاوب مع الشاشات الصغيرة */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 200px; /* تقلل عرض الشريط الجانبي على الشاشات الأصغر */
+    }
+
+    .charts-row {
+        flex-direction: column; /* تحويل التخطيط إلى عمودي */
+    }
+
+    .chart-container {
+        flex: 1 1 100%; /* كل رسم بياني يصبح بعرض 100% */
+    }
+
+    /* تحسين تصميم عنوان المستخدم */
+/* تحسينات للتجاوب مع الشاشات الصغيرة */
+@media (max-width: 768px) {
+    .welcome-user {
+        padding: 15px; /* تقليل المساحة الداخلية على الشاشات الصغيرة */
+    }
+
+    .recent-orders,
+    .seller-info {
+        padding: 15px; /* تقليل المساحة الداخلية على الشاشات الصغيرة */
+    }
+
+    table {
+        font-size: 14px; /* تقليل حجم الخط في الجدول */
+    }
+
+    /* تحسين تصميم عنوان المستخدم */
+    .title-box {
+        font-size: 1.2em; /* تغيير حجم الخط للعناوين */
+    }
+}
+    /* تصميم خلاصة البيانات */
+    .summary-boxes {
+        display: flex;
+        flex-direction: column; /* تغيير التخطيط إلى عمودي */
+    }
+
+    .summary-box {
+        margin-bottom: 10px; /* إضافة مسافة بين الصناديق */
+        text-align: center; /* مركز النص داخل الصناديق */
+    }
+}
+@media (max-width: 768px) {
+    .seller-info, .recent-orders {
+        padding: 15px; /* تقليل المساحة الداخلية على الشاشات الصغيرة */
+    }
+
+    table {
+        font-size: 14px; /* تقليل حجم الخط في الجدول */
+    }
+}
+
+.title-box {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.welcome-user h2 {
+    font-size: 28px; /* Adjusted font size */
+    font-weight: 600;
+    color: #860392; /* اللون الجديد */
+    transition: color 0.3s ease; /* Transition for color change */
+}
+
+.welcome-user img {
+    width: 100px; /* Adjusted width */
+    height: 100px; /* Adjusted height */
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-info-container {
+    display: flex; /* توزيع العناصر بشكل أفقي */
+    justify-content: space-around; /* توزيع متساوي بين العناصر */
+    align-items: flex-start; /* محاذاة العناصر في الأعلى */
+    width: 100%; /* ملء العرض الكامل */
+    padding: 20px;
+    box-shadow: 0 4px 10px #860392; /* ظل للصندوق باللون الجديد */
+    border-radius: 15px; /* زوايا مستديرة */
+    background-color: rgba(255, 0, 0, 0); /* لون خلفية شفاف */
+}
+
+.user-profile {
+    flex: 1; /* تخصيص عرض للصورة */
+    text-align: center; /* محاذاة النص في المنتصف */
+}
+
+.stats-box, .quick-notes-box {
+    background-color: rgba(122, 28, 172, 0); /* لون خلفية خفيف بتدرج من اللون الجديد */
+    padding: 20px;
+    border-radius: 8px; /* زوايا مستديرة */
+    flex: 0 0 30%; /* عرض ثابت للصناديق */
+    margin-left: 20px; /* مسافة بين الصناديق */
+    box-shadow: 0 2px 5px #be000000; /* ظل خفيف */
+}
+
+h3 {
+    margin-top: 0; /* إزالة الهامش العلوي */
+    color: #860392; /* لون العنوان */
+}
+
+ul {
+    list-style-type: none; /* إزالة النقاط من القائمة */
+    padding: 0; /* إزالة الهوامش */
+}
+
+li {
+    margin-bottom: 10px; /* مسافة بين عناصر القائمة */
+    font-size: 14px; /* حجم خط مناسب */
+    color: #860392; /* لون نص مناسب */
+}
+
+.edit-button {
+    background-color: #860392; /* لون خلفية الزر */
+    color: white; /* لون النص */
+    border: none; /* إزالة الحدود */
+    padding: 10px 15px; /* حواف الزر */
+    border-radius: 5px; /* زوايا مستديرة */
+    cursor: pointer; /* تغيير المؤشر */
+    transition: background-color 0.3s; /* تأثير الانتقال */
+}
+
+.edit-button:hover {
+    background-color: #860392; /* يمكنك تغيير هذا اللون إذا رغبت في ذلك */
+}
+

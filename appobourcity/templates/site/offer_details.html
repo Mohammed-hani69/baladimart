@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>مدينة العبور | خدمات إلكترونية</title>
+
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="../../static/swiperJs/swiper-bundle.min.css" />
+
+    <!-- Link Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Link File CSS -->
+    <link rel="stylesheet" href="../../static/css/site/offer_details.css">
+    <link rel="icon" href="{{ url_for('static', filename='/img/1.png') }}" type="image/x-icon">
+</head>
+<body class="menu-side-in-bag">
+
+    <header>
+
+        <div class="header-top">
+            <div class="contanier">
+             <p>خدمات مدينة العبور للتسوق الإلكتروني</p>
+             <div class="link-top-heder">
+                 {% if current_user.is_authenticated %}
+                 <a href="{{ url_for('seller_profile') }}">حسابي</a>
+                 <a href="/favorites">قائمة الرغبات</a>
+                 {% endif %}
+                 {% if not current_user.is_authenticated %}
+                 <a href="login">تسجيل الدخول</a>
+                 {% endif %}
+                 {% if  current_user.is_authenticated%}
+                 <a href="/logout">تسجيل الخروج</a>
+                 {% endif %}
+                 <a href="#">مقارنة</a>
+             </div>
+         </div>
+           </div>
+
+           <div class="header-info">
+            <div class="contanier">
+                <img src="../../static/img/site/alpha.png" alt="Logo" class="small-logo black-image">
+
+            <div class="search-bar">
+                <form action="">
+                    <input type="search" placeholder="ابحث عن طلبك...">
+                    <button class="btn-srch">بحث</button>
+                </form>
+            </div>
+            <div class="card">
+                <div class="price">
+                </div>
+                <a href="/cart"><i class="fa-solid fa-bag-shopping"></i> <span class="count-in-card">2</span></a>
+
+            </div>
+            </div>
+        </div>
+
+        <div class="header-bottom">
+           <div class="contanier">
+            <i id="open-side" class="fa-solid fa-bars"></i>
+            <ul class="nav-links">
+
+                <li><a href="/"> الرئيسية</a>
+
+                </li>
+
+                <li>
+                    <a href="Services.html">الخدمات </a>
+
+                    <div class="drobdwon">
+                        <ul><li><a href="Services.html">الخدمات</a></li></ul>
+                        {% for typeservice in typeservice%}
+                        <ul>
+                            <li><a href="">{{typeservice.Types_of_services_name}}</a></li>
+                        </ul>
+                        {% endfor %}
+                        
+                    </div>
+                </li>
+
+                <li>
+                    <a href="about.html">من نحن</a>
+                </li>
+
+                <li>
+                    <a href="contact.html">المميزات</a>
+                </li>
+                <li><a href="/offer_details">العروض</a></li>
+
+                <li><a href="/allproduct">المنتجات</a></li>
+
+                <li><a href="/my-orders">الطلبات</a></li>
+
+                <li><a href="/alltrader">البائعين</a></li>
+
+
+            </ul>
+            {% if not current_user.is_authenticated %}
+            <a href="signup" class="sign-in-btn"><i class="fa-solid fa-user-plus"></i> إنشاء حساب </a>
+            {% endif %}
+            {% if current_user.is_authenticated and not is_seller%}
+            <a href="is_seller" class="merchant-btn"><i class="fa-solid fa-store"></i>بيع معانا</a>
+            {% endif %}
+            {%if current_user.is_authenticated and is_seller %}
+            <a href="/dashboard_trader" class="merchant-btn"><i class="fa-solid fa-store"></i>لوحة تحكم متجرك</a>
+            {% endif %}
+
+           </div>
+        </div>
+
+    </header>
+   <!-- عرض رسائل الفلاش -->
+   {% with messages = get_flashed_messages(with_categories=True) %}
+   {% if messages %}
+       <div id="flash-messages">
+           {% for category, message in messages %}
+               <div class="flash-message {{ category }}">
+                   {{ message }}
+               </div>
+           {% endfor %}
+       </div>
+   {% endif %}
+{% endwith %}
+    <section class="slide-sec contanier">
+        <div id="side-bar" class="side-bar">
+            <h5><i class="fa-solid fa-bars"></i> التسوق حسب القسم</h5>
+            <img class="logo-slide" src="../../static/img/site/alpha.png" alt="">
+            <i id="btn-close" class="fa-solid fa-bars fa-times"></i>
+            <ul class="side-links">
+                <a href="#"><li>الرئيسية</li></a>
+                <a href="#"><li>الخدمات</li></a>
+                <a href="#"><li>من نحن</li></a>
+                <a href="#"><li>المميزات</li></a>
+                <a href="offer_details"><li>العروض</li></a>
+                <a href="#"><li>المنتجات</li></a>
+                <a href="#"><li>إكسسوارات</li></a>
+                <a href="#"><li>مستحضرات التجميل</li></a>
+                <a href="#"><li>التلفزيونات</li></a>
+
+            </ul>
+
+        </div>
+
+        <div class="slide">
+            <div  class="slide-swp swiper mySwiper">
+                <div  class="swiper-wrapper">
+                       <div class="swiper-slide swiper-slide1">
+                           <img style="height:250px; object-fit:fill;" src="../../static/img/lenovo_banner_web_ar.jpg" alt="">
+                       </div>
+                       <div class="swiper-slide swiper-slide1">
+                           <img style="height:250px; object-fit:fill;" src="../../static/img/valu50_mainbanner_web_ar.jpg" alt="">
+                       </div>
+                       <div class="swiper-slide swiper-slide1">
+                           <img style="height:250px; object-fit:fill;" src="../../static/img/decsaving_banner_web_ar.jpg" alt="">
+                       </div>
+                       <div class="swiper-slide swiper-slide1">
+                           <img style="height:250px; object-fit:fill;" src="../../static/img/lastandbest_mainbanner_ar_web.jpg" alt="">
+                       </div>
+                       <div class="swiper-slide swiper-slide1">
+                           <img style="height:250px; object-fit:fill;" src="../../static/img/cib12_banner_web_ar.jpg" alt="">
+                       </div>
+                       <div class="swiper-slide swiper-slide1">
+                           <img style="height:250px; object-fit:fill;" src="../../static/img/samsungA16_mainbanner_web_ar.jpg" alt="">
+                       </div>
+                </div>
+                <div class="swiper-pagination"></div>
+              </div>
+        </div>
+    </section>
+
+    <div class="features contanier">
+        <div class="boxs">
+            <div class="box">
+
+                <div class="content">
+                    <h6>الشحن مجانا</h6>
+                    <p>التوصيل من يوم إلى ثلاثة أيام</p>
+                </div>
+                <img src="../../static/img/site/features1.png" alt="">
+            </div>
+
+            <div class="box">
+
+                <div class="content">
+                    <h6>ضمان المال</h6>
+                    <p>ضمان استرداد الأموال لمدة 14 يومًا</p>
+                </div>
+                <img src="../../static/img/site/features2.png" alt="">
+            </div>
+
+            <div class="box">
+
+                <div class="content">
+                    <h6>دعم عبر الإنترنت 24/7</h6>
+                    <p>الدعم الفني على أهبة الاستعداد</p>
+                </div>
+                <img src="../../static/img/site/features3.png" alt="">
+            </div>
+
+            <div class="box">
+
+                <div class="content">
+                    <h6>دفع آمن</h6>
+                    <p>يتم قبول جميع طرق الدفع</p>
+                </div>
+                <img src="../../static/img/site/features4.png" alt="">
+            </div>
+
+            <div class="box">
+
+                <div class="content">
+                    <h6>عروض يومية</h6>
+                    <p>خصومات تصل إلى 50%</p>
+                </div>
+                <img src="../../static/img/site/features5.png" alt="">
+            </div>
+        </div>
+    </div>
+    
+      
+    
+
+   
+    
+    
+    <div class="banner2 contanier">
+        <div class="boxs">
+            {% for banners in banners%}
+            {% if banners.is_active and banners.typebanner == "centerright"%}
+            <div class="box">
+                <a href="#"><img src="../../static/uploads/banners/{{banners.image}}" alt="">
+                    <span class="glass-hover"></span></a>
+            </div>
+            {% endif %}
+            {% endfor %}
+
+            {% for banners in banners%}
+            {% if banners.is_active and banners.typebanner == "centerleft"%}
+            <div class="box">
+                <a href="#"><img src="../../static/uploads/banners/{{banners.image}}" alt="">
+                    <span class="glass-hover"></span></a>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <section class="slide-with-img contanier">
+        {% if offers|length == 0 %}
+        <div class="container-nooofer">
+            <div class="centered-content-nooofer">
+                
+                <svg class="svg-shape" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="#0F62FE" d="M36.2,-32C45,-27.4,48.8,-13.7,46.1,-2.8C43.3,8.2,33.9,16.3,25.1,27.8C16.3,39.2,8.2,54,1,53C-6.1,51.9,-12.2,35.1,-26.4,23.7C-40.6,12.2,-62.8,6.1,-63.4,-0.6C-64,-7.3,-43,-14.7,-28.8,-19.3C-14.7,-23.9,-7.3,-25.8,3.2,-29C13.7,-32.2,27.4,-36.6,36.2,-32Z" transform="translate(100 100)" />
+                </svg>
+                <p class="no-offers">لا يوجد عروض</p>
+            </div>
+        </div>
+        
+        {% else %}
+        {% for offer in offers %}
+        
+        <!-- العنوان العام للسكشن -->
+        <div class="section-head">
+            <h4>{{offer.name}}<span></span></h4>
+        </div>
+    
+        <!-- تكرار العروض -->
+        <div class="features contanier">
+            <div class="boxs">
+                <div class="box">
+                    <div class="content">
+                        <h6>وصف العرض</h6>
+                        <p>{{ offer.description}}</p>
+                    </div>
+                    <img src="../../static/img/site/features1.png" alt="">
+                </div>
+    
+                <div class="box">
+                    <div class="content">
+                        <h6>كود العرض</h6>
+                        <p>{{offer.code}}</p>
+                    </div>
+                    <img src="../../static/img/site/features2.png" alt="">
+                </div>
+    
+                <div class="box">
+                    <div class="content">
+                        <h6>تاريخ انتهاء العرض </h6>
+                        <p>{{offer.end_date}}</p>
+                    </div>
+                    <img src="../../static/img/site/features3.png" alt="">
+                </div>
+            </div>
+        </div>
+    
+        <div class="cont">
+            <div class="img-with-slide">
+                <a href="#"><img src="../../static/uploads/offer/{{ offer.image }}" alt=""></a>
+            </div>
+    
+            <div class="swip-with-img swiper mySwiper">
+                <div class="boxs swiper-wrapper">
+                    {% for product in offer_products[offer.offer_id] %}
+                    <div class="box column product-item swiper-slide">
+                        <div class="product-btn">
+                            <ul class="product-action">
+                                <li><a href="#"><i class="fa-regular fa-heart"></i></a></li>
+
+                                    <li>
+                                        <a href="#" class="add-to-cart" data-product-id="{{ product.product_id }}" data-seller-id="{{ current_user.seller_id }}">
+                                            <i class="fa-solid fa-cart-arrow-down"></i>
+                                        </a>
+                                    </li>                            
+
+
+                            </ul>
+                        </div>
+                        <div class="div-img">
+                            {% if product.discount != 0.0 %}
+                            <span class="discount">{{ product.discount }}%</span>
+                            {% endif %}
+                            <img src="../../static/uploads/products/{{ product.image1 }}" class="img-product">
+                            <img src="../../static/uploads/products/{{ product.image2 }}" class="hover-img">
+                        </div>
+                        <div class="content">
+                            <a class="product-item-link">
+                                {% if product.product_name|length > 30 %}
+                                {{ product.product_name[:30] }}...
+                                <a href="#" title="{{ product.product_name }}">المزيد</a>
+                            {% else %}
+                                {{ product.product_name }}
+                            {% endif %}
+                            
+                            </a>
+                            <div class="stars">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star-half-stroke"></i>
+                            </div>
+                            <div class="price">
+                                <span>{{ "%.2f"|format(product.total_after_commission * (1 - (product.discount / 100))) }} جنيه</span>
+                                {% if product.discount != 0.0 %}
+                                <del>{{ product.total_after_commission }} ج.م</del>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+    
+                <div class="swiper-button-next swiper-btn"></div>
+                <div class="swiper-button-prev swiper-btn"></div>
+            </div>
+        </div>
+
+    
+    {% endfor %}
+    {% endif %}
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+                
+                // استخراج معرف المنتج ومعرف المستخدم
+                const productId = this.getAttribute('data-product-id');
+                const seller_id = this.getAttribute('data-seller-id');
+                
+                // إرسال البيانات إلى السيرفر
+                fetch('/add-to-cart', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ product_id: productId, seller_id: seller_id }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    
+                })
+                .catch(error => console.error('Error:', error));
+            });
+        });
+    </script>
+
+
+  
+
+
+    <div class="newsletter">
+        <div class="container">
+            <div class="subscribe-content">
+                <div class="text">
+                    <h4>سجل للحصول علي آخر العروض</h4>
+                    <p>سجل برقم الهاتف حتي تحصل علي اخر العروض الخصومات</p>
+                </div>
+            </div>
+            <div class="subscribe-form">
+                <form action="">
+                    <input type="phone" placeholder="أدخل رقم الهاتف هنا للتسجيل" required>
+                    <button class="btn-srch" type="submit">سجل</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="contanier">
+            <div class="top-footer">
+                <div class="row">
+                    <img src="../../static/img/site/alpha.png" alt="" class="small-logo">
+                    <div class="hotline">
+
+                        <div class="hotline-text">
+                            <h6>خدمة عملاء 24/7</h6>
+                            <a href="https://wa.me/+201145425207?text=مرحبًا، أريد الاستفسار عن الخدمة"target="_blank"><span>(+20) 01145425207</span></a>
+                        </div>
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+
+                </div>
+                <div class="small-row">
+                    <h6> اعرف المزيد عنا</h6>
+                    <div class="links-row">
+                        <a href="#"> <i class="fa-solid fa-angle-left"></i>معلومات عن اكسبريمو </a>
+                        <a href="#"><i class="fa-solid fa-angle-left"></i>الشحن و التوصيل </a>
+
+                    </div>
+                </div>
+
+                <div class="small-row">
+                    <h6> تسوق معنا</h6>
+                    <div class="links-row">
+                        <a href="/profile"><i class="fa-solid fa-angle-left"></i>حسابك</a>
+                        <a href="#"> <i class="fa-solid fa-angle-left"></i>مشترياتك</a>
+                        <a href="#"> <i class="fa-solid fa-angle-left"></i>عناوينك</a>
+                        <a href="#"> <i class="fa-solid fa-angle-left"></i>قوائمك</a>
+                    </div>
+                </div>
+
+                <div class="small-row">
+                    <h6> دعنا نساعدك</h6>
+                    <div class="links-row">
+                        <a href="#"><i class="fa-solid fa-angle-left"></i>المساعدة و الدعم</a>
+                        <a href="#"><i class="fa-solid fa-angle-left"></i>تتبع الطلب</a>
+                        <a href="#"><i class="fa-solid fa-angle-left"></i>سياسة الاسترجاع</a>
+                        <a href="#"><i class="fa-solid fa-angle-left"></i>الشروط و الأحكام </a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="bottom-footer">
+            <div class="contanier">
+                <p>Copyright &copy; <span>MOHAMED HANI</span> Powered by <span>HASHISH</span></p>
+                <div class="payment">
+                <img src="../../static/img/site/payment-1.png" alt="">
+                <img src="../../static/img/site/payment-2.png" alt="">
+                <img src="../../static/img/site/payment-3.png" alt="">
+                <img src="../../static/img/site/payment-4.png" alt="">
+            </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Swiper JS -->
+    <script src="../../static/swiperJs/swiper-bundle.min.js"></script>
+
+    <!-- Linke File JS -->
+    <script src="../../static/js/site/home.js"></script>
+</body>
+</html>

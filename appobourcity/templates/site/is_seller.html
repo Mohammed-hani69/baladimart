@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب</title>
+    <!-- روابط الخطوط والأيقونات -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../../static/css/site/signup.css">
+    <link rel="icon" href="{{ url_for('static', filename='/img/1.png') }}" type="image/x-icon">
+</head>
+<body>
+    <!-- الحاوية الرئيسية -->
+    <div class="container">
+        <!-- الشعار خارج الفورم وفي المنتصف -->
+        <div class="site-logo">
+            <img src="../../static/img/site/alpha.png" alt="شعار الموقع" class="logo-img">
+        </div>
+
+        <!-- القسم الأيمن: صورة التسوق -->
+        <div class="image-container">
+            <img src="../../static/img/site/imge.svg" alt="صورة تعبر عن التسوق">
+        </div>
+
+        <!-- نموذج إنشاء الحساب -->
+        <div class="form-container" id="signup-form">
+
+            <h2>سجل بيانات المتجر</h2>
+            <form action="{{ url_for('is_seller') }}" method="POST" enctype="multipart/form-data">
+                {{ form.hidden_tag() }} <!-- لإضافة التحقق من CSRF -->
+                
+                {% with messages = get_flashed_messages(with_categories=True) %}
+                    {% if messages %}
+                        <div id="flash-messages">
+                            {% for category, message in messages %}
+                                <div class="flash-message {{ category }}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+            
+                <div class="input-row">
+                    <div class="input-group full-width">
+                        <label for="store_name"><i class="fa-solid fa-shop" style="color: #9c0797;"></i> اسم المتجر:</label>
+                        {{ form.store_name(placeholder="أدخل اسم المتجر", required=True) }}
+                    </div>
+                </div>
+            
+                <div class="input-row">
+                    <div class="input-group full-width">
+                        <label for="store_category"><i class="fa-solid fa-store" style="color: #9c0797;"></i> تخصص المتجر:</label>
+                            <select id="store_category" name="store_category" class="form-control" required>
+                                <option value="" disabled selected>اختر تخصص المتجر</option>
+                                {% for category in category %}
+                                <option value="{{ category.category_name }}">{{ category.category_name }}</option>
+                                {% endfor %}
+                            </select>
+                    </div>
+                </div>
+            
+                <div class="input-row">                        
+                    <div class="input-group full-width">
+                        <label for="store_image">
+                            <i class="fa-solid fa-image" style="color: #9c0797;"></i> تحميل لوجو المتجر:
+                        </label>
+                        {{ form.store_image(class="form-control", accept="image/*", required=True) }}
+                    </div>
+                </div>
+
+                <div class="input-row">                        
+                    <div class="input-group full-width">
+                        <label for="owner_banner">
+                            <i class="fa-solid fa-image" style="color: #9c0797;"></i> تحميل بانر المتجر:
+                        </label>
+                        {{ form.owner_banner(class="form-control", accept="image/*", required=True) }}
+                    </div>
+                </div>
+            
+                <div class="input-row">
+                    <div class="input-group full-width">
+                        {{ form.submit(class="btn-custom") }}
+                    </div>
+                </div>
+            </form>
+            
+
+    <!-- كود JavaScript للتبديل بين النماذج -->
+    <script src="../../static/js/site/signup.js"></script>
+</body>
+</html>

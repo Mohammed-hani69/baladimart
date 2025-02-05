@@ -1,0 +1,495 @@
+/* تنسيق الهيدر لقائمة العروض */
+.offer-list-header {
+    font-size: 28px; /* حجم الخط */
+    font-weight: 600; /* الوزن */
+    color: #860392; /* لون النص */
+    margin-bottom: 20px; /* تباعد أسفل الهيدر */
+    padding-bottom: 10px; /* تباعد داخلي أسفل الهيدر */
+}
+
+/* صفحة العروض */
+.offers-page {
+    padding: 36px 24px;
+    background: var(--grey);
+}
+
+.offers-page .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.offers-page .header h2 {
+    font-size: 25px;
+    font-weight: 600;
+    color: #860392; /* تغيير لون النص إلى 7A1CAC */
+}
+
+/* تنسيق النموذج */
+.offers-page form {
+    margin-bottom: 24px;
+    background: var(--light);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* ظل خفيف */
+}
+
+/* تنسيق التسمية داخل النموذج */
+.offers-page form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #860392; /* تغيير لون النص إلى 7A1CAC */
+}
+
+/* تنسيق الحقول النصية داخل النموذج */
+.offers-page form input[type="text"],
+.offers-page form input[type="number"],
+.offers-page form input[type="date"],
+.offers-page form select {
+    width: calc(100% - 20px); /* تعديل العرض ليتناسب مع الحقول */
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid var(--dark-grey);
+    border-radius: 5px;
+    transition: border-color 0.3s; /* تأثير انتقال لتغيير لون الحدود */
+}
+
+/* تغيير لون الحدود عند التركيز */
+.offers-page form input[type="text"]:focus,
+.offers-page form input[type="number"]:focus,
+.offers-page form input[type="date"]:focus,
+.offers-page form select:focus {
+    border-color: var(--primary); /* تغيير لون الحدود عند التركيز */
+    outline: none; /* إزالة التحديد الافتراضي */
+}
+
+/* تنسيق الزر داخل النموذج */
+.offers-page form button {
+    padding: 12px 20px;
+    background: var(--primary);
+    color: #ffffff; /* لون النص أبيض */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s; /* تأثير انتقال لتغيير لون الخلفية */
+}
+
+/* تغيير لون الخلفية عند التمرير فوق الزر */
+.offers-page form button:hover {
+    background: var(--dark-primary); /* لون داكن عند التمرير */
+}
+
+/* تنسيق الجدول الخاص بالعروض */
+.offers-page .offers-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+/* تنسيق خلايا الجدول */
+.offers-page .offers-table th,
+.offers-page .offers-table td {
+    padding: 8px 12px;
+    text-align: right;
+    
+}
+
+/* تنسيق رأس الجدول */
+.offers-page .offers-table th {
+    background: var(--dark-grey);
+    color: #ffffff; /* لون النص أبيض */
+}
+
+/* تنسيق خلايا الجدول */
+.offers-page .offers-table td {
+    border-bottom: 1px solid var(--grey);
+    color: var(--dark);
+}
+
+/* تغيير لون الخلفية عند التمرير فوق الصف */
+.offers-page .offers-table tbody tr:hover {
+    background: var(--light-grey);
+}
+
+/* تنسيق الهاتف و الشاشات الصغيرة */
+@media screen and (max-width: 768px) {
+    .offers-page {
+        padding: 20px;
+        height: auto; /* السماح للارتفاع بالتكيف مع المحتوى على الشاشات الصغيرة */
+    }
+
+    .offers-page .header h2 {
+        font-size: 28px; /* حجم الخط على الشاشات الصغيرة */
+    }
+
+    .offers-page form input[type="text"],
+    .offers-page form input[type="number"],
+    .offers-page form input[type="date"],
+    .offers-page form select {
+        width: 100%; /* استخدام العرض الكامل على الشاشات الصغيرة */
+    }
+}
+
+/* تنسيق صفوف النموذج */
+.form-row {
+    display: flex; /* استخدام الفليكس لتخطيط الحقول بجانب بعضها */
+    justify-content: space-between; /* توزيع الفضاء بالتساوي */
+    margin-bottom: 15px; /* مسافة أسفل الصف */
+}
+
+/* تنسيق مجموعات الحقول */
+.form-group {
+    flex: 1; /* جعل كل حقل يأخذ مساحة متساوية */
+    margin-right: 10px; /* مسافة بين الحقول */
+}
+
+.form-group:last-child {
+    margin-right: 0; /* إزالة المسافة عن آخر حقل */
+}
+
+/* إضافة بعض الأنماط لتحسين المظهر */
+.submit-btn {
+    padding: 10px 15px;
+    background-color: var(--primary);
+    color: #ffffff; /* لون النص أبيض */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* تنسيق الصندوق العنوان */
+.title-box {
+    display: inline-block; /* جعل الصندوق بحجم النص */
+    background-color: #86039200; /* لون خلفية خفيف */
+    border: 1px solid #860392; /* إطار حول النص */
+    border-radius: 10px; /* حواف دائرية */
+    padding: 5px 10px; /* مساحة داخلية للصندوق */
+    margin-bottom: 10px; /* تباعد أسفل الصندوق */
+    font-size: 1em; /* تكبير النص قليلاً */
+    color: #860392; /* لون النص */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* ظل خفيف */
+}
+
+/* الشريط العلوي */
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* لضمان توزيع العناصر بالتساوي */
+    padding: 16px; /* إضافة تباعد داخل الشريط العلوي */
+    background: var(--dark-grey); /* لون الخلفية للشريط العلوي */
+    color: #ffffff; /* لون النص في الشريط العلوي */
+}
+
+/* تحسين تنسيق الهيدر */
+.offers-main .header {
+    margin-top: 20px; /* إضافة تباعد أعلى الهيدر */
+    margin-bottom: 24px; /* إضافة تباعد أسفل الهيدر */
+}
+
+/* تحسين تنسيق العنوان في الهيدر */
+.offers-main .header h2 {
+    font-size: 25px; /* حجم الخط */
+    font-weight: 600; /* الوزن */
+    color: #860392; /* لون النص */
+}
+
+/* نمط الأزرار */
+.submit-btn, .reset-btn {
+    padding: 10px 15px; /* إضافة حشوة للأزرار */
+    background-color: var(--primary); /* لون الخلفية */
+    color: #ffffff; /* لون النص أبيض */
+    border: none;
+    border-radius: 5px; /* حواف دائرية */
+    cursor: pointer; /* تغيير المؤشر عند التمرير فوق الزر */
+}
+
+/* تحذير عند التركيز */
+.submit-btn:hover, .reset-btn:hover {
+    background-color: var(--dark-primary); /* لون داكن عند التمرير */
+}
+
+/* تنسيق قائمة العروض */
+.offer-list h2 {
+    margin-top: 20px; /* إضافة تباعد أعلى العنوان */
+}
+
+/* تحسين نمط الأزرار */
+.search-btn,
+.report-btn,
+.edit-btn,
+.delete-btn {
+    padding: 10px 15px; /* حشوة للزر */
+    border: none; /* إزالة الحدود */
+    border-radius: 5px; /* حواف دائرية */
+    cursor: pointer; /* تغيير المؤشر عند التمرير */
+    transition: background-color 0.3s; /* تأثير انتقال لتغيير لون الخلفية */
+}
+
+/* أزرار البحث وإصدار التقارير */
+.search-btn {
+    background-color: #860392; /* لون خلفية الزر */
+    color: white; /* لون النص */
+    margin-left: 10px; /* مسافة بين زر البحث وزر إصدار التقارير */
+}
+
+.report-btn {
+    background-color: #0275d8; /* لون خلفية زر إصدار التقارير */
+    color: white; /* لون النص */
+    margin-left: 10px; /* مسافة بين الأزرار */
+}
+
+/* تأثير عند التحويم فوق الأزرار */
+.search-btn:hover {
+    background-color: #4cae4c; /* لون داكن عند التمرير فوق زر البحث */
+}
+
+.report-btn:hover {
+    background-color: #0056b3; /* لون داكن عند التمرير فوق زر إصدار التقارير */
+}
+
+/* تحسين تصميم أزرار التعديل والحذف */
+.edit-btn {
+    background-color: #ffc107; /* لون خلفية زر التعديل */
+    color: white; /* لون النص */
+    margin-right: 5px; /* مسافة بين الأزرار */
+}
+
+.delete-btn {
+    background-color: #d9534f; /* لون خلفية زر الحذف */
+    color: white; /* لون النص */
+}
+
+.edit-btn:hover {
+    background-color: #e0a800; /* لون داكن عند التحويم فوق زر التعديل */
+}
+
+.delete-btn:hover {
+    background-color: #c9302c; /* لون داكن عند التحويم فوق زر الحذف */
+}
+
+/* تصغير حجم مربع البحث */
+.search-box input[type="text"] {
+    padding: 8px; /* تقليل الحشوة */
+    font-size: 14px; /* تقليل حجم الخط */
+    width: 250px; /* ضبط عرض الحقل */
+    border: 1px solid var(--dark-grey); /* إضافة حدود */
+}
+
+/* تنسيق الأزرار */
+.search-btn, .report-btn {
+    padding: 8px 12px; /* تقليل الحشوة */
+    font-size: 12px; /* تقليل حجم الخط */
+}
+/* --------------------------------
+   تنسيقات النافذة المنبثقة
+   -------------------------------- */
+
+   .modal {
+    display: none; /* إخفاء النافذة المنبثقة افتراضيًا */
+    position: fixed; /* موضع ثابت */
+    top: 0;
+    left: 0;
+    width: 100%; /* عرض كامل */
+    height: 100%; /* ارتفاع كامل */
+    background-color: rgba(0, 0, 0, 0.5); /* تظليل الخلفية */
+    justify-content: center; /* توسيط المحتوى أفقيًا */
+    align-items: center; /* توسيط المحتوى عموديًا */
+    z-index: 1000; /* لتظهر فوق كل المحتويات */
+    display: flex; /* تأكد من استخدام flexbox لتوسيع المحتوى */
+}
+
+.modal-content {
+    background-color: #fff; /* لون خلفية النموذج */
+    padding: 20px; /* مسافة داخلية للنموذج */
+    border-radius: 8px; /* حواف دائرية */
+    width: 100%; /* عرض كامل للنموذج */
+    max-width: 1200px; /* زيادة العرض الأقصى للنموذج */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* ظل خفيف */
+    margin: auto; /* توسيط النموذج */
+    margin-top: 50px; /* زيادة التباعد من أعلى النموذج (يمكنك تغيير القيمة حسب الحاجة) */
+}
+
+.modal-title {
+    text-align: center; /* محاذاة العنوان في المنتصف */
+    margin-bottom: 20px; /* إضافة مسافة أسفل العنوان */
+    color: #860392; /* لون النص */
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column; /* جعل العناصر عمودية */
+    color: #860392; /* لون النص */
+}
+
+.form-row {
+    display: flex; /* استخدام flexbox */
+    justify-content: space-between; /* توزيع العناصر بالتساوي */
+    margin-bottom: 15px; /* إضافة مسافة بين الصفوف */
+}
+
+.form-group {
+    flex: 1; /* جعل كل مجموعة تأخذ مساحة متساوية */
+    margin-right: 15px; /* إضافة مسافة بين المجموعات */
+}
+
+.form-group:last-child {
+    margin-right: 0; /* إزالة المسافة من المجموعة الأخيرة */
+}
+
+input,
+select {
+    width: 100%; /* جعل الإدخال يستغل المساحة بالكامل */
+    padding: 10px; /* مسافة داخلية في الحقول */
+    border: 1px solid #ccc; /* إطار خفيف حول الحقول */
+    border-radius: 5px; /* حواف دائرية للحقول */
+    font-size: 14px; /* حجم الخط */
+    color: #860392; /* لون النص */
+}
+
+button.edit-button {
+    display: block; /* لجعل الزر في منتصف الصفحة */
+    width: 100%; /* عرض الزر كامل */
+    padding: 10px; /* مسافة داخلية للزر */
+    background-color: #860392; /* لون الزر */
+    color: white; /* لون النص في الزر */
+    border: none; /* بدون إطار */
+    border-radius: 5px; /* حواف دائرية للزر */
+    cursor: pointer; /* تغيير المؤشر عند التحويم */
+    font-size: 16px; /* حجم الخط في الزر */
+    margin-top: 20px; /* مسافة أعلى الزر */
+}
+
+button.edit-button:hover {
+    background-color: #45a049; /* لون الزر عند التحويم */
+}
+
+
+
+
+
+/* زر التبديل (Switch) */
+.theme-toggle {
+    position: relative;
+    display: inline-block;
+    width: 50px; /* تصغير الحجم */
+    height: 28px; /* تصغير الحجم */
+}
+
+.theme-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 50px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;  /* تصغير الـ knob */
+    width: 22px;   /* تصغير الـ knob */
+    border-radius: 50%;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+}
+
+input:checked + .slider {
+    background-color: #860392; /* اللون الأخضر عند التفعيل */
+}
+
+input:checked + .slider:before {
+    transform: translateX(22px); /* حركة الـ knob */
+}
+
+/* إزالة النص الذي يظهر مع الزر */
+.status-label {
+    display: none;  /* إزالة النص تمامًا */
+}
+
+
+/* فئة لتصغير الـ select */
+.small-select {
+    font-size: 12px;
+    padding: 5px 10px;
+    width: 120px;
+}
+
+
+
+.badge {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333; /* لون النص */
+}
+
+.badge-approved {
+    background-color: rgba(0, 128, 0, 0.2); /* أخضر خفيف */
+    color: #006400; /* أخضر غامق للنص */
+}
+
+.badge-rejected {
+    background-color: rgba(255, 0, 0, 0.2); /* أحمر خفيف */
+    color: #8B0000; /* أحمر غامق للنص */
+}
+
+.badge-pending {
+    background-color: rgba(255, 255, 0, 0.2); /* أصفر خفيف */
+    color: #DAA520; /* أصفر غامق للنص */
+}
+
+
+
+
+.offers-table {
+    width: 100%; /* عرض الجدول بالكامل */
+    border-collapse: collapse; /* دمج الحدود */
+    font-size: 12px; /* تصغير حجم النص */
+}
+
+.offers-table th, .offers-table td {
+    padding: 5px; /* تقليل الحشوة داخل الخلايا */
+    text-align: center; /* توسيط النص */
+}
+
+.offers-table th {
+    background-color: rgba(0, 0, 0, 0.1); /* خلفية الأعمدة */
+    font-weight: bold; /* نص عريض */
+}
+
+.offers-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* خلفية الصفوف الفردية */
+}
+
+.offers-table tbody tr:nth-child(odd) {
+    background-color: #ffffff; /* خلفية الصفوف الزوجية */
+}
+
+.offers-table td textarea, .offers-table td select {
+    font-size: 11px; /* تصغير حجم النص داخل الحقول */
+    padding: 2px; /* تقليل الحشوة داخل الحقول */
+}
+
+.offers-table td a {
+    font-size: 10px; /* تصغير حجم النص داخل الروابط */
+    padding: 2px 5px; /* تقليل حشوة الروابط */
+}
+
+.offers-table .form-group {
+    margin: 0; /* إزالة الهوامش بين الحقول */
+}

@@ -1,0 +1,70 @@
+.custom-small-card {
+    width: 180px; /* تقليل عرض البطاقة */
+    height: 350px; /* تقليل ارتفاع البطاقة */
+    margin: 5px; /* تقليل المسافات بين البطاقات */
+    padding: 2px; /* تقليل الحشو الداخلي */
+    font-size: 9px; /* تصغير النصوص */
+    background-color: #f9f9f9; /* لون خلفية */
+    border: 1px solid #ddd; /* إطار خفيف */
+    border-radius: 6px; /* زوايا مستديرة */
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1); /* ظل خفيف */
+    overflow: hidden; /* إخفاء المحتوى الزائد */
+}
+
+/* ضبط الصور داخل البطاقة */
+.custom-small-card img {
+    width: 100%; /* ضبط الصور لتتناسب مع عرض البطاقة */
+    max-height: 120px; /* تقليل ارتفاع الصور */
+    object-fit: cover; /* قص الصورة إذا زاد حجمها */
+    border-radius: 4px; /* زوايا مستديرة للصورة */
+}
+
+/* ضبط النصوص والمحتوى */
+.custom-small-card .content {
+    text-align: center; /* محاذاة النصوص إلى المنتصف */
+    height: 80px; /* تقليل ارتفاع النصوص */
+    overflow: hidden; /* إخفاء النصوص الزائدة */
+}
+
+/* تعديل القسم الخاص بالسعر */
+.custom-small-card .price {
+    font-size: 8px; /* تصغير النصوص */
+}
+
+.custom-small-card .stars i {
+    font-size: 10px; /* حجم أصغر للنجوم */
+    color: #ffc107; /* لون النجوم */
+}
+
+/* أزرار الإجراء */
+.custom-small-card .product-btn ul {
+    gap: 3px; /* تقليل المسافات بين الأزرار */
+}
+
+/* النص الخاص بالخصم */
+.custom-small-card .discount {
+    font-size: 8px; /* حجم النصوص الخاصة بالخصم */
+    background-color: #ff6f61; /* خلفية الخصم */
+    color: #fff;
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
+/* حاوية البطاقات */
+.boxs2 {
+    display: flex;
+    flex-wrap: wrap; /* السماح بالتفاف العناصر */
+    gap: 5px; /* تقليل المسافات بين البطاقات */
+    justify-content: start; /* محاذاة البطاقات إلى اليمين */
+}
+
+
+
+.small-logo {
+    width: 100px; /* عرض الصورة */
+    height: auto; /* الحفاظ على النسبة بين العرض والارتفاع */
+}
+
+.black-image {
+    filter: brightness(0) invert(0); /* تحويل الصورة إلى اللون الأسود */
+}

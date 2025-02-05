@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='/img/1.png') }}" type="image/x-icon">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap JS Bundle (يشمل Popper.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="static/css/sellers.css">
+    <title>البائعون</title>
+</head>
+
+<body>
+<!-- الشريط الجانبي -->
+<div class="sidebar">
+    <a href="dashboard.html" class="logo">
+        <i class='bx bx-code-alt'></i>
+        <div class="logo-name"><span>مدينة</span>العبور</div>
+    </a>
+    <ul class="side-menu">
+        <li><a href="/dashboard"><i class='bx bxs-dashboard'></i>لوحة التحكم</a></li>
+        <li><a href="/products"><i class='bx bx-store-alt'></i>المنتجات</a></li>
+        <li><a href="/banner"><i class='bx bx-image'></i>البانرات الاعلانيه</a></li>
+        <li><a href="/sellers"><i class='bx bx-group'></i>البائعون</a></li>
+        <li><a href="/Orders"><i class='bx bx-receipt'></i>الطلبات</a></li>
+        <li><a href="/services"><i class='bx bx-message-square-dots'></i>الخدمات</a></li>
+        <li><a href="/Types_of_services"><i class="bx bx-briefcase"></i>انواع الخدمات</a></li>
+        <li><a href="/category"><i class='bx bx-category'></i>الاقسام</a></li>
+        <li><a href="/offers_admin"><i class='bx bx-gift'></i>العروض</a></li>
+        <li><a href="/settings"><i class='bx bx-cog'></i>الإعدادات</a></li>
+        <li><a href="#" id="language-toggle"><i class='bx bx-globe'></i>اللغة</a></li>
+    </ul>
+    <ul class="side-menu">
+        <li>
+            <a href="admin.html" class="logout">
+                <i class='bx bx-log-out-circle'></i>
+                تسجيل الخروج
+            </a>
+        </li>
+    </ul>
+
+</div>
+<!-- نهاية الشريط الجانبي -->
+
+    <!-- المحتوى الرئيسي -->
+    <div class="content">
+        <!-- الشريط العلوي -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            <form action="#">
+                
+            </form>
+            <input type="checkbox" id="theme-toggle" hidden>
+            <label for="theme-toggle" class="theme-toggle"></label>
+<!-- زر الإشعارات الجديد -->
+<a href="/notifications">
+    <button class="button">
+        <svg viewBox="0 0 448 512" class="bell">
+            <path d="M224 0c-17.7 0-32 14.3-32 32V49.9C119.5 61.4 64 124.2 64 200v33.4c0 45.4-15.5 89.5-43.8 124.9L5.3 377c-5.8 7.2-6.9 17.1-2.9 25.4S14.8 416 24 416H424c9.2 0 17.6-5.3 21.6-13.6s2.9-18.2-2.9-25.4l-14.9-18.6C399.5 322.9 384 278.8 384 233.4V200c0-75.8-55.5-138.6-128-150.1V32c0-17.7-14.3-32-32-32zm0 96h8c57.4 0 104 46.6 104 104v33.4c0 47.9 13.9 94.6 39.7 134.6H72.3C98.1 328 112 281.3 112 233.4V200c0-57.4 46.6-104 104-104h8zm64 352H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7s18.7-28.3 18.7-45.3z"></path>
+        </svg>
+        الاشعارات
+    </button>
+</a>
+ 
+ <a href="settings.html" class="profile">
+    <img src="images/logo.png" alt="الملف الشخصي">
+            </a>
+        </nav>
+        <!-- نهاية الشريط العلوي -->
+
+        <main class="sellers-page">
+            <div class="header">
+
+<!-- جدول البائعين -->
+<main class="sellers-page">
+    <div class="header">
+        <div class="title-box">
+            <h2> البائعين</h2>
+        </div>
+
+        <!-- محرك البحث -->
+        <div class="search-box">
+            <input 
+                type="text" 
+                id="sellerSearch" 
+                class="search-input" 
+                placeholder="ابحث عن بائع..."
+                onkeyup="filterSellers()"> <!-- تشغيل التصفية عند الكتابة -->
+            <button id="searchSellerButton" class="search-button" onclick="filterSellers()">بحث</button>
+        </div>
+    </div>
+
+    <div class="recent-sellers">
+        <style>
+            /* تصغير حجم الجدول */
+            .sellers-table {
+                font-size: 12px; /* تصغير حجم النص */
+            }
+        
+            /* تصغير حجم الخلايا */
+            .sellers-table th, .sellers-table td {
+                padding: 5px; /* تقليل الحشوة داخل الخلايا */
+            }
+        
+            /* تصغير النص داخل textarea */
+            .sellers-table textarea {
+                font-size: 12px; /* تقليل حجم النص */
+                height: 50px; /* تصغير ارتفاع textarea */
+            }
+        
+            /* تصغير حجم الأزرار */
+            .sellers-table .btn {
+                padding: 2px 8px; /* تقليل الحشوة داخل الأزرار */
+                font-size: 12px; /* تقليل حجم النص في الأزرار */
+            }
+        </style>
+        
+        <table class="table table-bordered table-striped sellers-table" id="sellersTable">
+            <thead class="thead-dark">
+                <tr>
+                    <th>كود التاجر</th>
+                    <th>اسم التاجر</th>
+                    <th>اسم المتجر</th>
+                    <th>تخصص المتجر</th>
+                    <th>البريد الإلكتروني</th>
+                    <th>رقم الهاتف</th>
+                    <th>العنوان</th>
+                    <th>تاريخ التسجيل</th>
+                    <th>الحالة</th>
+                    <th>بائع أو لا</th>
+                    <th>الرساله</th>
+                    <th>ارسال الرسائل</th>
+                    <th>الإجراءات</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for seller in seller %}
+                <tr>
+                    <td>{{ seller.seller_id }}</td>
+                    <td>{{ seller.seller_name }}</td>
+                    <td>{{ seller.store_name }}</td>
+                    <td>{{ seller.store_category }}</td>
+                    <td>
+                        <a href="mailto:{{ seller.email }}">{{ seller.email }}</a>
+                    </td>
+                    <td>
+                        <a href="https://wa.me/2{{ seller.phone | replace('+', '') }}" target="_blank">
+                            {{ seller.phone }}
+                        </a>
+                    </td>
+                    <td>{{ seller.governorate }} - {{ seller.city }} - {{ seller.village }} - {{ seller.street_address }}</td>
+                    <td>{{ seller.formatted_registration_date }}</td>
+                    <td>
+                        <div class="form-group">
+                            <label for="status-toggle-{{ seller.seller_id }}" class="theme-toggle">
+                                <input type="checkbox" class="custom-switch-input" 
+                                       id="status-toggle-{{ seller.seller_id }}" 
+                                       {% if seller.status %}checked{% endif %} 
+                                       onchange="toggleStatus({{ seller.seller_id }}, '{{ url_for('toggle_seller_status') }}')">
+                                <span class="slider"></span> 
+                                <span class="status-label">
+                                    {% if seller.status %}نشط{% else %}غير نشط{% endif %}
+                                </span>
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <label for="is_seller-toggle-{{ seller.seller_id }}" class="theme-toggle">
+                                <input 
+                                    type="checkbox" 
+                                    class="custom-switch-input" 
+                                    id="is_seller-toggle-{{ seller.seller_id }}" 
+                                    {% if seller.is_seller %}checked{% endif %} 
+                                    onchange="toggleis_seller({{ seller.seller_id }}, '{{ url_for('toggle_seller_is_seller') }}')"
+                                    aria-label="Toggle seller status">
+                                <span class="slider"></span> 
+                                <span class="is_seller-label">
+                                    {% if seller.is_seller %}نشط{% else %}غير نشط{% endif %}
+                                </span>
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        <textarea class="form-control" id="note-{{ seller.seller_id }}" placeholder="أدخل الرساله هنا"></textarea>
+                    </td>
+                    <td>
+                        <div class="d-flex gap-1">
+                            <button 
+                                class="btn btn-success btn-sm d-flex align-items-center justify-content-center" 
+                                style="width: 100px;" 
+                                onclick="sendToWhatsApp('{{ seller.phone }}', document.getElementById('note-{{ seller.seller_id }}').value)">
+                                <i class="bi bi-whatsapp" style="margin-left: 5px;"></i> واتساب
+                            </button>
+                            <button 
+                                class="btn btn-danger btn-sm d-flex align-items-center justify-content-center" 
+                                style="width: 100px;" 
+                                onclick="sendToEmail('{{ seller.email }}', document.getElementById('note-{{ seller.seller_id }}').value)">
+                                <i class="fa fa-envelope" style="margin-left: 5px;"></i> بريد
+                            </button>
+                        </div>
+                    </td> 
+                    <td>
+                        <button class="btn btn-warning" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#editSellerModal"
+                                data-id="{{ seller['seller_id'] }}" 
+                                data-name="{{ seller['seller_name'] }}" 
+                                data-store="{{ seller['store_name'] }}" 
+                                data-category="{{ seller['store_category'] }}" 
+                                data-email="{{ seller['email'] }}" 
+                                data-phone="{{ seller['phone'] }}" 
+                                data-address="{{ seller['address'] }}">
+                            تعديل
+                        </button>
+                    </td>                   
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        
+    </div>
+</main>
+
+<script>
+
+
+    function sendToWhatsApp(phone, note) {
+        if (!note.trim()) {
+            alert("الرجاء كتابة ملاحظة قبل الإرسال.");
+            return;
+        }
+        const whatsappUrl = `https://wa.me/2${phone}?text=${encodeURIComponent(note)}`;
+        window.open(whatsappUrl, '_blank');
+    }
+    
+    function sendToEmail(email, note) {
+        if (!note.trim()) {
+            alert("الرجاء كتابة ملاحظة قبل الإرسال.");
+            return;
+        }
+        const mailtoUrl = `mailto:${email}?subject=ملاحظات&body=${encodeURIComponent(note)}`;
+        window.open(mailtoUrl, '_blank');
+    }
+    
+    // وظيفة التصفية للبائعين
+    function filterSellers() {
+        var input = document.getElementById('sellerSearch');
+        var filter = input.value.toLowerCase();
+        var table = document.getElementById('sellersTable');
+        var rows = table.getElementsByTagName('tr');
+
+        // تجاهل الصف الأول (عناوين الأعمدة)
+        for (var i = 1; i < rows.length; i++) {
+            var cells = rows[i].getElementsByTagName('td');
+            var match = false;
+
+            // تحقق من كل خلية في الصف
+            for (var j = 0; j < cells.length; j++) {
+                if (cells[j]) {
+                    var textValue = cells[j].textContent || cells[j].innerText;
+                    if (textValue.toLowerCase().indexOf(filter) > -1) {
+                        match = true;
+                        break;
+                    }
+                }
+            }
+
+            // عرض أو إخفاء الصف بناءً على المطابقة
+            rows[i].style.display = match ? '' : 'none';
+        }
+    }
+</script>
+<style>
+    .search-box {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .search-input {
+        padding: 10px;
+        width: 100%;
+        max-width: 400px;
+        font-size: 16px;
+        border:  #ccc;
+        border-radius: 0px 80px 80px 0px;
+        margin-right: 10px;
+    }
+
+    .search-button {
+        padding: 10px 20px;
+        background-color: #860392;
+        color: white;
+        border: none;
+        border-radius: 80px 0px 0px 80px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .search-button:hover {
+        background-color:rgb(92, 6, 85);
+    }
+</style>
+
+<div class="modal fade" id="editSellerModal" tabindex="-1" role="dialog" aria-labelledby="editSellerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form id="editSellerForm" action="{{ url_for('update_seller') }}" method="POST">
+                {{ form.hidden_tag() }}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editSellerModalLabel">تعديل بيانات البائع</h5>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="إغلاق">
+                        إغلاق
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="seller_id" id="seller_id">
+                    <div class="form-group">
+                        <label for="seller_name">اسم التاجر</label>
+                        <input type="text" class="form-control" id="seller_name_edit" name="seller_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="store_name">اسم المتجر</label>
+                        <input type="text" class="form-control" id="store_name_edit" name="store_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="store_category">تخصص المتجر</label>
+                        <select id="store_category_edit" name="store_category" class="form-control" required>
+                            <option value="">اختر التخصص</option>
+                            {% for category in category %}
+                                <option value="{{ category.category_name }}">{{ category.category_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">البريد الإلكتروني</label>
+                        <input type="email" class="form-control" id="email_edit" name="email" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">رقم الهاتف</label>
+                        <input type="text" class="form-control" id="phone_edit" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">العنوان</label>
+                        <input type="text" class="form-control" id="address_edit" name="address">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">حفظ التعديلات</button>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</div>
+
+
+
+
+
+    <!-- Scripts -->
+    <script src="static/js/sellers.js"></script>
+    <script src="static/js/dashboard.js"></script>
+    <script src="static/js/settings.js"></script>
+
+</body>
+
+</html>

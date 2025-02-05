@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فاتورة</title>
+    <link rel="stylesheet" href="css/invoice.css">
+    <link rel="icon" href="{{ url_for('static', filename='/img/1.png') }}" type="image/x-icon">
+</head>
+<body>
+    <div class="invoice-container">
+        <!-- رأس الفاتورة -->
+        <header class="invoice-header">
+            <div class="logo-container">
+                <img src="../../static/uploads/{{store_image}}" alt="شعار الموقع" class="logo">
+            </div>
+            <h1 class="invoice-title">فاتورة الطلب</h1>
+            <p class="invoice-date">التاريخ: <span id="invoice-date">2024-11-27</span></p>
+        </header>
+
+        <!-- تفاصيل العميل -->
+        <section class="customer-details">
+            <h2>تفاصيل العميل</h2>
+            <div class="customer-info">
+                <p><strong>اسم العميل:</strong> <span id="customer-name">أحمد محمد</span></p>
+                <p><strong>البريد الإلكتروني:</strong> <span id="customer-email">ahmed@example.com</span></p>
+            </div>
+        </section>
+
+        <!-- تفاصيل الطلب -->
+        <section class="order-details">
+            <h2>تفاصيل الطلب</h2>
+            <div class="order-info">
+                <p><strong>تاريخ الطلب:</strong> <span id="order-date">2024-10-27</span></p>
+                <p><strong>المبلغ الإجمالي:</strong> <span id="total-amount">$500</span></p>
+                <p><strong>طريقة الدفع:</strong> <span id="payment-method">بطاقة ائتمان</span></p>
+                <p><strong>حالة الدفع:</strong> <span id="payment-status">غير مدفوع</span></p>
+            </div>
+        </section>
+
+        <footer class="invoice-footer">
+            <button onclick="printInvoice()" class="print-button">طباعة الفاتورة</button>
+            <button onclick="goBackToOrders()" class="back-button">الرجوع إلى صفحة الطلبات</button>
+        </footer>
+        
+
+
+        <script src="js/invoice.js"></script>
+        <script src="js/dashboard.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,636 @@
+
+:root {
+    --primary-color: #0096FF;
+    --secondary-color: #333;
+    --light-background: #fff;
+    --dark-background: #2c2c2c;
+}
+.title-box {
+    display: inline-block; /* جعل الصندوق بحجم النص */
+    background-color: #0d6efd00; /* لون خلفية خفيف */
+    border: 1px solid #0096FF; /* إطار حول النص */
+    border-radius: 10px; /* حواف دائرية */
+    padding: 5px 10px; /* مساحة داخلية للصندوق */
+    margin-bottom: 10px; /* تباعد أسفل الصندوق */
+    font-size: 1em; /* تكبير النص قليلاً */
+    color: #0096FF; /* لون النص */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* ظل خفيف */
+}
+
+/* Styles for the popup */
+.popup {
+    display: none;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    
+}
+
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+.close-btn {
+    float: right;
+    cursor: pointer;
+    font-size: 18px;
+    color: #333;
+}
+
+.popup-content h3 {
+    margin: 0 0 10px;
+}
+
+.popup-content input {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+}
+
+.popup-content button {
+    padding: 10px;
+    background-color: #0096FF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.popup-content button:hover {
+    background-color: #218838;
+}
+
+.welcome-user {
+    background: var(--light);
+    padding: 36px 24px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Align items to the left */
+    grid-gap: 16px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
+}
+
+.user-info-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background-color: #0d6efd00;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px #6439FF;
+}
+
+.user-profile {
+    display: flex;
+    object-fit: fill;
+    align-items: center;
+    gap: 1rem;
+}
+
+#user-profile-pic {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* نص البروفايل */
+.user-details p {
+    margin: 0.5rem 0;
+    color: var(--dark);
+    font-size: 1rem;
+}
+
+/* زر التعديل */
+.edit-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: white; /* تغيير لون الخلفية إلى الأبيض */
+    color: var(--dark);
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.edit-button:hover {
+    background-color: #f0f0f0; /* ظل داكن قليلاً عند التمرير */
+}
+
+
+.icon {
+    width: 20px;
+    height: 20px;
+}
+
+.welcome-user h2 {
+    font-size: 28px; /* Adjusted font size */
+    font-weight: 600;
+    color: #0d6efd;
+    transition: color 0.3s ease; /* Transition for color change */
+}
+
+.welcome-user img {
+    width: 100px; /* Adjusted width */
+    height: 100px; /* Adjusted height */
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* New styles for dark mode */
+.dark-mode .welcome-user h2,
+.dark-mode .welcome-user {
+    color: white; /* Change color to white in dark mode */
+    background: var(--dark); /* Change background to dark in dark mode */
+}
+
+.recent-orders,
+.seller-info {
+    background: var(--light);
+    padding: 36px 24px; /* Adjusted padding */
+    border-radius: 20px;
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column; /* Allow centering */
+    align-items: center; /* Center content horizontally */
+}
+
+.recent-orders h2,
+.seller-info h2 {
+    text-align: center; /* Center text */
+    transition: color 0.3s ease; /* Transition for color change */
+}
+
+.dark-mode .recent-orders h2,
+.dark-mode .seller-info h2 {
+    color: var(--dark);
+}
+
+.recent-orders table,
+.seller-info table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px; /* Added border radius */
+    overflow: hidden; /* Ensure no overflow */
+}
+
+.recent-orders th,
+.recent-orders td,
+.seller-info th,
+.seller-info td {
+    padding: 12px 16px; /* Adjusted padding */
+    text-align: left;
+    border-bottom: 1px solid var(--grey);
+}
+
+.recent-orders th,
+.seller-info th {
+    color: var(--dark);
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.recent-orders td,
+.seller-info td {
+    color: var(--dark);
+    font-size: 13px;
+}
+
+.recent-orders tbody tr,
+.seller-info tbody tr {
+    transition: background 0.3s ease;
+}
+
+.recent-orders tbody tr:hover,
+.seller-info tbody tr:hover {
+    background: var(--grey); /* Highlight row on hover */
+}
+
+.seller-info .toggle-status {
+    cursor: pointer;
+    color: var(--primary);
+}
+
+
+.title-box {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.welcome-user h2 {
+    font-size: 28px; /* Adjusted font size */
+    font-weight: 600;
+    color: var(--dark);
+    transition: color 0.3s ease; /* Transition for color change */
+}
+
+.welcome-user img {
+    width: 100px; /* Adjusted width */
+    height: 100px; /* Adjusted height */
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-info-container {
+    display: flex; /* توزيع العناصر بشكل أفقي */
+    justify-content: space-around; /* توزيع متساوي بين العناصر */
+    align-items: flex-start; /* محاذاة العناصر في الأعلى */
+    width: 100%; /* ملء العرض الكامل */
+    padding: 20px;
+    box-shadow: 0 4px 10px #0096FF; /* ظل للصندوق باللون الجديد */
+    border-radius: 15px; /* زوايا مستديرة */
+    background-color: rgba(255, 0, 0, 0); /* لون خلفية شفاف */
+}
+
+.user-profile {
+    flex: 1; /* تخصيص عرض للصورة */
+    text-align: center; /* محاذاة النص في المنتصف */
+}
+
+.stats-box, .quick-notes-box {
+    background-color: rgba(122, 28, 172, 0); /* لون خلفية خفيف بتدرج من اللون الجديد */
+    padding: 20px;
+    border-radius: 8px; /* زوايا مستديرة */
+    flex: 0 0 30%; /* عرض ثابت للصناديق */
+    margin-left: 20px; /* مسافة بين الصناديق */
+    box-shadow: 0 2px 5px #be000000; /* ظل خفيف */
+}
+
+h3 {
+    margin-top: 0; /* إزالة الهامش العلوي */
+    color: var(--dark);
+}
+
+ul {
+    list-style-type: none; /* إزالة النقاط من القائمة */
+    padding: 0; /* إزالة الهوامش */
+}
+
+li {
+    margin-bottom: 10px; /* مسافة بين عناصر القائمة */
+    font-size: 14px; /* حجم خط مناسب */
+    color: var(--dark);
+}
+
+.edit-button {
+    background-color: #0096FF; /* لون خلفية الزر */
+    color: white; /* لون النص */
+    border: none; /* إزالة الحدود */
+    padding: 10px 15px; /* حواف الزر */
+    border-radius: 5px; /* زوايا مستديرة */
+    cursor: pointer; /* تغيير المؤشر */
+    transition: background-color 0.3s; /* تأثير الانتقال */
+}
+
+.edit-button:hover {
+    background-color: #5800FF; /* يمكنك تغيير هذا اللون إذا رغبت في ذلك */
+}
+
+/* تنسيق الحاوية للبوكسات */
+.dashboard-summary {
+    background: var(--light);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0);
+    margin-top: 20px;
+}
+
+/* تنسيق العنوان داخل ملخص الأعمال */
+.dashboard-summary h3 {
+    font-size: 1.6rem;
+    margin-bottom: 25px;
+    font-weight: bold;
+    color: var(--dark);
+    text-align: center;
+}
+
+/* الحاوية التي تحتوي على البوكسات */
+.summary-boxes {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+/* تنسيق البوكسات الفردية */
+.summary-box {
+    background-color: var(--light-background); 
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* تأثير التحريك عند التمرير على البوكس */
+.summary-box:hover {
+    transform: translateY(-10px);
+}
+
+/* تنسيق العنوان داخل كل بوكس */
+.summary-box h4 {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+/* تنسيق الأرقام داخل كل بوكس */
+.summary-box p {
+    font-size: 1.5rem;
+    color: var(--secondary-color);
+    font-weight: bold;
+}
+
+/* إذا كان العرض ضيقًا، نقوم بتغيير الـ grid ليتناسب مع الشاشات الصغيرة */
+@media (max-width: 768px) {
+    .summary-boxes {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .summary-boxes {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* إضافة تنسيق للأيقونات */
+.icon {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+/* الوضع الليلي */
+.dark-mode .dashboard-summary {
+    background-color: var(--dark-background); /* خلفية الوضع الليلي */
+}
+
+.dark-mode .summary-box {
+    background-color: var(--dark-box-background); /* خلفية البوكسات في الوضع الليلي */
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1); /* الظل في الوضع الليلي */
+}
+
+.dark-mode .summary-box h4 {
+    color: var(--light-text-color); /* تغيير اللون في الوضع الليلي */
+}
+
+.dark-mode .summary-box p {
+    color: var(--light-text-color); /* تغيير اللون في الوضع الليلي */
+}
+
+.dark-mode .dashboard-summary h3 {
+    color: var(--light-text-color); /* تغيير اللون في الوضع الليلي */
+}
+
+/* تنسيق الجدول */
+.recent-products {
+    margin-top: 40px;
+    padding: 20px;
+    background: var(--light);
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.recent-products h3 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    text-align: center;
+    color: var(--dark);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: right;
+    color: var(--dark);
+
+    border-bottom: 1px solid #ccc;
+}
+
+th {
+    color: var(--dark);
+}
+
+.status {
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.status.active {
+    background-color: #00ff08;
+    color: white;
+}
+
+.status.inactive {
+    background-color: #f44336;
+    color: white;
+}
+
+/* تنسيق زر التبديل */
+.switch-btn {
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    display: block;
+    margin: 0 auto;
+}
+
+.switch-btn:hover {
+    color: var(--dark);
+}
+
+
+
+.chart-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+/* تفعيل زر التبديل */
+.toggle-btn {
+    padding: 10px 20px;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto;
+}
+
+.toggle-btn:hover {
+    background-color: #0b7dda;
+}
+
+/* تنسيق زر السويتش */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #ff0000;
+    transition: 0.4s;
+    border-radius: 50px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    border-radius: 50px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+
+.recent-orders table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.recent-orders h3 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.recent-orders th, .recent-orders td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.recent-orders th {
+    color: var(--dark);
+    font-weight: bold;
+}
+
+.recent-orders tbody tr:hover {
+    color: var(--dark);
+}
+
+.cancel-btn {
+    background-color: #006eff; /* لون الزر */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.cancel-btn:hover {
+    background-color: #ff0000; /* تدرج اللون عند المرور على الزر */
+}
+
+
+
+/*تنسيق رسالة الفلاش*/
+
+.flash-message {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+    animation: fadeOut 5s forwards;
+}
+
+/* رسائل النجاح */
+.flash-message.success {
+    background-color: rgba(0, 255, 0, 0.2); /* خلفية خضراء شفافة */
+    border: 2px solid darkgreen; /* إطار أخضر غامق */
+    color: darkgreen; /* لون النص */
+}
+
+/* رسائل الخطأ */
+.flash-message.error {
+    background-color: rgba(255, 0, 0, 0.2); /* خلفية حمراء شفافة */
+    border: 2px solid darkred; /* إطار أحمر غامق */
+    color: darkred; /* لون النص */
+}
+
+/* تأثير الاختفاء التدريجي */
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    90% { opacity: 0.2; }
+    100% { opacity: 0; display: none; }
+}
+
+.instruction {
+    font-size: 13px; /* حجم الخط صغير */
+    color: red; /* اللون أحمر */
+    margin-right: 10px; /* مسافة علوية صغيرة */
+}
+
+.paid {
+    background-color: green;
+    color: white;
+}
+
+.not-paid {
+    background-color: red;
+    color: white;
+}
+    

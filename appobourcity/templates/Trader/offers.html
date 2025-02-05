@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='/img/1.png') }}" type="image/x-icon">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap JS Bundle (يشمل Popper.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="stylesheet" href="../static/css/Tradercss/style.css">
+    <link rel="stylesheet" href="../static/css/Tradercss/offers.css">
+    <title>البائعون</title>
+    <link rel="icon" href="{{ url_for('static', filename='/img/1.png') }}" type="image/x-icon">
+</head>
+
+<body>
+<!-- الشريط الجانبي -->
+<div class="sidebar">
+    <a href="dashboard.html" class="logo">
+        <i class='bx bx-code-alt'></i>
+        <div class="logo-name"><span>مدينة</span>العبور</div>
+    </a>
+    <ul class="side-menu">
+        <li><a href="dashboard_trader"><i class='bx bxs-dashboard'></i>لوحة التحكم</a></li>
+        <li><a href="product_trader"><i class='bx bx-store-alt'></i>إدارة المنتجات</a></li>
+        <li><a href="Subcategories"><i class='bx bx-category'></i>إدارة الاقسام الفرعيه</a></li>
+        <li><a href="/customers"><i class='bx bx-group'></i>إدارة العملاء</a></li>
+        <li><a href="/Orders_trader"><i class='bx bx-receipt'></i>إدارة الطلبات</a></li>
+        <li><a href="offers"><i class='bx bx-gift'></i>العروض والخصومات</a></li>
+        <li><a href="settings.html"><i class='bx bx-cog'></i>الإعدادات</a></li>
+        <li><a href="#" id="language-toggle"><i class='bx bx-globe'></i>اللغة</a></li>
+    </ul>
+    <ul class="side-menu">
+        <li>
+            <a href="logout" class="logout">
+                <i class='bx bx-log-out-circle'></i>
+                تسجيل الخروج
+            </a>
+        </li>
+    </ul>
+
+</div>
+<!-- نهاية الشريط الجانبي -->
+
+    <!-- المحتوى الرئيسي -->
+    <div class="content">
+        <!-- الشريط العلوي -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            <form action="#">
+                <div class="form-input" style="direction: rtl; display: flex; align-items: center;">
+                    <button class="search-btn" type="submit" style="margin-right: 5px;"><i class='bx bx-search'></i></button>
+                    <input type="search" placeholder="بحث..." style="text-align: right;">
+                </div>
+            </form>
+            <input type="checkbox" id="theme-toggle" hidden>
+            <label for="theme-toggle" class="theme-toggle"></label>
+<!-- زر الإشعارات الجديد -->
+<a href="/notifications">
+    <button class="button">
+        <svg viewBox="0 0 448 512" class="bell">
+            <path d="M224 0c-17.7 0-32 14.3-32 32V49.9C119.5 61.4 64 124.2 64 200v33.4c0 45.4-15.5 89.5-43.8 124.9L5.3 377c-5.8 7.2-6.9 17.1-2.9 25.4S14.8 416 24 416H424c9.2 0 17.6-5.3 21.6-13.6s2.9-18.2-2.9-25.4l-14.9-18.6C399.5 322.9 384 278.8 384 233.4V200c0-75.8-55.5-138.6-128-150.1V32c0-17.7-14.3-32-32-32zm0 96h8c57.4 0 104 46.6 104 104v33.4c0 47.9 13.9 94.6 39.7 134.6H72.3C98.1 328 112 281.3 112 233.4V200c0-57.4 46.6-104 104-104h8zm64 352H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7s18.7-28.3 18.7-45.3z"></path>
+        </svg>
+        الاشعارات
+    </button>
+</a>
+ 
+ <a href="settings.html" class="profile">
+    <img src="images/logo.png" alt="الملف الشخصي">
+            </a>
+        </nav>
+        <!-- نهاية الشريط العلوي -->
+
+        <main class="offers-page">
+            <div class="header">
+
+
+                 <!-- نموذج إضافة عرض جديد -->
+                 <div class="container">
+                    <form class="add-offer-form" method="post" enctype="multipart/form-data">
+                        {{ form.hidden_tag() }}  <!-- إضافة token CSRF للحماية من الهجمات -->
+                        <h2>إضافة عرض جديد</h2>
+                        <!-- عرض رسائل الفلاش -->
+                            {% with messages = get_flashed_messages(with_categories=True) %}
+                            {% if messages %}
+                                <div id="flash-messages">
+                                    {% for category, message in messages %}
+                                        <div class="flash-message {{ category }}">
+                                            {{ message }}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            {% endwith %}
+                        <!-- الصف الأول: اسم العرض ونوع العرض -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name"><i class="fas fa-tag"></i> اسم العرض</label>
+                                {{ form.name(class="form-control", placeholder="اسم العرض") }}
+                                {% if form.name.errors %}
+                                    <ul class="errors">
+                                        {% for error in form.name.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label for="code"><i class="fas fa-tag"></i> كود العرض</label>
+                                {{ form.code(class="form-control", placeholder="كود العرض") }}
+                                {% if form.code.errors %}
+                                    <ul class="errors">
+                                        {% for error in form.code.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                    
+                            <div class="form-group">
+                                <label for="typename"><i class="fas fa-list"></i> نوع العرض</label>
+                                {{ form.typename(class="form-control", placeholder="نوع العرض") }}
+                                {% if form.typename.errors %}
+                                    <ul class="errors">
+                                        {% for error in form.typename.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                        </div>
+                    
+                        <!-- الصف الثاني: قيمة الخصم وتواريخ البداية والنهاية -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="discount_value"><i class="fas fa-percent"></i> قيمة الخصم</label>
+                                {{ form.discount_value(class="form-control", placeholder="مثال: 50%") }}
+                                {% if form.discount_value.errors %}
+                                    <ul class="errors">
+                                        {% for error in form.discount_value.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                    
+                            <div class="form-group">
+                                <label for="start_date"><i class="fas fa-calendar-alt"></i> تاريخ البداية</label>
+                                {{ form.start_date(class="form-control") }}
+                                {% if form.start_date.errors %}
+                                    <ul class="errors">
+                                        {% for error in form.start_date.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                    
+                            <div class="form-group">
+                                <label for="end_date"><i class="fas fa-calendar-check"></i> تاريخ النهاية</label>
+                                {{ form.end_date(class="form-control") }}
+                                {% if form.end_date.errors %}
+                                    <ul class="errors">
+                                        {% for error in form.end_date.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                        </div>
+                    
+                        <!-- الصف الثالث: وصف العرض وصورة العرض -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="description"><i class="fas fa-info-circle"></i> شروط العرض</label>
+                                {{ form.description(class="form-control", placeholder="شروط العرض") }}
+                                {% if form.description.errors %}
+                                    <ul class="errors">
+                                        {% for error in form.description.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                    
+                            <div class="form-group">
+                                <label for="image"><i class="fas fa-image"></i> صورة العرض</label>
+                                {{ form.image(class="form-control-file") }}
+                                {% if form.image.errors %}
+                                    <ul class="errors">
+                                        {% for error in form.image.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                        </div>
+                    
+                        <!-- الصف الرابع: المنتجات المرتبطة -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="products"><i class="fas fa-boxes"></i> المنتجات المرتبطة</label>
+                                {{ form.products(class="form-control", multiple=True) }}
+                                {% if form.products.errors %}
+                                    <ul class="errors">
+                                        {% for error in form.products.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                        </div>
+                    
+                        <!-- زر الحفظ -->
+                        <div class="form-row">
+                            <button type="submit" class="submit-button"><i class="fas fa-save"></i> حفظ</button>
+                        </div>
+                    </form>
+                </div>
+
+<!-- جدول البائعين -->
+<main class="offers-page">
+    <div class="header">
+        <div class="title-box">
+            <h2> البائعين</h2>
+        </div>
+    </div>
+    <div class="recent-sellers">
+    <table class="table table-bordered table-striped sellers-table">
+        <thead class="thead-dark">
+            <tr>
+                <th>#</th>
+                <th>كود الخصم</th>
+                <th>العنوان</th>
+                <th>نوع العرض</th>
+                <th>مقدار العرض</th>
+                <th>تاريخ البداية</th>
+                <th>تاريخ الانتهاء</th>
+                <th>حالة العرض</th>
+                <th>ملاحظات</th>
+                <th>الإجراءات</th>
+            </tr>
+        </thead>
+        <tbody id="offersTableBody">
+            {% for offers in offers %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ offers.code }}</td>
+                <td>{{ offers.name }}</td>
+                <td>{{ offers.typename }}</td>
+                <td>{{ offers.discount_value }}</td>
+                <td>{{ offers.start_date }}</td>
+                <td>{{ offers.end_date }}</td>
+                <td>
+                    {% if offers.approval_status == 'approved' %}
+                        <span class="badge badge-approved">تم الموافقة</span>
+                    {% elif offers.approval_status == 'rejected' %}
+                        <span class="badge badge-rejected">تم الرفض</span>
+                    {% else %}
+                        <span class="badge badge-pending">تحت المراجعة</span>
+                    {% endif %}
+                </td>
+                <td>{{ offers.notes}}</td>
+                <td>
+                    <div class="btn-group" role="group" style="display: flex; justify-content: flex-end; gap: 5px;">
+                        <!-- زر الحذف -->
+                        <a href="{{ url_for('delete_offer_trader', offer_id=offers.offer_id) }}" 
+                           class="btn btn-sm btn-danger d-flex align-items-center justify-content-center" 
+                           style="background-color: #f54242; border-radius: 3px; padding: 4px 10px; font-size: 12px; color: white; text-decoration: none;" 
+                           onclick="return confirm('هل أنت متأكد أنك تريد حذف هذا المنتج؟')">
+                            <i class="fas fa-trash-alt me-1"></i> حذف
+                        </a>
+                        <!-- زر التعديل -->
+                    <button class="btn btn-warning" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#editOfferModal"
+                        data-id="{{ offers['offer_id'] }}"
+                        data-name="{{ offers['name'] }}"
+                        data-code="{{ offers['code'] }}"
+                        data-typename="{{ offers['typename'] }}"
+                        data-discount="{{ offers['discount_value'] }}"
+                        data-start="{{ offers['start_date'] }}"
+                        data-end="{{ offers['end_date'] }}"
+                        data-description="{{ offers['description'] }}"
+                        data-products="{{ offers['products'] | join(',') }}">
+                         تعديل
+                    </button>
+                </td>
+                
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</main>
+
+<div class="modal fade" id="editOfferModal" tabindex="-1" role="dialog" aria-labelledby="editOfferModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form id="editOfferForm" action="{{ url_for('update_offer_data') }}" method="POST">
+                {{ form.hidden_tag() }}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editOfferModalLabel">تعديل بيانات العرض</h5>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="إغلاق">
+                        إغلاق
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="offer_id" id="offer_id">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">اسم العرض</label>
+                            <input type="text" class="form-control" id="name_edit" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="discount_value">قيمة الخصم</label>
+                            <input type="text" class="form-control" id="discount_value_edit" name="discount_value" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="typename">نوع العرض</label>
+                            <select class="form-control" id="typename_edit" name="typename" required>
+                                <option value="" disabled selected>اختر نوع العرض</option>
+                                <option value="discount"> نسبه</option>
+                                <option value="value"> ثابت</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="code">كود الخصم</label>
+                            <input type="text" class="form-control" id="code_edit" name="code" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="start_date"> تاريخ البداية</label>
+                            <input type="date" class="form-control" id="start_date_edit" name="start_date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="end_date">تاريخ النهاية</label>
+                            <input type="date" class="form-control" id="end_date_edit" name="end_date" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="description">شروط العرض</label>
+                            <input type="text" class="form-control" id="description_edit" name="description" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="image">صورة العرض</label>
+                            <input type="file" class="form-control" id="image_edit" name="image" required>
+                        </div>
+                    </div>
+                        <div class="form-group">
+                            <label for="products"><i class="fas fa-boxes"></i> المنتجات المرتبطة</label>
+                                {{ form.products(class="form-control", multiple=True) }}
+                                {% if form.products.errors %}
+                                <ul class="errors">
+                                    {% for error in form.products.errors %}
+                                    <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                                {% endif %}
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">حفظ التعديلات</button>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</div>
+
+
+
+
+
+    <!-- Scripts -->
+    <script src="../static/js/Traderjs/offers.js"></script>
+    <script src="../static/js/Traderjs/dashboard.js"></script>
+
+</body>
+
+</html>

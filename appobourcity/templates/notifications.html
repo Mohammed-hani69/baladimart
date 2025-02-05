@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='/img/1.png') }}" type="image/x-icon">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="static/css/services.css">
+    <link rel="stylesheet" href="static/css/notifications.css">
+    <link rel="stylesheet" href="static/css/responsive.css">
+    <title>التنبيهات والإشعارات</title>
+</head>
+
+<body>
+<!-- الشريط الجانبي -->
+<div class="sidebar">
+    <a href="dashboard.html" class="logo">
+        <i class='bx bx-code-alt'></i>
+        <div class="logo-name"><span>مدينة</span>العبور</div>
+    </a>
+    <ul class="side-menu">
+        <li><a href="/dashboard"><i class='bx bxs-dashboard'></i>لوحة التحكم</a></li>
+        <li><a href="/products"><i class='bx bx-store-alt'></i>المنتجات</a></li>
+        <li><a href="/banner"><i class='bx bx-image'></i>البانرات الاعلانيه</a></li>
+        <li><a href="/sellers"><i class='bx bx-group'></i>البائعون</a></li>
+        <li><a href="/Orders"><i class='bx bx-receipt'></i>الطلبات</a></li>
+        <li><a href="/services"><i class='bx bx-message-square-dots'></i>الخدمات</a></li>
+        <li><a href="/Types_of_services"><i class="bx bx-briefcase"></i>انواع الخدمات</a></li>
+        <li><a href="/offers_admin"><i class='bx bx-gift'></i>العروض</a></li>
+        <li><a href="/settings"><i class='bx bx-cog'></i>الإعدادات</a></li>
+        <li><a href="#" id="language-toggle"><i class='bx bx-globe'></i>اللغة</a></li>
+    </ul>
+    <ul class="side-menu">
+        <li>
+            <a href="{{ url_for('logout') }}" class="logout">
+                <i class='bx bx-log-out-circle'></i>
+                تسجيل الخروج
+            </a>
+        </li>
+    </ul>
+
+</div>
+<!-- نهاية الشريط الجانبي -->
+
+    <!-- المحتوى الرئيسي -->
+    <div class="content">
+        <!-- شريط التنقل -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            <form action="#">
+                <div class="form-input">
+                    <button class="search-btn" type="submit"><i class='bx bx-search'></i></button>
+                    <input type="search" placeholder="بحث...">
+                </div>
+            </form>
+            <input type="checkbox" id="theme-toggle" hidden>
+            <label for="theme-toggle" class="theme-toggle"></label>
+
+            <!-- زر الإشعارات -->
+            <a href="/notifications">
+                <button class="button">
+                    <svg viewBox="0 0 448 512" class="bell">
+                        <path d="M224 0c-17.7 0-32 14.3-32 32V49.9C119.5 61.4 64 124.2 64 200v33.4c0 45.4-15.5 89.5-43.8 124.9L5.3 377c-5.8 7.2-6.9 17.1-2.9 25.4S14.8 416 24 416H424c9.2 0 17.6-5.3 21.6-13.6s2.9-18.2-2.9-25.4l-14.9-18.6C399.5 322.9 384 278.8 384 233.4V200c0-75.8-55.5-138.6-128-150.1V32c0-17.7-14.3-32-32-32zm0 96h8c57.4 0 104 46.6 104 104v33.4c0 47.9 13.9 94.6 39.7 134.6H72.3C98.1 328 112 281.3 112 233.4V200c0-57.4 46.6-104 104-104h8zm64 352H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7s18.7-28.3 18.7-45.3z"></path>
+                    </svg>
+                    الاشعارات
+                </button>
+            </a>
+
+            <a href="settings.html" class="profile">
+                <img src="static/img/1.png" alt="الملف الشخصي">
+            </a>
+        </nav>
+        <!-- نهاية شريط التنقل -->
+        <!-- نموذج إضافة الخدمة -->
+        <div class="container">
+            <form class="add-service-form" action="{{ url_for('notifications') }}" method="POST" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+
+                <!-- عرض رسائل الفلاش -->
+                {% with messages = get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                    <div id="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="flash-message {{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% endwith %}
+            
+                <h2>إرسال إشعار جديد</h2>
+            
+                <!-- اختيار المرسل إليه -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="send_to"><i class='bx bx-group'></i> إرسال إلى:</label>
+                        <select id="send_to" name="send_to" class="form-control" onchange="toggleRecipientField(this.value)">
+                            <option value="single">بريد بائع محدد</option>
+                            <option value="all">جميع المستخدمين</option>
+                        </select>
+                    </div>
+                </div>
+            
+                <!-- إدخال بريد البائع -->
+                <div class="form-row" id="single-recipient">
+                    <div class="form-group">
+                        <label for="seller_email"><i class='bx bxs-user'></i> بريد البائع:</label>
+                        {{ form.seller_email(class="form-control", placeholder="بريد البائع") }}
+                        {% if form.seller_email.errors %}
+                            <ul class="errors">
+                                {% for error in form.seller_email.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            
+                <!-- عنوان ونص الإشعار -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="title"><i class='bx bxs-bell'></i> عنوان الإشعار:</label>
+                        {{ form.title(class="form-control", placeholder="عنوان الإشعار") }}
+                    </div>
+                </div>
+            
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="message"><i class='bx bxs-message-detail'></i> نص الإشعار:</label>
+                        {{ form.message(class="form-control", placeholder="نص الإشعار") }}
+                    </div>
+                </div>
+            
+                <!-- رابط الإشعار -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="action_url"><i class="bx bx-link"></i> رابط الإشعار:</label>
+                        {{ form.action_url(class="form-control", placeholder="رابط الإشعار") }}
+                    </div>
+                </div>
+            
+                <!-- زر الإرسال -->
+                <button type="submit" class="btn btn-primary"><i class='bx bx-send'></i> {{ form.submit.label }}</button>
+            </form>
+            
+            <script>
+                function toggleRecipientField(value) {
+                    const recipientField = document.getElementById('single-recipient');
+                    recipientField.style.display = value === 'single' ? 'block' : 'none';
+                }
+            </script>
+            
+            
+            
+        </div>
+        <!-- جدول التنبيهات -->
+        <div class="alerts">
+            <h1 class="title-box">التنبيهات والإشعارات</h1>
+            <table class="notifications-table">
+                <thead>
+                    <tr>
+                        <th>اسم المرسل اليه</th>
+                        <th>بريد المرسل اليه</th>
+                        <th>عنوان الاشعار</th>
+                        <th>محتوي الاشعار</th>
+                        <th>الوقت و التاريخ</th>
+                        <th>حالة القراءه</th>
+                        <th>الإجراء</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for notifications, seller in notifications%}
+                    <tr>
+                        <td>{{seller.seller_name}}</td>
+                        <td>{{seller.email}}</td>
+                        <td>{{notifications.title}}</td>
+                        <td>
+                            {% if notifications.message|length > 30 %}
+                                {{ notifications.message[:30] }}...
+                                <a href="#" 
+                                   style="color: #007bff; text-decoration: underline; cursor: pointer;" 
+                                   onclick="showNotificationDetails({
+                                       notification_id: '{{ notifications.notification_id }}',
+                                       title: '{{ notifications.title }}',
+                                       message: '{{ notifications.message|escape }}',
+                                       created_at: '{{ notifications.created_at }}'
+                                   })">
+                                    قراءة المزيد
+                                </a>
+                            {% else %}
+                                {{ notifications.message }}
+                            {% endif %}
+                        </td>                        
+                        
+                        <td data-date="{{ notifications.created_at }}" class="formatted-date"></td>
+                        <td>
+                            {% if notifications.read_status == 0 %}
+                                <!-- زر لتحديث حالة القراءة -->
+                                <button id="read-btn-{{ notifications.notification_id }}" 
+                                        class="btn btn-sm btn-primary" 
+                                        style="padding: 5px 15px; font-size: 14px; border-radius: 5px;" 
+                                        onclick="updateReadStatus({{ notifications.notification_id }})">
+                                    لم تقرأ بعد
+                                </button>
+                            {% else %}
+                                <!-- نص يظهر عند القراءة -->
+                                <span id="read-status-{{ notifications.notification_id }}" 
+                                      style="color: green; font-weight: bold;">
+                                    تم القراءة
+                                </span>
+                            {% endif %}
+                        </td>
+                        
+                        <td>
+                            <a href="{{ url_for('delete_notification', notification_id=notifications.notification_id) }}" 
+                               class="btn btn-sm btn-danger d-flex align-items-center justify-content-center" 
+                               style="background-color: #f54242; border-radius: 5px; padding: 5px 15px; font-size: 14px; color: white; text-decoration: none;" 
+                               >
+                               <i class="fas fa-trash-alt me-2"></i> حذف
+                            </a>
+                        </td>                        
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="notificationModal" 
+     style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; max-width: 600px; background: white; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); padding: 20px; z-index: 1000;">
+    <div style="border-bottom: 1px solid #ddd; padding-bottom: 10px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+        <h3 style="margin: 0;">📩 تفاصيل الإشعار</h3>
+        <button onclick="closeModal()" 
+                style="background: none; border: none; font-size: 20px; font-weight: bold; cursor: pointer; color: #888;">
+            &#10006;
+        </button>
+    </div>
+    <div id="notificationDetails" style="font-size: 14px; color: #555; line-height: 1.6;">
+        <!-- سيتم إضافة تفاصيل الإشعار هنا ديناميكيًا -->
+    </div>
+    <div style="text-align: right; margin-top: 15px;">
+        <button onclick="closeModal()" 
+                style="background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+            إغلاق
+        </button>
+    </div>
+</div>
+<div id="modalOverlay" 
+     style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 999;" 
+     onclick="closeModal()"></div>
+
+
+<!-- نافذة منبثقة للدفع الآن 
+<div class="modal" id="modalPay">
+    <div class="modal-content">
+        <span class="close" id="closePay">&times;</span>
+        <div class="modal-header">
+            <i class='bx bx-credit-card'></i>
+            <h2>الدفع الآن</h2>
+        </div>
+        <div class="modal-body">
+            <p id="modalPayContent">تفاصيل الدفع هنا.</p>
+        </div>
+        <div class="modal-footer">
+            <a href="products.html" class="action-btn">دفع الآن</a>
+        </div>
+    </div>
+</div>-->
+    <!-- نهاية المحتوى الرئيسي -->
+    <script src="static/js/dashboard.js"></script>
+    <script src="static/js/notifications.js"></script>
+
+</body>
+
+</html>

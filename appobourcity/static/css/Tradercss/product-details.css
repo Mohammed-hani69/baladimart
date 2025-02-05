@@ -1,0 +1,254 @@
+/* تعريف متغيرات الألوان */
+:root {
+    background: var(--light);
+    --text-color: #000; /* لون النص في الوضع النهاري */
+    --card-background: white; /* لون خلفية الكروت في الوضع النهاري */
+    --button-background: #0096FF; /* لون خلفية الأزرار في الوضع النهاري */
+    --button-hover: #29ac34; /* لون الخلفية عند التمرير */
+    --border-color: #ddd; /* لون الحدود في الوضع النهاري */
+}
+
+/* الوضع الليلي */
+body.dark-mode {
+    background: var(--light);
+    --text-color: #f4f4f4; /* لون النص في الوضع الليلي */
+    --card-background: #3C3C3C; /* لون خلفية الكروت في الوضع الليلي */
+    --button-background: #0096FF; /* لون خلفية الأزرار في الوضع الليلي */
+    --button-hover: #3C3C3C; /* لون الخلفية عند التمرير */
+    --border-color: #555; /* لون الحدود في الوضع الليلي */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--light);
+    color: var(--dark);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* هيدر الصفحة */
+.header {
+    background-color: #0096FF;
+    color: white;
+    padding: 20px 40px; /* زيادة الحشو من اليمين واليسار */
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header h2 {
+    margin: 0;
+    font-size: 1em; /* زيادة حجم النص */
+    font-weight: 600;
+}
+
+/* تنسيق حاوية تفاصيل المنتج */
+.product-details-container {
+    padding: 100px px; /* زيادة الحشو الجانبي لتوسيع الحاوية */
+    max-width: 1800px; /* زيادة العرض الأقصى ليتناسب مع التوسيع */
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* صندوق المنتج */
+.product-box {
+    background: var(--light);
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 40px; /* زيادة الحشو داخل الصندوق */
+    display: flex;
+    flex-direction: column;
+    gap: 30px; /* زيادة التباعد بين العناصر داخل الصندوق */
+}
+
+/* الهيدر داخل الصندوق */
+.product-box .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.6em; /* زيادة حجم النص */
+}
+
+/* جدول تفاصيل المنتج */
+.product-details-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px; /* زيادة التباعد العلوي */
+}
+
+.product-details-table th,
+.product-details-table td {
+    padding: 15px; /* زيادة الحشو داخل الخلايا */
+    text-align: left;
+    border: 1px solid var(--border-color);
+    font-size: 1.2em; /* زيادة حجم الخط داخل الخلايا */
+}
+
+/* تفاصيل الدفع */
+.summary {
+    margin-top: 30px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0; /* زيادة التباعد بين العناصر */
+}
+
+.total {
+    font-weight: bold;
+    font-size: 1.4em; /* زيادة حجم الخط الإجمالي */
+}
+
+/* معلومات البائع */
+.info-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px; /* زيادة التباعد بين العناصر */
+    font-size: 1.2em; /* زيادة حجم الخط */
+}
+
+.info-item i {
+    margin-right: 15px; /* زيادة المسافة بين الأيقونة والنص */
+}
+
+.save-button {
+    background-color: var(--button-background);
+    color: white;
+    padding: 15px 25px; /* زيادة الحشو داخل الأزرار */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.save-button:hover {
+    background-color: #05aed8;
+}
+
+/* التقييمات */
+.review-item {
+    margin-bottom: 15px; /* زيادة التباعد بين التقييمات */
+    font-size: 1.2em; /* زيادة حجم الخط */
+}
+
+.review-item strong {
+    font-weight: bold;
+}
+
+/* زر تعديل */
+.edit-button {
+    background-color: var(--button-background);
+    color: white;
+    padding: 15px 25px; /* زيادة الحشو داخل الزر */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2em; /* زيادة حجم الخط */
+}
+
+.edit-button:hover {
+    background-color: var(--button-hover);
+}
+
+/* هيدر القسم */
+.section-header {
+    background-color: var(--button-background);
+    color: white;
+    padding: 15px 25px; /* زيادة الحشو داخل الهيدر */
+    border-radius: 8px 8px 0 0;
+    font-size: 1.5em; /* زيادة حجم النص */
+    font-weight: 600;
+}
+
+/* نماذج معلومات البائع و التقييمات */
+.seller-info,
+.product-reviews {
+    background-color: var(--card-background);
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 40px; /* زيادة الحشو داخل النماذج */
+}
+
+.seller-info h3,
+.product-reviews h3 {
+    font-size: 1.6em; /* زيادة حجم النص */
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.seller-info .form-group,
+.product-reviews .form-group {
+    margin-bottom: 25px; /* زيادة المسافة بين الحقول */
+}
+
+.seller-info label,
+.product-reviews label {
+    display: block;
+    font-size: 1.2em; /* زيادة حجم النص */
+    margin-bottom: 10px; /* زيادة المسافة أسفل العلامات */
+    font-weight: 600;
+}
+
+.seller-info select,
+.product-reviews select,
+.seller-info input,
+.product-reviews input {
+    width: 100%;
+    padding: 15px; /* زيادة الحشو داخل الحقول */
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1.2em; /* زيادة حجم النص داخل الحقول */
+    background-color: #fff;
+    color: var(--text-color);
+}
+
+/* زر حفظ داخل النماذج */
+.save-button {
+    background-color: var(--button-background);
+    color: white;
+    padding: 15px 25px; /* زيادة الحشو داخل الزر */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+.save-button:hover {
+    background-color: #05aed8;
+}
+
+/* استجابة للتصميم في الشاشات الصغيرة */
+@media (max-width: 768px) {
+    .product-details-container {
+        padding: 30px 20px; /* تقليل الحشو قليلاً في الشاشات الصغيرة */
+    }
+
+    .product-box,
+    .seller-info,
+    .product-reviews {
+        padding: 25px; /* تقليل الحشو في العناصر */
+    }
+
+    .product-details-table th,
+    .product-details-table td {
+        padding: 10px; /* تقليل الحشو داخل الخلايا */
+    }
+
+    .header h2 {
+        font-size: 1.6em; /* تقليل حجم الخط في العناوين */
+    }
+}
+
+@media print {
+    body {
+        font-size: 12px;
+    }
+
+    #printable-area {
+        page-break-after: always;
+    }
+}

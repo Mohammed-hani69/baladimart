@@ -1,0 +1,163 @@
+/* إعدادات السلايدر */
+.slider {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1500px; /* تأثير ثلاثي الأبعاد */
+  margin-top: 80px; /* المسافة التي تضمن أن السلايدر يظهر أسفل الهيدر */
+  z-index: 10; /* ضمان أن السلايدر يظهر فوق المحتوى الآخر */
+}
+
+/* إعدادات السلايد */
+.swiper-container {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s ease-in-out;
+  display: flex;
+  justify-content: center;
+}
+
+/* تنسيق السلايد */
+.swiper-slide {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  transform-style: preserve-3d; /* تأثيرات ثلاثية الأبعاد */
+  transition: transform 1s ease-in-out;
+  will-change: transform;
+}
+
+/* النص داخل السلايد */
+.slider__text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #000000;
+  z-index: 10;
+  opacity: 0;
+  animation: fadeInText 1.5s ease-out forwards;
+  text-shadow: 4px 4px 30px rgba(0, 0, 0, 0.6); /* إضافة الشادو للنصوص */
+  position: absolute;
+  z-index: 10;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.5); /* خلفية داكنة للنص */
+  border-radius: 8px;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+}
+
+/* تأثير النص عند الظهور */
+@keyframes fadeInText {
+  0% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.9);
+  }
+  100% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* تنسيق العناوين */
+.slider__text h2 {
+  font-size: 3rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  letter-spacing: 5px;
+}
+
+/* تنسيق النصوص */
+.slider__text p {
+  font-size: 1.5rem;
+  font-weight: 300;
+  line-height: 1.6;
+  max-width: 700px;
+  margin: 0 auto;
+  opacity: 0.8;
+}
+
+/* إضافة بلور على الصور */
+.swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  transition: filter 0.4s ease;
+
+}
+
+/* تحسين النقاط (pagination) */
+.swiper-pagination {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 20;
+}
+
+.swiper-pagination-bullet {
+  width: 12px;
+  height: 12px;
+  margin: 0 10px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #54d7b7;
+  transform: scale(1.2);
+}
+
+/* تأثير عند التمرير فوق السلايد */
+.swiper-slide:hover {
+  transform: rotateY(15deg);
+}
+
+.swiper-slide:hover .slider__text {
+  transform: translate(-50%, -50%) scale(1.05);
+  opacity: 1;
+}
+
+/* تأثير تكبير الصور عند التفاعل */
+.swiper-slide:hover img {
+  filter: blur(0); /* إزالة البلور عند التفاعل مع السلايد */
+  transform: scale(1.2);
+}
+
+/* تخصيص النصوص عند التحرك على السلايد */
+.swiper-slide:hover .slider__text h2 {
+  color: #ff6b6b;
+  transform: scale(1.1);
+}
+
+/* تخصيص الميديا لنسخة الهواتف */
+@media screen and (max-width: 768px) {
+  .slider {
+      height: 400px;
+      margin-top: 20px; /* تأكيد أن السلايدر يظهر أسفل الهيدر */
+  }
+
+  .slider__text h2 {
+      font-size: 2rem;
+  }
+
+  .slider__text p {
+      font-size: 1.2rem;
+  }
+}

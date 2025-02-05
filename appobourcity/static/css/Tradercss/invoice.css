@@ -1,0 +1,116 @@
+/* الأساسيات */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 20px;
+}
+
+/* حاوية الفاتورة */
+.invoice-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    direction: rtl; /* اتجاه النص من اليمين إلى اليسار */
+    text-align: right;
+}
+
+/* رأس الفاتورة */
+.invoice-header {
+    text-align: center;
+    border-bottom: 2px solid #ddd;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+.logo {
+    max-width: 120px;
+    margin-bottom: 10px;
+}
+
+.invoice-title {
+    font-size: 24px;
+    color: #0096FF;
+    margin: 0;
+}
+
+.invoice-date {
+    font-size: 14px;
+    color: #666;
+}
+
+/* تفاصيل العميل */
+.customer-details {
+    margin-bottom: 20px;
+}
+
+.customer-details h2 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
+
+.customer-info p {
+    font-size: 16px;
+    margin: 5px 0;
+    color: #555;
+}
+
+/* تفاصيل الطلب */
+.order-details {
+    margin-bottom: 20px;
+}
+
+.order-details h2 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
+
+.order-info p {
+    font-size: 16px;
+    margin: 5px 0;
+    color: #555;
+}
+
+/* زر الطباعة */
+.print-button {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 16px;
+    background-color: #0096FF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.print-button:hover {
+    background-color: #2ea023;
+}
+.back-button {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 16px;
+    background-color: #0096FF; /* لون مميز */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 20px;
+    margin-left: 10px; /* مسافة بين الزرين */
+}
+
+.back-button:hover {
+    background-color: #2ea023;
+}

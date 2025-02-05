@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>مدينة العبور | خدمات إلكترونية</title>
+
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="../../static/swiperJs/swiper-bundle.min.css" />
+
+    <!-- Link Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Link File CSS -->
+    <link rel="stylesheet" href="../../static/css/site/offer_details.css">
+    <link rel="stylesheet" href="../../static/css/site/order_details.css">
+    <link rel="icon" href="{{ url_for('static', filename='/img/1.png') }}" type="image/x-icon">
+</head>
+<body class="menu-side-in-bag">
+
+    <header>
+
+        <div class="header-top">
+            <div class="contanier">
+             <p>خدمات مدينة العبور للتسوق الإلكتروني</p>
+             <div class="link-top-heder">
+                 {% if current_user.is_authenticated %}
+                 <a href="{{ url_for('seller_profile') }}">حسابي</a>
+                 <a href="/favorites">قائمة الرغبات</a>
+                 {% endif %}
+                 {% if not current_user.is_authenticated %}
+                 <a href="login">تسجيل الدخول</a>
+                 {% endif %}
+                 {% if  current_user.is_authenticated%}
+                 <a href="/logout">تسجيل الخروج</a>
+                 {% endif %}
+                 <a href="#">مقارنة</a>
+             </div>
+         </div>
+           </div>
+
+           <div class="header-info">
+            <div class="contanier">
+                <img src="../../static/img/site/alpha.png" alt="Logo" class="small-logo black-image">
+
+            <div class="search-bar">
+                <form action="">
+                    <input type="search" placeholder="ابحث عن طلبك...">
+                    <button class="btn-srch">بحث</button>
+                </form>
+            </div>
+            <div class="card">
+                <div class="price">
+                </div>
+                <a href="/cart"><i class="fa-solid fa-bag-shopping"></i> <span class="count-in-card">2</span></a>
+
+            </div>
+            </div>
+        </div>
+
+        <div class="header-bottom">
+           <div class="contanier">
+            <i id="open-side" class="fa-solid fa-bars"></i>
+            <ul class="nav-links">
+
+                <li><a href="/"> الرئيسية</a>
+
+                </li>
+
+                <li>
+                    <a href="Services">الخدمات </a>
+
+                    <div class="drobdwon">
+                        <ul><li><a href="Services.html">الخدمات</a></li></ul>
+                        {% for typeservice in typeservice%}
+                        <ul>
+                            <li><a href="">{{typeservice.Types_of_services_name}}</a></li>
+                        </ul>
+                        {% endfor %}
+                        
+                    </div>
+                </li>
+
+                <li>
+                    <a href="about.html">من نحن</a>
+                </li>
+
+                <li>
+                    <a href="contact.html">المميزات</a>
+                </li>
+                <li><a href="/offer_details">العروض</a></li>
+
+                <li><a href="/allproduct">المنتجات</a></li>
+
+                <li><a href="/my-orders">الطلبات</a></li>
+
+                <li><a href="/alltrader">البائعين</a></li>
+
+
+            </ul>
+            {% if not current_user.is_authenticated %}
+            <a href="signup" class="sign-in-btn"><i class="fa-solid fa-user-plus"></i> إنشاء حساب </a>
+            {% endif %}
+            {% if current_user.is_authenticated and not is_seller%}
+            <a href="is_seller" class="merchant-btn"><i class="fa-solid fa-store"></i>بيع معانا</a>
+            {% endif %}
+            {%if current_user.is_authenticated and is_seller %}
+            <a href="/dashboard_trader" class="merchant-btn"><i class="fa-solid fa-store"></i>لوحة تحكم متجرك</a>
+            {% endif %}
+
+           </div>
+        </div>
+
+    </header>
+   <!-- عرض رسائل الفلاش -->
+   {% with messages = get_flashed_messages(with_categories=True) %}
+   {% if messages %}
+       <div id="flash-messages">
+           {% for category, message in messages %}
+               <div class="flash-message {{ category }}">
+                   {{ message }}
+               </div>
+           {% endfor %}
+       </div>
+   {% endif %}
+{% endwith %}
+<section class="slide-sec contanier">
+        <div id="side-bar" class="side-bar">
+            <h5><i class="fa-solid fa-bars"></i> التسوق حسب القسم</h5>
+            <img class="logo-slide" src="../../static/img/site/alpha.png" alt="">
+            <i id="btn-close" class="fa-solid fa-bars fa-times"></i>
+            <ul class="side-links">
+                <a href="#"><li>الرئيسية</li></a>
+                <a href="#"><li>الخدمات</li></a>
+                <a href="#"><li>من نحن</li></a>
+                <a href="#"><li>المميزات</li></a>
+                <a href="offer_details"><li>العروض</li></a>
+                <a href="#"><li>المنتجات</li></a>
+                <a href="#"><li>إكسسوارات</li></a>
+                <a href="#"><li>مستحضرات التجميل</li></a>
+                <a href="#"><li>التلفزيونات</li></a>
+
+            </ul>
+
+        </div>
+</section>
+
+
+          <!-- Order Details Section -->
+<div class="order-details-container">
+
+    <div class="order-box">
+        <div style="height:30px; padding:15px;" class="header">
+            <h2><i class='bx bx-file'></i> تفاصيل الطلب</h2>
+            <span>رقم الطلب: {{ order.order_id }}</span>
+            <span>{{ order.order_date.strftime('%I:%M %p %d %B %Y') }}</span>
+        </div>
+        <table class="order-details-table">
+            <thead style=" background-color: rgba(255, 0, 242, 0.2);">
+                <tr>
+                    <th><i class='bx bx-package'></i> المنتج</th>
+                    <th><i class='bx bx-info-circle'></i> الكمية</th>
+                    <th><i class='bx bx-info-circle'></i> سعر القطعه بعد الخصم</th>
+                    <th><i class='bx bx-money'></i> السعر النهائي</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order_details in order_details %}
+                <tr>
+                    <!-- ضرب السعر في الكمية ثم عرض النتيجة -->
+                     <td>
+                        {% if order_details.product_name|length > 30 %}
+                            {{ order_details.product_name[:70] }}... 
+                            <a href="" title="{{ order_details.product_name }}"></a>
+                        {% else %}
+                            {{ order_details.product_name }}
+                        {% endif %}
+                    </td>
+                    <td>{{ order_details.quantity }}</td>
+                    <td>{{ order_details.price_comition }} ج.م</td>
+                    <td>{{ order_details.price_comition * order_details.quantity }} ج.م</td>
+                    
+                </tr>
+                <!-- إضافة النتيجة إلى المجموع الإجمالي -->
+                {% endfor %}
+                <tr>
+                    <td colspan="3" style="text-align:right;"><strong>المجموع الكلي:</strong></td>
+                    <td><strong>{{ total_price }} ج.م</strong></td>  <!-- عرض المجموع الكلي -->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+</div>
+  
+
+    <div class="newsletter">
+        <div class="container">
+            <div class="subscribe-content">
+                <div class="text">
+                    <h4>سجل للحصول علي آخر العروض</h4>
+                    <p>سجل برقم الهاتف حتي تحصل علي اخر العروض الخصومات</p>
+                </div>
+            </div>
+            <div class="subscribe-form">
+                <form action="">
+                    <input type="phone" placeholder="أدخل رقم الهاتف هنا للتسجيل" required>
+                    <button class="btn-srch" type="submit">سجل</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="contanier">
+            <div class="top-footer">
+                <div class="row">
+                    <img src="../../static/img/site/alpha.png" alt="" class="small-logo">
+                    <div class="hotline">
+
+                        <div class="hotline-text">
+                            <h6>خدمة عملاء 24/7</h6>
+                            <a href="https://wa.me/+201145425207?text=مرحبًا، أريد الاستفسار عن الخدمة"target="_blank"><span>(+20) 01145425207</span></a>
+                        </div>
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+
+                </div>
+                <div class="small-row">
+                    <h6> اعرف المزيد عنا</h6>
+                    <div class="links-row">
+                        <a href="#"> <i class="fa-solid fa-angle-left"></i>معلومات عن اكسبريمو </a>
+                        <a href="#"><i class="fa-solid fa-angle-left"></i>الشحن و التوصيل </a>
+
+                    </div>
+                </div>
+
+                <div class="small-row">
+                    <h6> تسوق معنا</h6>
+                    <div class="links-row">
+                        <a href="/profile"><i class="fa-solid fa-angle-left"></i>حسابك</a>
+                        <a href="#"> <i class="fa-solid fa-angle-left"></i>مشترياتك</a>
+                        <a href="#"> <i class="fa-solid fa-angle-left"></i>عناوينك</a>
+                        <a href="#"> <i class="fa-solid fa-angle-left"></i>قوائمك</a>
+                    </div>
+                </div>
+
+                <div class="small-row">
+                    <h6> دعنا نساعدك</h6>
+                    <div class="links-row">
+                        <a href="#"><i class="fa-solid fa-angle-left"></i>المساعدة و الدعم</a>
+                        <a href="#"><i class="fa-solid fa-angle-left"></i>تتبع الطلب</a>
+                        <a href="#"><i class="fa-solid fa-angle-left"></i>سياسة الاسترجاع</a>
+                        <a href="#"><i class="fa-solid fa-angle-left"></i>الشروط و الأحكام </a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="bottom-footer">
+            <div class="contanier">
+                <p>Copyright &copy; <span>MOHAMED HANI</span> Powered by <span>HASHISH</span></p>
+                <div class="payment">
+                <img src="../../static/img/site/payment-1.png" alt="">
+                <img src="../../static/img/site/payment-2.png" alt="">
+                <img src="../../static/img/site/payment-3.png" alt="">
+                <img src="../../static/img/site/payment-4.png" alt="">
+            </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Swiper JS -->
+    <script src="../../static/swiperJs/swiper-bundle.min.js"></script>
+
+    <!-- Linke File JS -->
+    <script src="../../static/js/site/home.js"></script>
+    <script src="../../static/js/order_details.js"></script>
+    <script src="../../static/js/dashboard.js"></script>
+    <script src="../../static/js/settings.js"></script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

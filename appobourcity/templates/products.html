@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='/img/1.png') }}" type="image/x-icon">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="static/css/products.css">
+    <title>المنتجات</title>
+</head>
+
+<body>
+<!-- الشريط الجانبي -->
+<div class="sidebar">
+    <a href="dashboard.html" class="logo">
+        <i class='bx bx-code-alt'></i>
+        <div class="logo-name"><span>مدينة</span>العبور</div>
+    </a>
+    <ul class="side-menu">
+        <li><a href="/dashboard"><i class='bx bxs-dashboard'></i>لوحة التحكم</a></li>
+        <li><a href="/products"><i class='bx bx-store-alt'></i>المنتجات</a></li>
+        <li><a href="/banner"><i class='bx bx-image'></i>البانرات الاعلانيه</a></li>
+        <li><a href="/sellers"><i class='bx bx-group'></i>البائعون</a></li>
+        <li><a href="/Orders"><i class='bx bx-receipt'></i>الطلبات</a></li>
+        <li><a href="/services"><i class='bx bx-message-square-dots'></i>الخدمات</a></li>
+        <li><a href="/Types_of_services"><i class="bx bx-briefcase"></i>انواع الخدمات</a></li>
+        <li><a href="/category"><i class='bx bx-category'></i>الاقسام</a></li>
+        <li><a href="/offers_admin"><i class='bx bx-gift'></i>العروض</a></li>
+        <li><a href="/settings"><i class='bx bx-cog'></i>الإعدادات</a></li>
+        <li><a href="#" id="language-toggle"><i class='bx bx-globe'></i>اللغة</a></li>
+    </ul>
+    <ul class="side-menu">
+        <li>
+            <a href="admin.html" class="logout">
+                <i class='bx bx-log-out-circle'></i>
+                تسجيل الخروج
+            </a>
+        </li>
+    </ul>
+
+</div>
+<!-- نهاية الشريط الجانبي -->
+
+    <!-- المحتوى الرئيسي -->
+    <div class="content">
+        <!-- الشريط العلوي -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            <form action="#">
+                
+            </form>
+            <!-- زر وضع الظلام -->
+            <input type="checkbox" id="theme-toggle" hidden>
+            <label for="theme-toggle" class="theme-toggle"></label>
+<!-- زر الإشعارات الجديد -->
+<a href="/notifications">
+    <button class="button">
+        <svg viewBox="0 0 448 512" class="bell">
+            <path d="M224 0c-17.7 0-32 14.3-32 32V49.9C119.5 61.4 64 124.2 64 200v33.4c0 45.4-15.5 89.5-43.8 124.9L5.3 377c-5.8 7.2-6.9 17.1-2.9 25.4S14.8 416 24 416H424c9.2 0 17.6-5.3 21.6-13.6s2.9-18.2-2.9-25.4l-14.9-18.6C399.5 322.9 384 278.8 384 233.4V200c0-75.8-55.5-138.6-128-150.1V32c0-17.7-14.3-32-32-32zm0 96h8c57.4 0 104 46.6 104 104v33.4c0 47.9 13.9 94.6 39.7 134.6H72.3C98.1 328 112 281.3 112 233.4V200c0-57.4 46.6-104 104-104h8zm64 352H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7s18.7-28.3 18.7-45.3z"></path>
+        </svg>
+        الاشعارات
+    </button>
+</a>
+ 
+            <!-- أيقونة الملف الشخصي -->
+            <a href="settings.html" class="profile">
+                <img src="images/logo.png" alt="الملف الشخصي">
+            </a>
+        </nav>
+        <!-- نهاية الشريط العلوي -->
+
+        <main class="products-page">
+            <div class="header">
+                <div class="title-box">
+                    <h2>قائمة المنتجات</h2>
+                </div>
+        
+                <!-- محرك البحث -->
+                <div class="search-box">
+                    <input 
+                        type="text" 
+                        id="productSearch" 
+                        class="search-input" 
+                        placeholder="ابحث عن منتج..."
+                        onkeyup="filterProducts()"> <!-- تشغيل التصفية عند الكتابة -->
+                    <button id="searchButton" class="search-button" onclick="filterProducts()">بحث</button>
+                </div>
+            </div>
+        
+            <!-- جدول المنتجات -->
+            <div class="recent-products">
+                <table class="products-table" id="productsTable">
+                    <thead>
+                        <tr>
+                            <th>رقم المنتج</th>
+                            <th>اسم المنتج</th>
+                            <th>السعر</th>
+                            <th>المبلغ بعد العمولة</th>
+                            <th>الربح بدون خصم</th>
+                            <th>الخصم</th>
+                            <th>السعر بعد الخصم</th>
+                            <th>كمية المخزون</th>
+                            <th>القسم</th>
+                            <th>التقييم</th>
+                            <th>اسم البائع</th>
+                            <th>اسم المتجر</th>
+                            <th>العنوان</th>
+                            <th>الحالة</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for products in products %}
+                        <tr>
+                            <td>{{ products.product_id }}</td>
+                            <td>
+                                {% if products.product_name|length > 30 %}
+                                    {{ products.product_name[:30] }}...
+                                    <a href="#" title="{{ products.product_name }}">المزيد</a>
+                                {% else %}
+                                    {{ products.product_name }}
+                                {% endif %}
+                            </td>
+                            <td>{{ products.price }}&nbsp;&nbsp;ج.م</td>
+                            <td>{{ products.total_after_commission }}&nbsp;&nbsp;ج.م</td>
+                            <td>{{ products.net_profit }}&nbsp;&nbsp;ج.م</td>
+                            <td>{{ products.discount }}%</td>
+                            <td>{{ "%.2f"|format(products.price * (1 - (products.discount / 100))) }} جنيه</td>
+                            <td>{{ products.stock_quantity }}</td>
+                            <td>{{ products.product_category }}</td>
+                            <td>{{ products.rating }}</td>
+                            <td>{{ products.seller.seller_name }}</td>
+                            <td>{{ products.seller.store_name }}</td>
+                            <td>{{ products.seller.address }}</td>
+                            <td>
+                                <div class="form-group">
+                                    <label for="status-toggle-{{ products.product_id }}" class="theme-toggle">
+                                        <input type="checkbox" class="custom-switch-input" 
+                                               id="status-toggle-{{ products.product_id }}" 
+                                               {% if products.status %}checked{% endif %} 
+                                               onchange="toggleStatus({{ products.product_id }}, this.checked)">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td>                
+                                <a href="{{ url_for('delete_product_admin', product_id=products.product_id) }}" 
+                                class="btn btn-sm btn-danger d-flex align-items-center justify-content-center" 
+                                style="background-color: #f54242; border-radius: 5px; padding: 5px 5px; font-size: 10px; color: white; text-decoration: none;" 
+                                >
+                                 <i class="fas fa-trash-alt me-2"></i> حذف
+                             </a>                                                         
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </main>
+        
+        <script>
+            // وظيفة التصفية
+            function filterProducts() {
+                var input = document.getElementById('productSearch');
+                var filter = input.value.toLowerCase();
+                var table = document.getElementById('productsTable');
+                var rows = table.getElementsByTagName('tr');
+        
+                // تجاهل الصف الأول (عناوين الأعمدة)
+                for (var i = 1; i < rows.length; i++) {
+                    var cells = rows[i].getElementsByTagName('td');
+                    var match = false;
+        
+                    // تحقق من كل خلية في الصف
+                    for (var j = 0; j < cells.length; j++) {
+                        if (cells[j]) {
+                            var textValue = cells[j].textContent || cells[j].innerText;
+                            if (textValue.toLowerCase().indexOf(filter) > -1) {
+                                match = true;
+                                break;
+                            }
+                        }
+                    }
+        
+                    // عرض أو إخفاء الصف بناءً على المطابقة
+                    rows[i].style.display = match ? '' : 'none';
+                }
+            }
+        </script>
+        
+    
+    <style>
+        .search-box {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+    
+        .search-input {
+            padding: 10px;
+            width: 100%;
+            max-width: 400px;
+            font-size: 16px;
+            border:  #ccc;
+            border-radius: 0px 80px 80px 0px;
+            margin-right: 10px;
+        }
+    
+        .search-button {
+            padding: 10px 20px;
+            background-color: #860392;
+            color: white;
+            border: none;
+            border-radius: 80px 0px 0px 80px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    
+        .search-button:hover {
+            background-color:rgb(92, 6, 85);
+        }
+    </style>
+    <!-- Scripts -->
+    <script src="static/js/products.js"></script>
+    <script src="static/js/dashboard.js"></script>
+    <script src="static/js/settings.js"></script>
+
+</body>
+
+</html>
