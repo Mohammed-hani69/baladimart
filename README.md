@@ -26,4 +26,4 @@ Follow these steps to set up the project locally:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/username/multi-vendor-ecommerce.git
+   git clone https://github.com/Mohammed-hani69/baladimart.git
