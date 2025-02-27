@@ -4,6 +4,7 @@ from datetime import date, datetime
 from flask_jwt_extended import create_access_token
 from flask_login import current_user, login_required, login_user, logout_user 
 from babel.dates import format_datetime
+from sqlalchemy.exc import SQLAlchemyError
 import os
 import qrcode
 from flask import Blueprint, flash, jsonify, redirect, render_template, request, session, url_for
@@ -3378,11 +3379,71 @@ def get_cart(seller_id):
         'total_price': item.total_price
     } for item in cart_items])
 
-if __name__ == '__main__':
-    app.run(debug=True)
 
 
 
+
+@app.route('/api_categories', methods=['GET'])
+def get_categories():
+    try:
+        # جلب الأقسام المفعلة فقط
+        categories = Category.query.filter_by(is_active=True).all()
+        
+        # تحويل البيانات إلى JSON
+        categories_list = [
+            {
+                "category_id": cat.category_id,
+                "category_name": cat.category_name,
+                "image_category": cat.image_category if cat.image_category else None,
+                "is_active": cat.is_active
+            }
+            for cat in categories
+        ]
+        
+        return jsonify({"success": True, "categories": categories_list}), 200
+    
+    except Exception as e:
+        return jsonify({"success": False, "message": str(e)}), 500
+    
+
+
+@app.route('/api_get_products', methods=['GET'])
+def api_get_products():
+    try:
+        products = Product.query.all()
+        product_list = []
+        for product in products:
+            # إنشاء قاموس للمنتج مع إزالة الحقول الفارغة
+            product_data = {
+                key: value for key, value in {
+                    'product_id': product.product_id,
+                    'category_id': product.category_id,
+                    'seller_id': product.seller_id,
+                    'product_name': product.product_name,
+                    'description': product.description,
+                    'price': product.price,
+                    'stock_quantity': product.stock_quantity,
+                    'product_category': product.product_category,
+                    'status': product.status,
+                    'rating': product.rating,
+                    'discount': product.discount,
+                    'net_profit': product.net_profit,
+                    'total_after_commission': product.total_after_commission,
+                    'image1': product.image1,
+                    'image2': product.image2,
+                    'image3': product.image3,
+                    'image4': product.image4,
+                    'image5': product.image5,
+                    'has_active_offer': product.has_active_offer()
+                }.items() if value is not None  # إزالة الحقول الفارغة
+            }
+            product_list.append(product_data)
+        return jsonify(product_list), 200
+    except SQLAlchemyError as e:
+        return jsonify({'error': str(e)}), 500
+    except Exception as e:
+        return jsonify({'error': 'An unexpected error occurred'}), 500
+        
 #=========================================   API_POST    ==============================
 #=========================================   API_POST    ==============================
 #=========================================   API_POST    ==============================
