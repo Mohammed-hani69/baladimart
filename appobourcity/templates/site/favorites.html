@@ -125,8 +125,9 @@
                 <img src="{{ url_for('static', filename='uploads/products/' + product.image1) }}" alt="{{ product.product_name }}">
                 <h3>{{ product.product_name }}</h3>
                 <div class="price">
-                    <span>{{ "%.2f"|format(product.price) }} جنيه</span>
-                </div>
+                    <span>{{ "{:.2f}".format(product.total_after_commission * (1 - product.discount / 100)) }}<span>جنيه</span></span>
+                    
+                </div>  
                 <a href="{{ url_for('product_details', product_id=product.product_id) }}" class="details-btn">عرض التفاصيل</a>
                 <form method="POST" action="{{ url_for('remove_favorite', product_id=product.product_id) }}" style="display: inline;">
                     <button type="submit" class="remove-btn">إزالة من المفضلة</button>
