@@ -1,4 +1,5 @@
 # app.py
+import os
 from flask import Flask
 from flask_jwt_extended import JWTManager
 from flask_sqlalchemy import SQLAlchemy
@@ -22,9 +23,14 @@ from flask_cors import CORS
 # إنشاء تطبيق Flask
 app = Flask(__name__)
 CORS(app)
-# إعدادات قاعدة البيانات
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db' 
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+# ضمان وجود مجلد /data لتخزين قاعدة البيانات
+DATA_DIR = "/data"
+if not os.path.exists(DATA_DIR):
+    os.makedirs(DATA_DIR)
+
+# إعدادات قاعدة البيانات لحفظها في /data لضمان استمراريتها على Fly.io
+app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{os.path.join(DATA_DIR, "database.db")}'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'Y5lKJk50mo_mx0N-ZY0fYCxnn6SUHlUvnzPzOQ'
 app.config["JWT_SECRET_KEY"] = "b4b38504c6b61a7529e353a1c5b3d42b142739b23ce8ca8ac2c7770c24259bf7"  # استخدم مفتاحًا سريًا قويًا
 jwt = JWTManager(app)
